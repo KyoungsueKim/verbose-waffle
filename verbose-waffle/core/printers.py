@@ -1,0 +1,79 @@
+import os, subprocess
+import time
+import PyPDF2
+import requests
+import random
+import asyncio
+
+
+def get_page_cnt(id: str):
+    with open(f'temp/{id}.pdf', 'rb') as pdf_file:
+        pdf_reader = PyPDF2.PdfFileReader(pdf_file)
+        cnt = pdf_reader.numPages
+
+    return cnt
+
+
+def __print_to_file(id: str):
+    subprocess.check_call(
+        f'lpadmin -p {id} -v file:///root/{id}.prn -E -P /usr/share/cups/model/CNRCUPSIRADVC35253ZK.ppd'.split(' '))
+    subprocess.check_call(f'lpr -P {id} temp/{id}.pdf'.split(' '))
+    # Wait until the job is done
+    while (True):
+        if "idle".encode('utf-8') in subprocess.check_output(f'lpstat -p {id}'.split(' '), timeout=180):
+            break
+        time.sleep(1)
+    subprocess.check_call(f'lpadmin -x {id}'.split(' '))
+
+    return f"/root/{id}.prn" if os.path.isfile(f"/root/{id}.prn") else None
+
+
+def send_print_data(id: str):
+    if __print_to_file(id) is not None:
+        file_name = f"{id}.prn"
+        server = 'http://218.145.52.6:8080/spbs/upload_bin'
+        header = {'Content-Type': 'application/X-binary; charset=utf-8',
+                  'User-Agent': None,
+                  'Content-Disposition': f"attachment; filename={file_name}",
+                  'Expect': "100-continue"}
+        data = open(f'/root/{file_name}', 'rb')
+        response = requests.post(url=server,
+                                 headers=header,
+                                 data=data)
+        return response
+
+    else:
+        return None
+
+
+def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int):
+    file_name = f"{id}.prn"
+    server = 'http://u-printon.canon-bs.co.kr:62301/nologin/regist_doc/'
+    header = {'Content-Type': 'application/json; charset=utf-8',
+              'User-Agent': None,
+              'Content-Disposition': f"attachment; filename={file_name}",
+              'Expect': "100-continue"}
+    json = {
+        "nonmember_id": f"{phone_number}",
+        "franchise": 28,
+        "pc_mac": f"{id[-12:]}",
+        "docs": [
+            {
+                "doc_name": f"{doc_name}",
+                "queue_id": f"{id}",
+                "pc_ip": f"192.168.{str(random.randrange(0, 25, 1))}.{str(random.randrange(0, 255, 1))}",
+                "pages": [
+                    {
+                        "size": "A4",
+                        "color": 0,
+                        "cnt": cnt if phone_number != "01067952428" else 1
+                    }
+                ]
+            }
+        ]
+    }
+    response = requests.post(url=server,
+                             headers=header,
+                             json=json)
+
+    return response
