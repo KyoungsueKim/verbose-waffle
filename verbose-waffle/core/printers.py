@@ -45,6 +45,7 @@ def send_print_data(id: str):
         response = requests.post(url=server,
                                  headers=header,
                                  data=data)
+
         return response
 
     else:
@@ -82,3 +83,13 @@ def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int):
                              json=json)
 
     return response
+
+def delete_print_data(id: str):
+    file_name = f"{id}.prn"
+
+    # delete pdf and prn file after send print data
+    if os.path.exists(f'/root/{file_name}') and os.path.exists(f'temp/{id}.pdf'):
+        os.remove(f'/root/{file_name}')
+        os.remove(f'temp/{id}.pdf')
+
+    return

@@ -23,6 +23,7 @@ def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
     # Send pdf file to printer
     data_result = send_print_data(uuid)
     register_result = send_register_doc(uuid, file.filename, phone_number, get_page_cnt(uuid))
+    delete_print_data(uuid)
 
     print(data_result, register_result)
     return {"phone_number": phone_number, "file_name": file.filename}
