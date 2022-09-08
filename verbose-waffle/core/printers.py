@@ -15,14 +15,19 @@ def get_page_cnt(id: str):
 
 
 def __print_to_file(id: str):
-    subprocess.check_call(
-        f'lpadmin -p {id} -v file:///root/{id}.prn -E -P /usr/share/cups/model/CNRCUPSIRADVC35253ZK.ppd'.split(' '))
-    subprocess.check_call(f'lpr -P {id} temp/{id}.pdf'.split(' '))
+    # Create Virtual Printer
+    subprocess.check_call(f'lpadmin -p {id} -v file:///root/{id}.prn -o print-color-mode-default=monochrome -E -m CNRCUPSIRADVC35253ZK.ppd'.split(' '))
+
+    # Print pdf file via the virtual printer
+    subprocess.check_call(f'lpr -P {id} -o ColorModel=KGray temp/{id}.pdf'.split(' '))
+
     # Wait until the job is done
     while (True):
         if "idle".encode('utf-8') in subprocess.check_output(f'lpstat -p {id}'.split(' '), timeout=180):
             break
         time.sleep(1)
+
+    # Delete printer after fileDevice print.
     subprocess.check_call(f'lpadmin -x {id}'.split(' '))
 
     return f"/root/{id}.prn" if os.path.isfile(f"/root/{id}.prn") else None
