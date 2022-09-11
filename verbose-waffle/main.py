@@ -34,4 +34,4 @@ def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
 
 if __name__ == '__main__':
     os.system('service cups start')
-    uvicorn.run("main:app", host="0.0.0.0", port=64550, reload=False)
+    uvicorn.run("main:app", host="0.0.0.0", port=80, reload=False)

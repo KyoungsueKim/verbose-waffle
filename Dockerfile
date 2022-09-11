@@ -3,5 +3,5 @@ MAINTAINER zp5njqlfex@gmail.com
 
 COPY . /opt/project/
 
-EXPOSE 64550
+EXPOSE 80
 CMD python3 /opt/project/verbose-waffle/main.py
