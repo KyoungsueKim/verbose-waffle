@@ -1,4 +1,4 @@
-FROM    mindersturmoil/verbose-waffle:1
+FROM    mindersturmoil/verbose-waffle:3
 MAINTAINER zp5njqlfex@gmail.com
 
 COPY . /opt/project/
