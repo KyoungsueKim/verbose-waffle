@@ -16,6 +16,10 @@ def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
     uuid_base = hash.sha1(str(time.time()).encode('utf-8')).hexdigest()
     uuid = f"{uuid_base[0:8]}-{uuid_base[9:13]}-{uuid_base[14:18]}-{uuid_base[19:23]}-{uuid_base[24:36]}".upper()
 
+    # Create directory if doesn't exists.
+    if not os.path.exists('temp/'):
+        os.makedirs('temp/')
+
     # Save file with name as uuid
     with open(f"temp/{uuid}.pdf", "wb+") as file_obj:
         file_obj.write(file.file.read())
@@ -30,4 +34,4 @@ def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
 
 if __name__ == '__main__':
     os.system('service cups start')
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=64550, reload=False)
