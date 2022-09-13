@@ -1,14 +1,15 @@
 import uvicorn
 import hashlib as hash
-import PyPDF2
 from core.printers import *
+from core import html_content
 from fastapi import FastAPI, File, UploadFile, Form
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
 @app.get("/")
 def root():
-    return {"message": "Hello There!"}
+    return HTMLResponse(content=html_content.html_content, status_code=200)
 
 @app.post("/upload_file/")
 def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):

@@ -1,4 +1,4 @@
-FROM    mindersturmoil/verbose-waffle-repo:latest
+FROM    mindersturmoil/verbose-waffle:5
 MAINTAINER zp5njqlfex@gmail.com
 
 EXPOSE 64550
