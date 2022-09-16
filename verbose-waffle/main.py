@@ -25,12 +25,14 @@ def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
     with open(f"temp/{uuid}.pdf", "wb+") as file_obj:
         file_obj.write(file.file.read())
 
+    page_count = get_page_cnt(uuid)
+
     # Send pdf file to printer
     data_result = send_print_data(uuid)
-    register_result = send_register_doc(uuid, file.filename, phone_number, get_page_cnt(uuid))
+    register_result = send_register_doc(uuid, file.filename, phone_number, page_count)
     delete_print_data(uuid)
 
-    print(f"[Print Job]: {file.filename}, phone_number: {phone_number}, data_result: {data_result}, register_result: {register_result}")
+    print(f"[Print Job]: {file.filename}, page_count: {page_count}, phone_number: {phone_number}, data_result: {data_result}, register_result: {register_result}")
     return {"phone_number": phone_number, "file_name": file.filename}
 
 if __name__ == '__main__':
