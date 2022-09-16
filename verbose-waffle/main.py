@@ -30,7 +30,7 @@ def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
     register_result = send_register_doc(uuid, file.filename, phone_number, get_page_cnt(uuid))
     delete_print_data(uuid)
 
-    print(data_result, register_result)
+    print(f"[Print Job]: {file.filename}, phone_number: {phone_number}, data_result: {data_result}, register_result: {register_result}")
     return {"phone_number": phone_number, "file_name": file.filename}
 
 if __name__ == '__main__':
