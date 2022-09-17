@@ -72,7 +72,7 @@ def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int):
                     {
                         "size": "A4",
                         "color": 0,
-                        "cnt": cnt if phone_number != "01067952428" else 1
+                        "cnt": cnt if (phone_number != "01067952428") or (phone_number != "01089624031") else 1
                     }
                 ]
             }
