@@ -1,6 +1,7 @@
 # verbose-waffle (서버 컨테이너)
 캠퍼스 프린터기를 사용할 때 드라이버가 윈도우밖에 없어서 아이패드를 주로 쓰는 사람들은 꼭 윈도우 노트북을 켜야 하더라구요. 그게 너무 불편해서 하나 만들었습니다. 짜잔.
 
+![image](https://user-images.githubusercontent.com/61102713/198853397-d98c747d-2dae-4756-8cc5-3d0015dc8b41.png)
 ![image](https://user-images.githubusercontent.com/61102713/198852430-17e54f35-a841-4abb-b39f-97ae98f1d873.png)
 
 * 이건 클라이언트 앱이 정상적으로 작동하기 위해 필요한 도커 컨테이너형 서버입니다. 
@@ -27,7 +28,7 @@ docker build --tag verbose-waffle .
 ```
 docker image ls
 ```
-* 만들어진 도커 이미지를 바탕으로 컨테이너를 실행해볼까요?
+* 만들어진 도커 이미지를 바탕으로 컨테이너를 실행해볼까요? 파일을 수신하는 포트는 64550번 포트입니다. 
 ```
 docker run -it -p 64550:64550 verbose-waffle /bin/bash
 ```
