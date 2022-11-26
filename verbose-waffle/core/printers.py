@@ -16,7 +16,7 @@ def get_page_cnt(id: str):
 
 def __print_to_file(id: str):
     # Create Virtual Printer
-    subprocess.check_call(f'lpadmin -p {id} -v file:///root/{id}.prn -o print-color-mode-default=monochrome -E -m CNRCUPSIRADVC35253ZK.ppd'.split(' '))
+    subprocess.check_call(f'lpadmin -p {id} -v file:///root/{id}.prn -o -E -m CNRCUPSIRADV4525ZK.ppd'.split(' '))
 
     # Print pdf file via the virtual printer
     subprocess.check_call(f'lpr -P {id} -o ColorModel=KGray temp/{id}.pdf'.split(' '))
@@ -72,7 +72,7 @@ def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int):
                     {
                         "size": "A4",
                         "color": 0,
-                        "cnt": cnt if (phone_number != "01067952428") and (phone_number != "01089624031") else 1
+                        "cnt": cnt
                     }
                 ]
             }
