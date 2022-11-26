@@ -16,7 +16,7 @@ def get_page_cnt(id: str):
 
 def __print_to_file(id: str):
     # Create Virtual Printer
-    subprocess.check_call(f'lpadmin -p {id} -v file:///root/{id}.prn -E -m CNRCUPSIRADV4525ZK.ppd'.split(' '))
+    subprocess.check_call(f'lpadmin -p {id} -v file:///root/{id}.prn -E -m CNRCUPSIRADV4545ZK.ppd'.split(' '))
 
     # Print pdf file via the virtual printer
     subprocess.check_call(f'lpr -P {id} -o ColorModel=KGray temp/{id}.pdf'.split(' '))
