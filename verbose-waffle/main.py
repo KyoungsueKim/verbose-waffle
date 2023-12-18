@@ -32,7 +32,7 @@ async def receive_file(phone_number: str = Form(...), file: UploadFile = File(..
     # Send pdf file to printer
     data_result = send_print_data(uuid)
     register_result = send_register_doc(uuid, file.filename, phone_number, page_count)
-    await delete_print_data(uuid)
+    delete_print_data(uuid)
 
     print(
         f"[Print Job]: {file.filename}, page_count: {page_count}, phone_number: {phone_number}, data_result: {data_result}, register_result: {register_result}")

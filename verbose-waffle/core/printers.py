@@ -1,13 +1,11 @@
 import os, subprocess
 import time
 import PyPDF2
-import cups
 import requests
 import random
-import asyncio
 
 
-async def get_page_cnt(id: str):
+def get_page_cnt(id: str):
     with open(f'temp/{id}.pdf', 'rb') as pdf_file:
         pdf_reader = PyPDF2.PdfFileReader(pdf_file)
         cnt = pdf_reader.numPages
@@ -15,28 +13,26 @@ async def get_page_cnt(id: str):
     return cnt
 
 
-async def __print_to_file(id: str):
+def __print_to_file(id: str):
     # Create Virtual Printer
-    await asyncio.create_subprocess_shell(f'lpadmin -p {id} -v file:///root/{id}.prn -E -m CNRCUPSIRADV45453ZK.ppd')
+    subprocess.check_call(f'lpadmin -p {id} -v file:///root/{id}.prn -E -m CNRCUPSIRADV45453ZK.ppd'.split(' '))
 
     # Print pdf file via the virtual printer
-    await asyncio.create_subprocess_shell(f'lpr -P {id} -o ColorModel=KGray temp/{id}.pdf')
+    subprocess.check_call(f'lpr -P {id} -o ColorModel=KGray temp/{id}.pdf'.split(' '))
 
     # Wait until the job is done
-    while True:
-        process = await asyncio.create_subprocess_shell(f'lpstat -p {id}', stdout=asyncio.subprocess.PIPE)
-        stdout, _ = await process.communicate()
-        if "idle".encode('utf-8') in stdout:
+    while (True):
+        if "idle".encode('utf-8') in subprocess.check_output(f'lpstat -p {id}'.split(' '), timeout=180):
             break
-        await asyncio.sleep(1)
+        time.sleep(1)
 
     # Delete printer after fileDevice print.
-    await asyncio.create_subprocess_shell(f'lpadmin -x {id}')
+    subprocess.check_call(f'lpadmin -x {id}'.split(' '))
 
     return f"/root/{id}.prn" if os.path.isfile(f"/root/{id}.prn") else None
 
 
-async def send_print_data(id: str):
+def send_print_data(id: str):
     if __print_to_file(id) is not None:
         file_name = f"{id}.prn"
         server = 'http://218.145.52.6:8080/spbs/upload_bin'
@@ -55,7 +51,7 @@ async def send_print_data(id: str):
         return None
 
 
-async def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int):
+def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int):
     file_name = f"{id}.prn"
     server = 'http://u-printon.canon-bs.co.kr:62301/nologin/regist_doc/'
     header = {'Content-Type': 'application/json; charset=utf-8',
@@ -88,7 +84,7 @@ async def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int)
     return response
 
 
-async def delete_print_data(id: str):
+def delete_print_data(id: str):
     file_name = f"{id}.prn"
 
     # delete pdf and prn file after send print data
