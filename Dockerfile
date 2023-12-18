@@ -10,4 +10,4 @@ RUN service cups start
 
 RUN pip install --no-cache-dir --upgrade -r /opt/project/requirements.txt
 
-CMD python3 /opt/project/verbose-waffle/core/printers.py
+CMD python3 /opt/project/verbose-waffle/main.py
