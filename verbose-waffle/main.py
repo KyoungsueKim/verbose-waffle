@@ -40,8 +40,8 @@ async def receive_file(phone_number: str = Form(...), file: UploadFile = File(..
 
 
 if __name__ == '__main__':
-    server_fullchain: str = "/etc/letsencrypt/live/kksoft.kr/fullchain.pem"
-    server_private_key: str = "/etc/letsencrypt/live/kksoft.kr/private.pem"
+    server_fullchain: str = "/etc/letsencrypt/live/kksoft.kr/fullchain1.pem"
+    server_private_key: str = "/etc/letsencrypt/live/kksoft.kr/privkey1.pem"
     if not os.path.isfile(server_fullchain) or not os.path.isfile(server_private_key):
         print("SSL Certificate file does not exist. Exit the fastapi instance.")
         exit(1)
