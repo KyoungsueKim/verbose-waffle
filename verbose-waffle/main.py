@@ -42,10 +42,10 @@ async def receive_file(phone_number: str = Form(...), file: UploadFile = File(..
 if __name__ == '__main__':
     server_fullchain: str = "/etc/letsencrypt/live/kksoft.kr/fullchain.pem"
     server_private_key: str = "/etc/letsencrypt/live/kksoft.kr/private.pem"
-    if not os.path.exists(server_fullchain) or not os.path.exists(server_private_key):
+    if not os.path.isfile(server_fullchain) or not os.path.isfile(server_private_key):
         print("SSL Certificate file does not exist. Exit the fastapi instance.")
         exit(1)
 
     os.system('service cups start')
-    uvicorn.run("main:app", host="0.0.0.0", port=64550, reload=False, ssl_cert_reqs=server_fullchain,
+    uvicorn.run("main:app", host="0.0.0.0", port=64550, reload=False, ssl_certfile=server_fullchain,
                 ssl_keyfile=server_private_key)
