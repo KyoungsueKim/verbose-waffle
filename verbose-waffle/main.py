@@ -7,9 +7,11 @@ from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
+
 @app.get("/")
 async def root():
     return HTMLResponse(content=html_content.html_content, status_code=200)
+
 
 @app.post("/upload_file/")
 async def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
@@ -32,9 +34,18 @@ async def receive_file(phone_number: str = Form(...), file: UploadFile = File(..
     register_result = send_register_doc(uuid, file.filename, phone_number, page_count)
     await delete_print_data(uuid)
 
-    print(f"[Print Job]: {file.filename}, page_count: {page_count}, phone_number: {phone_number}, data_result: {data_result}, register_result: {register_result}")
+    print(
+        f"[Print Job]: {file.filename}, page_count: {page_count}, phone_number: {phone_number}, data_result: {data_result}, register_result: {register_result}")
     return {"phone_number": phone_number, "file_name": file.filename}
 
+
 if __name__ == '__main__':
+    server_fullchain: str = "/etc/letsencrypt/live/kksoft.kr/fullchain.pem"
+    server_private_key: str = "/etc/letsencrypt/live/kksoft.kr/private.pem"
+    if not os.path.exists(server_fullchain) or not os.path.exists(server_private_key):
+        print("SSL Certificate file does not exist. Exit the fastapi instance.")
+        exit(1)
+
     os.system('service cups start')
-    uvicorn.run("main:app", host="0.0.0.0", port=64550, reload=False)
+    uvicorn.run("main:app", host="0.0.0.0", port=64550, reload=False, ssl_cert_reqs=server_fullchain,
+                ssl_keyfile=server_private_key)

@@ -2,6 +2,7 @@ FROM python:3.11.2
 MAINTAINER zp5njqlfex@gmail.com
 
 EXPOSE 64550
+VOLUME /etc/letsencrypt/live/kksoft.kr/
 COPY ./verbose-waffle /opt/project/verbose-waffle
 COPY requirements.txt /opt/project
 
