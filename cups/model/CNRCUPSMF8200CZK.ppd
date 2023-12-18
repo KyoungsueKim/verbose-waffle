@@ -1,0 +1,1282 @@
+*PPD-Adobe: "4.3"
+*%
+*%  Copyright CANON INC. 2013
+*%  CUPS printer driver for Canon printer devices
+*%
+*%  This program is free software; you can redistribute it and/or modify
+*%  it under the terms of the GNU General Public License as published by
+*%  the Free Software Foundation; either version 2 of the License, or
+*%  (at your option) any later version.
+*%
+*%  This program is distributed in the hope that it will be useful,
+*%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*%  GNU General Public License for more details.
+*%
+*%  You should have received a copy of the GNU General Public License
+*%  along with this program; if not, write to the Free Software
+*%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*%
+
+*FormatVersion: "4.3"
+*FileVersion: "5.0"
+*LanguageVersion: English
+*LanguageEncoding: ISOLatin1
+*PCFileName: "CNM820CZK.PPD"
+*Manufacturer: "Canon"
+*Product: "(mf8200c series)"
+*cupsVersion: 1.1
+*cupsBackSide: Rotated
+*cupsManualCopies: False
+*cupsModelNumber: 1086
+*cupsFilter: "application/vnd.cups-raster 0 rastertoufr2"
+*ModelName: "Canon MF8200C Series UFRII LT"
+*ShortNickName: "MF8200C Series"
+*NickName: "Canon MF8200C Series UFRII LT"
+*PSVersion: "(3010.000) 550"
+*PSVersion: "(3010.000) 651"
+*LanguageLevel: "3"
+*ColorDevice: True
+*DefaultColorSpace: RGB
+*FileSystem: False
+*Throughput: "14"
+*LandscapeOrientation: Plus90
+*VariablePaperSize: False
+*TTRasterizer: Type42
+*%CNGPLPLIBNAMER: "uictlufr2r"
+*%CNGPLPLIBNAMERVER: "1.0.0"
+
+*%CNPrintLang: UFR2
+
+*OpenUI *Resolution/Resolution : PickOne
+*DefaultResolution: 600
+*Resolution 600/600 dpi: "<</HWResolution[600 600]/cupsColorSpace 1/cupsColorOrder 0/cupsBitsPerColor 8>>setpagedevice"
+*CloseUI: *Resolution
+
+*OpenUI *CNDraftMode/Toner Save: PickOne
+*DefaultCNDraftMode: False
+*CNDraftMode True/ON: "<< >>setpagedevice"
+*CNDraftMode False/OFF: "<< >>setpagedevice"
+*CloseUI: *CNDraftMode
+
+*OpenUI *MediaType/Media Type : PickOne
+*DefaultMediaType: Auto
+*MediaType Auto/Auto: "<</MediaType(Auto)>>setpagedevice"
+*MediaType PlainPaper1/Plain Paper 1: "<</MediaType(PlainPaper1)>>setpagedevice"
+*MediaType PlainPaper2/Plain Paper 2: "<</MediaType(PlainPaper2)>>setpagedevice"
+*MediaType PlainPaper3/Plain Paper 3: "<</MediaType(PlainPaper3)>>setpagedevice"
+*MediaType RECYCLED/Recycled Paper: "<</MediaType(RECYCLED)>>setpagedevice"
+*MediaType COLOR/Color Paper: "<</MediaType(COLOR)>>setpagedevice"
+*MediaType HEAVY1/Heavy Paper 1: "<</MediaType(HEAVY1)>>setpagedevice"
+*MediaType HEAVY2/Heavy Paper 2: "<</MediaType(HEAVY2)>>setpagedevice"
+*MediaType OHP/OHP: "<</MediaType(OHP)>>setpagedevice"
+*MediaType LABELS/Labels: "<</MediaType(LABELS)>>setpagedevice"
+*MediaType ENVELOPE/Envelope: "<</MediaType(ENVELOPE)>>setpagedevice"
+*MediaType PlainPaperL/Thin: "<</MediaType(PlainPaperL)>>setpagedevice"
+*MediaType 1SIDECOATED1/Coated 1: "<</MediaType(1SIDECOATED1)>>setpagedevice"
+*MediaType 1SIDECOATED2/Coated 2: "<</MediaType(1SIDECOATED2)>>setpagedevice"
+*MediaType 1SIDECOATED3/Coated 3: "<</MediaType(1SIDECOATED3)>>setpagedevice"
+*MediaType 1SIDECOATED4/Coated 4: "<</MediaType(1SIDECOATED4)>>setpagedevice"
+*CloseUI: *MediaType
+
+*OpenUI *InputSlot/Paper Source: PickOne
+*DefaultInputSlot: Auto
+*InputSlot Auto/Auto : ""
+*InputSlot Manual/Multi-purpose Tray : ""
+*InputSlot Cas1/Drawer 1 : ""
+*CloseUI: *InputSlot
+
+*OpenUI *OutputBin/Paper Destination: PickOne
+*DefaultOutputBin: Auto
+*OutputBin Auto/Auto : "<< >>setpagedevice"
+*CloseUI: *OutputBin
+
+*OpenUI *CNBarCodeMode/Special Settings 1: PickOne
+*DefaultCNBarCodeMode: None
+*CNBarCodeMode None/Off: "<< >>setpagedevice"
+*CNBarCodeMode Mode1/Mode 1: "<< >>setpagedevice"
+*CNBarCodeMode Mode2/Mode 2: "<< >>setpagedevice"
+*CNBarCodeMode Mode3/Mode 3: "<< >>setpagedevice"
+*CNBarCodeMode Mode4/Mode 4: "<< >>setpagedevice"
+*CNBarCodeMode Mode5/Mode 5: "<< >>setpagedevice"
+*CloseUI: *CNBarCodeMode
+
+*OpenUI *BindEdge/BindingEdge: PickOne
+*DefaultBindEdge: Left
+*BindEdge Left/Left: "<< >>setpagedevice"
+*BindEdge Top/Top: "<< >>setpagedevice"
+*CloseUI: *BindEdge
+
+*OpenUI *Collate/Collate: PickOne
+*DefaultCollate: Group
+*Collate Group/Group: "<< >>setpagedevice"
+*CloseUI: *Collate
+
+*OpenUI *CNColorMode/Color Mode: PickOne
+*DefaultCNColorMode: color
+*CNColorMode color/Color: "<< >>setpagedevice"
+*CNColorMode mono/Black and White: "<< >>setpagedevice"
+*CloseUI: *CNColorMode
+
+*OpenUI *CNColorHalftone/Color Halftones : PickOne
+*DefaultCNColorHalftone: Gradation
+*CNColorHalftone Resolution/Resolution: "<< >>setpagedevice"
+*CNColorHalftone Gradation/Gradation: "<< >>setpagedevice"
+*CloseUI: *CNColorHalftone
+
+*OpenUI *CNHalftone/B & W Halftones: PickOne
+*DefaultCNHalftone: Gradation
+*CNHalftone Resolution/Resolution: "<< >>setpagedevice"
+*CNHalftone Gradation/Gradation: "<< >>setpagedevice"
+*CloseUI: *CNHalftone
+*OpenUI *CNSpecialSmooth/Special Smoothing Mode: PickOne
+*DefaultCNSpecialSmooth: Mode4
+*CNSpecialSmooth Mode4/Mode 4: "<< >>setpagedevice"
+*CloseUI: *CNSpecialSmooth
+
+*OpenUI *PageSize/Page Size: PickOne
+*DefaultPageSize: A4
+*PageSize Letter: "<</PageSize[612 792]/ImagingBBox null>>setpagedevice"
+*PageSize Legal: "<</PageSize[612 1008]/ImagingBBox null>>setpagedevice"
+*PageSize Statement: "<</PageSize[396 612]/ImagingBBox null>>setpagedevice"
+*PageSize Executive: "<</PageSize[522 756]/ImagingBBox null>>setpagedevice"
+*PageSize A5: "<</PageSize[419.5 595.3]/ImagingBBox null>>setpagedevice"
+*PageSize B5: "<</PageSize[515.9 728.5]/ImagingBBox null>>setpagedevice"
+*PageSize A4: "<</PageSize[595.3 841.9]/ImagingBBox null>>setpagedevice"
+*PageSize Monarch: "<</PageSize[279 540]/ImagingBBox null>>setpagedevice"
+*PageSize Com10: "<</PageSize[297 684]/ImagingBBox null>>setpagedevice"
+*PageSize dl_envelope: "<</PageSize[311.8 623.6]/ImagingBBox null>>setpagedevice"
+*PageSize Envelope_C5: "<</PageSize[459.2 649.1]/ImagingBBox null>>setpagedevice"
+*PageSize Foolscap: "<</PageSize[612 936]/ImagingBBox null>>setpagedevice"
+*PageSize Index_3x5: "<</PageSize[216 360]/ImagingBBox null>>setpagedevice"
+*PageSize 16K: "<</PageSize[552.7 765.4]/ImagingBBox null>>setpagedevice"
+*CloseUI: *PageSize
+
+*OpenUI *PageRegion: PickOne
+*DefaultPageRegion: A4
+*PageRegion Letter: "<</PageSize[612 792]/ImagingBBox null>>setpagedevice"
+*PageRegion Legal: "<</PageSize[612 1008]/ImagingBBox null>>setpagedevice"
+*PageRegion Statement: "<</PageSize[396 612]/ImagingBBox null>>setpagedevice"
+*PageRegion Executive: "<</PageSize[522 756]/ImagingBBox null>>setpagedevice"
+*PageRegion A5: "<</PageSize[419.5 595.3]/ImagingBBox null>>setpagedevice"
+*PageRegion B5: "<</PageSize[515.9 728.5]/ImagingBBox null>>setpagedevice"
+*PageRegion A4: "<</PageSize[595.3 841.9]/ImagingBBox null>>setpagedevice"
+*PageRegion Monarch: "<</PageSize[279 540]/ImagingBBox null>>setpagedevice"
+*PageRegion Com10: "<</PageSize[297 684]/ImagingBBox null>>setpagedevice"
+*PageRegion dl_envelope: "<</PageSize[311.8 623.6]/ImagingBBox null>>setpagedevice"
+*PageRegion Envelope_C5: "<</PageSize[459.2 649.1]/ImagingBBox null>>setpagedevice"
+*PageRegion Foolscap: "<</PageSize[612 936]/ImagingBBox null>>setpagedevice"
+*PageRegion Index_3x5: "<</PageSize[216 360]/ImagingBBox null>>setpagedevice"
+*PageRegion 16K: "<</PageSize[552.7 765.4]/ImagingBBox null>>setpagedevice"
+*CloseUI: *PageRegion
+
+*DefaultImageableArea: A4
+*ImageableArea Letter: "14.173 14.173 597.827 777.827"
+*ImageableArea Legal: "14.173 14.173 597.827 993.827"
+*ImageableArea Statement: "14.173 14.173 381.827 597.827"
+*ImageableArea Executive: "14.173 14.173 507.827 741.827"
+*ImageableArea A5: "14.173 14.173 405.327 581.127"
+*ImageableArea B5: "14.173 14.173 501.727 714.327"
+*ImageableArea A4: "14.173 14.173 581.127 827.727"
+*ImageableArea Monarch: "28.346 28.346 250.654 511.654"
+*ImageableArea Com10: "28.346 28.346 268.654 655.654"
+*ImageableArea dl_envelope: "28.346 28.346 283.454 595.254"
+*ImageableArea Envelope_C5: "28.346 28.346 430.854 620.754"
+*ImageableArea Foolscap: "14.173 14.173 597.827 921.827"
+*ImageableArea Index_3x5: "14.173 14.173 201.827 345.827"
+*ImageableArea 16K: "14.173 14.173 538.527 751.227"
+
+*DefaultPaperDimension: A4
+*PaperDimension Letter: "612 792"
+*PaperDimension Legal: "612 1008"
+*PaperDimension Statement: "396 612"
+*PaperDimension Executive: "522 756"
+*PaperDimension A5: "419.5 595.3"
+*PaperDimension B5: "515.9 728.5"
+*PaperDimension A4: "595.3 841.9"
+*PaperDimension Monarch: "279 540"
+*PaperDimension Com10: "297 684"
+*PaperDimension dl_envelope: "311.8 623.6"
+*PaperDimension Envelope_C5: "459.2 649.1"
+*PaperDimension Foolscap: "612 936"
+*PaperDimension Index_3x5: "216 360"
+*PaperDimension 16K: "552.7 765.4"
+
+*%CNJobAccount: True
+*%CNSecuredPrint: False
+*%CNMailBox: False
+*%CNInputSelect: True
+
+*CNOEFLibName: "ufr2filterr"
+*CNOptDevType: "2"
+*CNOptCalibType: "5"
+*CNPrinterName: "Canon MF8200C Series UFRII LT"
+*CNPDLType: "UFR2"
+*CNPrtColorSpace: "CMYK"
+*CN_PdlWrapper_PdlPath: "libcanonufr2r"
+*CNFeedDirection: "Custom:3"
+
+*CNTblFormat: "2"
+*CNTblInputSlot: "3"
+*CNTblDuplex: "1"
+*CNTblOutputBin: "0"
+*CNTblOutputPartition: "0"
+*CNTblSubstitute: "1"
+*CNTblMediaType: "22530"
+*CNModelMethod: "1572876"
+*CNMaxBoxNum: "0"
+*CNMaxDocStr: "0"
+*CNMaxCopies: "99"
+*CNMaxGutter: "50"
+*CNExecuteMethod: "2048"
+*CNUFR2ModelMethod: "70524"
+*CN_PDL_SLC_FI_RN_NL_K: "1,4,6,1,1,-2,80"
+*CN_PDL_SLC_FI_GN_NL_K: "1,4,6,1,1,-2,80"
+*CN_PDL_SLC_FI_RN_HHA_K: "1,4,6,1,1,-2,80"
+*CN_PDL_SLC_FI_RN_HHA_Y: "3,12,3,3,0,-3,80"
+*CN_PDL_SLC_FI_RN_HHA_M: "10,5,2,2,1,-4,80"
+*CN_PDL_SLC_FI_RN_HHA_C: "5,10,2,2,-1,-6,80"
+*CN_PDL_SLC_FI_GN_HHA_K: "1,4,6,1,1,-2,80"
+*CN_PDL_SLC_FI_GN_HHA_Y: "3,12,3,3,0,-3,80"
+*CN_PDL_SLC_FI_GN_HHA_M: "10,5,2,2,1,-4,80"
+*CN_PDL_SLC_FI_GN_HHA_C: "5,10,2,2,-1,-6,80"
+*CN_PrinterInfo_Path: "CNCUPSMF8200CZK"
+*CN_PrinterInfo_DefaultPath: "cnpkbidir_info_001"
+*CNHostDraftMode: "10,0,000"
+*CNNeedInterpData: "TRUE"
+*CNDR_FINM: "6"
+*CNDR_TINM: "13"
+*CNDR_LINM: "13"
+*CNDR_BINM: "19"
+*CNDR_VRNM: "1"
+*CNDR_ATNM: "4"
+*CNDR_SFLT: "-105"
+*CNDR_SFCT: "0"
+*CNDR_SFRT: "105"
+*CNDR_TRLL: "0"
+*CNDR_TRLU: "48"
+*CNDR_SFWD: "64"
+*CNDR_AJLN: "24"
+*CNDR_EXLN: "48"
+*CNDR_BKPX: "32"
+*CNDR_SGMX: "128"
+*CNDR_TOMD: "1"
+*CNDR_TOPX: "4"
+*CNDR_BTMX: "256"
+*CNDR_BPMX: "256"
+*CNDR_BCMX: "256"
+*CNDR_BDMX: "256"
+*CNDR_SMDT: "0"
+*CNDR_EXBP: "0"
+*CNDR_THNP: "/usr/share/ufr2filterr/ThLB_40A.BIN"
+*CNLandRotation: "3:TRUE"
+*CNHostRotation: "TRUE"
+*CN_PDL_RP: "9013"
+
+*UIConstraints: *MediaType ENVELOPE *PageSize A4
+*UIConstraints: *PageSize A4 *MediaType ENVELOPE
+*UIConstraints: *MediaType OHP *PageSize B5
+*UIConstraints: *PageSize B5 *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize B5
+*UIConstraints: *PageSize B5 *MediaType LABELS
+*UIConstraints: *MediaType ENVELOPE *PageSize B5
+*UIConstraints: *PageSize B5 *MediaType ENVELOPE
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize B5
+*UIConstraints: *PageSize B5 *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize B5
+*UIConstraints: *PageSize B5 *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize B5
+*UIConstraints: *PageSize B5 *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize B5
+*UIConstraints: *PageSize B5 *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType OHP *PageSize A5
+*UIConstraints: *PageSize A5 *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize A5
+*UIConstraints: *PageSize A5 *MediaType LABELS
+*UIConstraints: *MediaType ENVELOPE *PageSize A5
+*UIConstraints: *PageSize A5 *MediaType ENVELOPE
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize A5
+*UIConstraints: *PageSize A5 *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize A5
+*UIConstraints: *PageSize A5 *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize A5
+*UIConstraints: *PageSize A5 *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize A5
+*UIConstraints: *PageSize A5 *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType ENVELOPE *PageSize Letter
+*UIConstraints: *PageSize Letter *MediaType ENVELOPE
+*UIConstraints: *MediaType OHP *PageSize Legal
+*UIConstraints: *PageSize Legal *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Legal
+*UIConstraints: *PageSize Legal *MediaType LABELS
+*UIConstraints: *MediaType ENVELOPE *PageSize Legal
+*UIConstraints: *PageSize Legal *MediaType ENVELOPE
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize Legal
+*UIConstraints: *PageSize Legal *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize Legal
+*UIConstraints: *PageSize Legal *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize Legal
+*UIConstraints: *PageSize Legal *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize Legal
+*UIConstraints: *PageSize Legal *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType OHP *PageSize Executive
+*UIConstraints: *PageSize Executive *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Executive
+*UIConstraints: *PageSize Executive *MediaType LABELS
+*UIConstraints: *MediaType ENVELOPE *PageSize Executive
+*UIConstraints: *PageSize Executive *MediaType ENVELOPE
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize Executive
+*UIConstraints: *PageSize Executive *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize Executive
+*UIConstraints: *PageSize Executive *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize Executive
+*UIConstraints: *PageSize Executive *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize Executive
+*UIConstraints: *PageSize Executive *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType OHP *PageSize Statement
+*UIConstraints: *PageSize Statement *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Statement
+*UIConstraints: *PageSize Statement *MediaType LABELS
+*UIConstraints: *MediaType ENVELOPE *PageSize Statement
+*UIConstraints: *PageSize Statement *MediaType ENVELOPE
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize Statement
+*UIConstraints: *PageSize Statement *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize Statement
+*UIConstraints: *PageSize Statement *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize Statement
+*UIConstraints: *PageSize Statement *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize Statement
+*UIConstraints: *PageSize Statement *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType OHP *PageSize 16K
+*UIConstraints: *PageSize 16K *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize 16K
+*UIConstraints: *PageSize 16K *MediaType LABELS
+*UIConstraints: *MediaType ENVELOPE *PageSize 16K
+*UIConstraints: *PageSize 16K *MediaType ENVELOPE
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize 16K
+*UIConstraints: *PageSize 16K *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize 16K
+*UIConstraints: *PageSize 16K *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize 16K
+*UIConstraints: *PageSize 16K *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize 16K
+*UIConstraints: *PageSize 16K *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType OHP *PageSize Foolscap
+*UIConstraints: *PageSize Foolscap *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Foolscap
+*UIConstraints: *PageSize Foolscap *MediaType LABELS
+*UIConstraints: *MediaType ENVELOPE *PageSize Foolscap
+*UIConstraints: *PageSize Foolscap *MediaType ENVELOPE
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize Foolscap
+*UIConstraints: *PageSize Foolscap *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize Foolscap
+*UIConstraints: *PageSize Foolscap *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize Foolscap
+*UIConstraints: *PageSize Foolscap *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize Foolscap
+*UIConstraints: *PageSize Foolscap *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType PlainPaper1 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType PlainPaper1
+*UIConstraints: *MediaType PlainPaper2 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType PlainPaper2
+*UIConstraints: *MediaType PlainPaper3 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType PlainPaper3
+*UIConstraints: *MediaType RECYCLED *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType RECYCLED
+*UIConstraints: *MediaType COLOR *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType COLOR
+*UIConstraints: *MediaType HEAVY1 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType HEAVY1
+*UIConstraints: *MediaType HEAVY2 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType HEAVY2
+*UIConstraints: *MediaType OHP *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType LABELS
+*UIConstraints: *MediaType PlainPaperL *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType PlainPaperL
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType PlainPaper1 *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType PlainPaper1
+*UIConstraints: *MediaType PlainPaper2 *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType PlainPaper2
+*UIConstraints: *MediaType PlainPaper3 *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType PlainPaper3
+*UIConstraints: *MediaType RECYCLED *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType RECYCLED
+*UIConstraints: *MediaType COLOR *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType COLOR
+*UIConstraints: *MediaType HEAVY1 *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType HEAVY1
+*UIConstraints: *MediaType HEAVY2 *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType HEAVY2
+*UIConstraints: *MediaType OHP *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType LABELS
+*UIConstraints: *MediaType PlainPaperL *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType PlainPaperL
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType PlainPaper1 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType PlainPaper1
+*UIConstraints: *MediaType PlainPaper2 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType PlainPaper2
+*UIConstraints: *MediaType PlainPaper3 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType PlainPaper3
+*UIConstraints: *MediaType RECYCLED *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType RECYCLED
+*UIConstraints: *MediaType COLOR *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType COLOR
+*UIConstraints: *MediaType HEAVY1 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType HEAVY1
+*UIConstraints: *MediaType HEAVY2 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType HEAVY2
+*UIConstraints: *MediaType OHP *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType LABELS
+*UIConstraints: *MediaType PlainPaperL *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType PlainPaperL
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType PlainPaper1 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType PlainPaper1
+*UIConstraints: *MediaType PlainPaper2 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType PlainPaper2
+*UIConstraints: *MediaType PlainPaper3 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType PlainPaper3
+*UIConstraints: *MediaType RECYCLED *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType RECYCLED
+*UIConstraints: *MediaType COLOR *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType COLOR
+*UIConstraints: *MediaType HEAVY1 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType HEAVY1
+*UIConstraints: *MediaType HEAVY2 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType HEAVY2
+*UIConstraints: *MediaType OHP *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType LABELS
+*UIConstraints: *MediaType PlainPaperL *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType PlainPaperL
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType 1SIDECOATED4
+*UIConstraints: *MediaType OHP *PageSize Index_3x5
+*UIConstraints: *PageSize Index_3x5 *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Index_3x5
+*UIConstraints: *PageSize Index_3x5 *MediaType LABELS
+*UIConstraints: *MediaType 1SIDECOATED1 *PageSize Index_3x5
+*UIConstraints: *PageSize Index_3x5 *MediaType 1SIDECOATED1
+*UIConstraints: *MediaType 1SIDECOATED2 *PageSize Index_3x5
+*UIConstraints: *PageSize Index_3x5 *MediaType 1SIDECOATED2
+*UIConstraints: *MediaType 1SIDECOATED3 *PageSize Index_3x5
+*UIConstraints: *PageSize Index_3x5 *MediaType 1SIDECOATED3
+*UIConstraints: *MediaType 1SIDECOATED4 *PageSize Index_3x5
+*UIConstraints: *PageSize Index_3x5 *MediaType 1SIDECOATED4
+
+*DefaultFont: Courier
+*Font AvantGarde-Book: Standard "(001.006S)" Standard ROM
+*Font AvantGarde-BookOblique: Standard "(001.006S)" Standard ROM
+*Font AvantGarde-Demi: Standard "(001.007S)" Standard ROM
+*Font AvantGarde-DemiOblique: Standard "(001.007S)" Standard ROM
+*Font Bookman-Demi: Standard "(001.004S)" Standard ROM
+*Font Bookman-DemiItalic: Standard "(001.004S)" Standard ROM
+*Font Bookman-Light: Standard "(001.004S)" Standard ROM
+*Font Bookman-LightItalic: Standard "(001.004S)" Standard ROM
+*Font Courier: Standard "(002.004S)" Standard ROM
+*Font Courier-Bold: Standard "(002.004S)" Standard ROM
+*Font Courier-BoldOblique: Standard "(002.004S)" Standard ROM
+*Font Courier-Oblique: Standard "(002.004S)" Standard ROM
+*Font Helvetica: Standard "(001.006S)" Standard ROM
+*Font Helvetica-Bold: Standard "(001.007S)" Standard ROM
+*Font Helvetica-BoldOblique: Standard "(001.007S)" Standard ROM
+*Font Helvetica-Narrow: Standard "(001.006S)" Standard ROM
+*Font Helvetica-Narrow-Bold: Standard "(001.007S)" Standard ROM
+*Font Helvetica-Narrow-BoldOblique: Standard "(001.007S)" Standard ROM
+*Font Helvetica-Narrow-Oblique: Standard "(001.006S)" Standard ROM
+*Font Helvetica-Oblique: Standard "(001.006S)" Standard ROM
+*Font NewCenturySchlbk-Bold: Standard "(001.009S)" Standard ROM
+*Font NewCenturySchlbk-BoldItalic: Standard "(001.007S)" Standard ROM
+*Font NewCenturySchlbk-Italic: Standard "(001.006S)" Standard ROM
+*Font NewCenturySchlbk-Roman: Standard "(001.007S)" Standard ROM
+*Font Palatino-Bold: Standard "(001.005S)" Standard ROM
+*Font Palatino-BoldItalic: Standard "(001.005S)" Standard ROM
+*Font Palatino-Italic: Standard "(001.005S)" Standard ROM
+*Font Palatino-Roman: Standard "(001.005S)" Standard ROM
+*Font Symbol: Special "(001.007S)" Special ROM
+*Font Times-Bold: Standard "(001.007S)" Standard ROM
+*Font Times-BoldItalic: Standard "(001.009S)" Standard ROM
+*Font Times-Italic: Standard "(001.007S)" Standard ROM
+*Font Times-Roman: Standard "(001.007S)" Standard ROM
+*Font ZapfChancery-MediumItalic: Standard "(001.007S)" Standard ROM
+*Font ZapfDingbats: Special "(001.004S)" Standard ROM
+
+*%
+*% End of PPD file.
+*%
+
+*cupsLanguages: "de en es fr it ja ko zh_CN zh_TW"
+
+*de.Translation Resolution/Auflösung: ""
+*de.Resolution 600/600 dpi: ""
+*de.Translation CNDraftMode/Toner sparen: ""
+*de.CNDraftMode True/Ein: ""
+*de.CNDraftMode False/Aus: ""
+*de.Translation MediaType/Papiertyp: ""
+*de.MediaType Auto/Auto: ""
+*de.MediaType PlainPaper1/Normalpapier 1: ""
+*de.MediaType PlainPaper2/Normalpapier 2: ""
+*de.MediaType PlainPaper3/Normalpapier 3: ""
+*de.MediaType RECYCLED/Recyclingpapier: ""
+*de.MediaType COLOR/Farbpapier: ""
+*de.MediaType HEAVY1/Schweres Papier 1: ""
+*de.MediaType HEAVY2/Schweres Papier 2: ""
+*de.MediaType OHP/Folie: ""
+*de.MediaType LABELS/Etiketten: ""
+*de.MediaType ENVELOPE/Briefumschlag: ""
+*de.MediaType PlainPaperL/Dünn: ""
+*de.MediaType 1SIDECOATED1/Beschichtet 1: ""
+*de.MediaType 1SIDECOATED2/Beschichtet 2: ""
+*de.MediaType 1SIDECOATED3/Beschichtet 3: ""
+*de.MediaType 1SIDECOATED4/Beschichtet 4: ""
+*de.Translation InputSlot/Papierzufuhr: ""
+*de.InputSlot Auto/Auto: ""
+*de.InputSlot Manual/Mehrzweck-Papierfach: ""
+*de.InputSlot Cas1/Einzug 1: ""
+*de.Translation OutputBin/Papierausgabe: ""
+*de.OutputBin Auto/Auto: ""
+*de.Translation CNBarCodeMode/Sondereinstellungen 1: ""
+*de.CNBarCodeMode None/Aus: ""
+*de.CNBarCodeMode Mode1/Modus 1: ""
+*de.CNBarCodeMode Mode2/Modus 2: ""
+*de.CNBarCodeMode Mode3/Modus 3: ""
+*de.CNBarCodeMode Mode4/Modus 4: ""
+*de.CNBarCodeMode Mode5/Modus 5: ""
+*de.Translation BindEdge/Bindung: ""
+*de.BindEdge Left/Lange Seite (links): ""
+*de.BindEdge Top/Kurze Seite (oben): ""
+*de.Translation Collate/Endverarbeitung: ""
+*de.Collate Group/Gruppieren: ""
+*de.Translation CNColorMode/Farbmodus: ""
+*de.CNColorMode color/Farbe: ""
+*de.CNColorMode mono/Schwarzweiß: ""
+*de.Translation CNColorHalftone/Farbhalbtonraster: ""
+*de.CNColorHalftone Resolution/Auflösung: ""
+*de.CNColorHalftone Gradation/Farbabstufung: ""
+*de.Translation CNHalftone/Schwarzweiß-Halbtöne: ""
+*de.CNHalftone Resolution/Auflösung: ""
+*de.CNHalftone Gradation/Farbabstufung: ""
+*de.Translation CNSpecialSmooth/Spezieller Glättungsmodus: ""
+*de.CNSpecialSmooth Mode4/Modus 4: ""
+*de.Translation PageSize/Seitenformat: ""
+*de.PageSize Letter/Letter: ""
+*de.PageSize Legal/Legal: ""
+*de.PageSize Statement/Statement: ""
+*de.PageSize Executive/Executive: ""
+*de.PageSize A5/A5: ""
+*de.PageSize B5/B5: ""
+*de.PageSize A4/A4: ""
+*de.PageSize Monarch/Briefumschlag Monarch: ""
+*de.PageSize Com10/Briefumschlag No.10 (COM10): ""
+*de.PageSize dl_envelope/Briefumschlag DL: ""
+*de.PageSize Envelope_C5/Briefumschlag C5: ""
+*de.PageSize Foolscap/Foolscap: ""
+*de.PageSize Index_3x5/Karteikarte: ""
+*de.PageSize 16K/16K: ""
+*de.Translation PageRegion/Druckfläche: ""
+*de.PageRegion Letter/Letter: ""
+*de.PageRegion Legal/Legal: ""
+*de.PageRegion Statement/Statement: ""
+*de.PageRegion Executive/Executive: ""
+*de.PageRegion A5/A5: ""
+*de.PageRegion B5/B5: ""
+*de.PageRegion A4/A4: ""
+*de.PageRegion Monarch/Briefumschlag Monarch: ""
+*de.PageRegion Com10/Briefumschlag No.10 (COM10): ""
+*de.PageRegion dl_envelope/Briefumschlag DL: ""
+*de.PageRegion Envelope_C5/Briefumschlag C5: ""
+*de.PageRegion Foolscap/Foolscap: ""
+*de.PageRegion Index_3x5/Karteikarte: ""
+*de.PageRegion 16K/16K: ""
+
+*en.Translation Resolution/Resolution: ""
+*en.Resolution 600/600 dpi: ""
+*en.Translation CNDraftMode/Toner Save: ""
+*en.CNDraftMode True/On: ""
+*en.CNDraftMode False/Off: ""
+*en.Translation MediaType/Paper Type: ""
+*en.MediaType Auto/Auto: ""
+*en.MediaType PlainPaper1/Plain Paper 1: ""
+*en.MediaType PlainPaper2/Plain Paper 2: ""
+*en.MediaType PlainPaper3/Plain Paper 3: ""
+*en.MediaType RECYCLED/Recycled Paper: ""
+*en.MediaType COLOR/Color Paper: ""
+*en.MediaType HEAVY1/Heavy Paper 1: ""
+*en.MediaType HEAVY2/Heavy Paper 2: ""
+*en.MediaType OHP/Transparency: ""
+*en.MediaType LABELS/Labels: ""
+*en.MediaType ENVELOPE/Envelope: ""
+*en.MediaType PlainPaperL/Thin: ""
+*en.MediaType 1SIDECOATED1/Coated 1: ""
+*en.MediaType 1SIDECOATED2/Coated 2: ""
+*en.MediaType 1SIDECOATED3/Coated 3: ""
+*en.MediaType 1SIDECOATED4/Coated 4: ""
+*en.Translation InputSlot/Paper Source: ""
+*en.InputSlot Auto/Auto: ""
+*en.InputSlot Manual/Multi-purpose Tray: ""
+*en.InputSlot Cas1/Drawer 1: ""
+*en.Translation OutputBin/Paper Output: ""
+*en.OutputBin Auto/Auto: ""
+*en.Translation CNBarCodeMode/Special Settings 1: ""
+*en.CNBarCodeMode None/Off : ""
+*en.CNBarCodeMode Mode1/Mode 1: ""
+*en.CNBarCodeMode Mode2/Mode 2: ""
+*en.CNBarCodeMode Mode3/Mode 3: ""
+*en.CNBarCodeMode Mode4/Mode 4: ""
+*en.CNBarCodeMode Mode5/Mode 5: ""
+*en.Translation BindEdge/Binding Location: ""
+*en.BindEdge Left/Long Edge (Left): ""
+*en.BindEdge Top/Short Edge (Top): ""
+*en.Translation Collate/Finishing: ""
+*en.Collate Group/Group: ""
+*en.Translation CNColorMode/Color Mode: ""
+*en.CNColorMode color/Color: ""
+*en.CNColorMode mono/Black and White: ""
+*en.Translation CNColorHalftone/Color Halftones: ""
+*en.CNColorHalftone Resolution/Resolution: ""
+*en.CNColorHalftone Gradation/Gradation: ""
+*en.Translation CNHalftone/B & W Halftones: ""
+*en.CNHalftone Resolution/Resolution: ""
+*en.CNHalftone Gradation/Gradation: ""
+*en.Translation CNSpecialSmooth/Special Smoothing Mode: ""
+*en.CNSpecialSmooth Mode4/Mode 4: ""
+*en.Translation PageSize/Page Size: ""
+*en.PageSize Letter/Letter: ""
+*en.PageSize Legal/Legal: ""
+*en.PageSize Statement/Statement: ""
+*en.PageSize Executive/Executive: ""
+*en.PageSize A5/A5: ""
+*en.PageSize B5/B5: ""
+*en.PageSize A4/A4: ""
+*en.PageSize Monarch/Envelope Monarch: ""
+*en.PageSize Com10/Envelope No.10 (COM10): ""
+*en.PageSize dl_envelope/Envelope DL: ""
+*en.PageSize Envelope_C5/Envelope C5: ""
+*en.PageSize Foolscap/Foolscap: ""
+*en.PageSize Index_3x5/Index Card: ""
+*en.PageSize 16K/16K: ""
+*en.Translation PageRegion/Print Area: ""
+*en.PageRegion Letter/Letter: ""
+*en.PageRegion Legal/Legal: ""
+*en.PageRegion Statement/Statement: ""
+*en.PageRegion Executive/Executive: ""
+*en.PageRegion A5/A5: ""
+*en.PageRegion B5/B5: ""
+*en.PageRegion A4/A4: ""
+*en.PageRegion Monarch/Envelope Monarch: ""
+*en.PageRegion Com10/Envelope No.10 (COM10): ""
+*en.PageRegion dl_envelope/Envelope DL: ""
+*en.PageRegion Envelope_C5/Envelope C5: ""
+*en.PageRegion Foolscap/Foolscap: ""
+*en.PageRegion Index_3x5/Index Card: ""
+*en.PageRegion 16K/16K: ""
+
+*es.Translation Resolution/Resolución: ""
+*es.Resolution 600/600 ppp: ""
+*es.Translation CNDraftMode/Ahorro de tóner: ""
+*es.CNDraftMode True/Activado: ""
+*es.CNDraftMode False/Desactivado: ""
+*es.Translation MediaType/Tipo de papel: ""
+*es.MediaType Auto/Auto: ""
+*es.MediaType PlainPaper1/Papel normal 1: ""
+*es.MediaType PlainPaper2/Papel normal 2: ""
+*es.MediaType PlainPaper3/Papel normal 3: ""
+*es.MediaType RECYCLED/Papel reciclado: ""
+*es.MediaType COLOR/Papel de color: ""
+*es.MediaType HEAVY1/Papel grueso 1: ""
+*es.MediaType HEAVY2/Papel grueso 2: ""
+*es.MediaType OHP/Transparencia: ""
+*es.MediaType LABELS/Etiquetas: ""
+*es.MediaType ENVELOPE/Sobre: ""
+*es.MediaType PlainPaperL/Fino: ""
+*es.MediaType 1SIDECOATED1/Tratado 1: ""
+*es.MediaType 1SIDECOATED2/Tratado 2: ""
+*es.MediaType 1SIDECOATED3/Tratado 3: ""
+*es.MediaType 1SIDECOATED4/Tratado 4: ""
+*es.Translation InputSlot/Origen del papel: ""
+*es.InputSlot Auto/Auto: ""
+*es.InputSlot Manual/Bandeja multiuso: ""
+*es.InputSlot Cas1/Cassette 1: ""
+*es.Translation OutputBin/Salida del papel: ""
+*es.OutputBin Auto/Auto: ""
+*es.Translation CNBarCodeMode/Configuración especial 1: ""
+*es.CNBarCodeMode None/Desactivado: ""
+*es.CNBarCodeMode Mode1/Modo 1: ""
+*es.CNBarCodeMode Mode2/Modo 2: ""
+*es.CNBarCodeMode Mode3/Modo 3: ""
+*es.CNBarCodeMode Mode4/Modo 4: ""
+*es.CNBarCodeMode Mode5/Modo 5: ""
+*es.Translation BindEdge/Ubicación de la encuadernación: ""
+*es.BindEdge Left/Lado largo (izquierda): ""
+*es.BindEdge Top/Lado corto (superior): ""
+*es.Translation Collate/Acabado: ""
+*es.Collate Group/Agrupar: ""
+*es.Translation CNColorMode/Modo de color: ""
+*es.CNColorMode color/Color: ""
+*es.CNColorMode mono/Blanco y Negro: ""
+*es.Translation CNColorHalftone/Medios tonos de color: ""
+*es.CNColorHalftone Resolution/Resolución: ""
+*es.CNColorHalftone Gradation/Gradación: ""
+*es.Translation CNHalftone/Medios tonos B/N: ""
+*es.CNHalftone Resolution/Resolución: ""
+*es.CNHalftone Gradation/Gradación: ""
+*es.Translation CNSpecialSmooth/Modo de suavizado especial: ""
+*es.CNSpecialSmooth Mode4/Modo 4: ""
+*es.Translation PageSize/Tamaño de página: ""
+*es.PageSize Letter/Carta: ""
+*es.PageSize Legal/Legal: ""
+*es.PageSize Statement/Informe: ""
+*es.PageSize Executive/Executive: ""
+*es.PageSize A5/A5: ""
+*es.PageSize B5/B5: ""
+*es.PageSize A4/A4: ""
+*es.PageSize Monarch/Sobre Monarch: ""
+*es.PageSize Com10/Sobre nº 10 (COM10): ""
+*es.PageSize dl_envelope/Sobre DL: ""
+*es.PageSize Envelope_C5/Sobre C5: ""
+*es.PageSize Foolscap/Foolscap: ""
+*es.PageSize Index_3x5/Ficha: ""
+*es.PageSize 16K/16K: ""
+*es.Translation PageRegion/Área de impresión: ""
+*es.PageRegion Letter/Carta: ""
+*es.PageRegion Legal/Legal: ""
+*es.PageRegion Statement/Informe: ""
+*es.PageRegion Executive/Executive: ""
+*es.PageRegion A5/A5: ""
+*es.PageRegion B5/B5: ""
+*es.PageRegion A4/A4: ""
+*es.PageRegion Monarch/Sobre Monarch: ""
+*es.PageRegion Com10/Sobre nº 10 (COM10): ""
+*es.PageRegion dl_envelope/Sobre DL: ""
+*es.PageRegion Envelope_C5/Sobre C5: ""
+*es.PageRegion Foolscap/Foolscap: ""
+*es.PageRegion Index_3x5/Ficha: ""
+*es.PageRegion 16K/16K: ""
+
+*fr.Translation Resolution/Résolution : ""
+*fr.Resolution 600/600 ppp: ""
+*fr.Translation CNDraftMode/Economie d'encre : ""
+*fr.CNDraftMode True/Activé: ""
+*fr.CNDraftMode False/Désactivé: ""
+*fr.Translation MediaType/Type de papier : ""
+*fr.MediaType Auto/Auto: ""
+*fr.MediaType PlainPaper1/Papier ordinaire 1: ""
+*fr.MediaType PlainPaper2/Papier ordinaire 2: ""
+*fr.MediaType PlainPaper3/Papier ordinaire 3: ""
+*fr.MediaType RECYCLED/Papier recyclé: ""
+*fr.MediaType COLOR/Papier de couleur: ""
+*fr.MediaType HEAVY1/Papier épais 1: ""
+*fr.MediaType HEAVY2/Papier épais 2: ""
+*fr.MediaType OHP/Transparent: ""
+*fr.MediaType LABELS/Etiquettes: ""
+*fr.MediaType ENVELOPE/Enveloppe: ""
+*fr.MediaType PlainPaperL/Fin: ""
+*fr.MediaType 1SIDECOATED1/Couché 1: ""
+*fr.MediaType 1SIDECOATED2/Couché 2: ""
+*fr.MediaType 1SIDECOATED3/Couché 3: ""
+*fr.MediaType 1SIDECOATED4/Couché 4: ""
+*fr.Translation InputSlot/Alimentation papier : ""
+*fr.InputSlot Auto/Auto: ""
+*fr.InputSlot Manual/Bac multifonctions: ""
+*fr.InputSlot Cas1/Cassette 1: ""
+*fr.Translation OutputBin/Sortie papier : ""
+*fr.OutputBin Auto/Auto: ""
+*fr.Translation CNBarCodeMode/Paramètres spéciaux 1 : ""
+*fr.CNBarCodeMode None/Désactivé: ""
+*fr.CNBarCodeMode Mode1/Mode 1: ""
+*fr.CNBarCodeMode Mode2/Mode 2: ""
+*fr.CNBarCodeMode Mode3/Mode 3: ""
+*fr.CNBarCodeMode Mode4/Mode 4: ""
+*fr.CNBarCodeMode Mode5/Mode 5: ""
+*fr.Translation BindEdge/Emplacement de la reliure: ""
+*fr.BindEdge Left/Bord long (Gauche): ""
+*fr.BindEdge Top/Bord court (Haut): ""
+*fr.Translation Collate/Finition: ""
+*fr.Collate Group/Grouper: ""
+*fr.Translation CNColorMode/Mode couleur : ""
+*fr.CNColorMode color/Couleur: ""
+*fr.CNColorMode mono/Noir et blanc: ""
+*fr.Translation CNColorHalftone/Demi-tons couleur : ""
+*fr.CNColorHalftone Resolution/Résolution: ""
+*fr.CNColorHalftone Gradation/Gradation: ""
+*fr.Translation CNHalftone/Demi-teintes N & B : ""
+*fr.CNHalftone Resolution/Résolution: ""
+*fr.CNHalftone Gradation/Gradation: ""
+*fr.Translation CNSpecialSmooth/Mode Lissage spécial : ""
+*fr.CNSpecialSmooth Mode4/Mode 4: ""
+*fr.Translation PageSize/Format de page : ""
+*fr.PageSize Letter/Lettre: ""
+*fr.PageSize Legal/Légal: ""
+*fr.PageSize Statement/Statement US: ""
+*fr.PageSize Executive/Executive: ""
+*fr.PageSize A5/A5: ""
+*fr.PageSize B5/B5: ""
+*fr.PageSize A4/A4: ""
+*fr.PageSize Monarch/Enveloppe Monarch: ""
+*fr.PageSize Com10/Enveloppe n°10 (COM10): ""
+*fr.PageSize dl_envelope/Enveloppe DL: ""
+*fr.PageSize Envelope_C5/Enveloppe C5: ""
+*fr.PageSize Foolscap/Foolscap: ""
+*fr.PageSize Index_3x5/Fiche: ""
+*fr.PageSize 16K/16K: ""
+*fr.Translation PageRegion/Zone d'impression: ""
+*fr.PageRegion Letter/Lettre: ""
+*fr.PageRegion Legal/Légal: ""
+*fr.PageRegion Statement/Statement US: ""
+*fr.PageRegion Executive/Executive: ""
+*fr.PageRegion A5/A5: ""
+*fr.PageRegion B5/B5: ""
+*fr.PageRegion A4/A4: ""
+*fr.PageRegion Monarch/Enveloppe Monarch: ""
+*fr.PageRegion Com10/Enveloppe n°10 (COM10): ""
+*fr.PageRegion dl_envelope/Enveloppe DL: ""
+*fr.PageRegion Envelope_C5/Enveloppe C5: ""
+*fr.PageRegion Foolscap/Foolscap: ""
+*fr.PageRegion Index_3x5/Fiche: ""
+*fr.PageRegion 16K/16K: ""
+
+*it.Translation Resolution/Risoluzione: ""
+*it.Resolution 600/600 dpi: ""
+*it.Translation CNDraftMode/Risparmio toner: ""
+*it.CNDraftMode True/Attivato: ""
+*it.CNDraftMode False/Disattivato: ""
+*it.Translation MediaType/Tipo di carta: ""
+*it.MediaType Auto/Auto: ""
+*it.MediaType PlainPaper1/Carta comune 1: ""
+*it.MediaType PlainPaper2/Carta comune 2: ""
+*it.MediaType PlainPaper3/Carta comune 3: ""
+*it.MediaType RECYCLED/Carta riciclata: ""
+*it.MediaType COLOR/Carta colorata: ""
+*it.MediaType HEAVY1/Carta spessa 1: ""
+*it.MediaType HEAVY2/Carta spessa 2: ""
+*it.MediaType OHP/Lucido: ""
+*it.MediaType LABELS/Etichette: ""
+*it.MediaType ENVELOPE/Buste: ""
+*it.MediaType PlainPaperL/Sottile: ""
+*it.MediaType 1SIDECOATED1/Patinata 1: ""
+*it.MediaType 1SIDECOATED2/Patinata 2: ""
+*it.MediaType 1SIDECOATED3/Patinata 3: ""
+*it.MediaType 1SIDECOATED4/Patinata 4: ""
+*it.Translation InputSlot/Alimentazione carta: ""
+*it.InputSlot Auto/Auto: ""
+*it.InputSlot Manual/Vassoio multiuso: ""
+*it.InputSlot Cas1/Cassetto 1: ""
+*it.Translation OutputBin/Uscita carta: ""
+*it.OutputBin Auto/Auto: ""
+*it.Translation CNBarCodeMode/Impostazioni speciali 1: ""
+*it.CNBarCodeMode None/Disattivato: ""
+*it.CNBarCodeMode Mode1/Modalità 1: ""
+*it.CNBarCodeMode Mode2/Modalità 2: ""
+*it.CNBarCodeMode Mode3/Modalità 3: ""
+*it.CNBarCodeMode Mode4/Modalità 4: ""
+*it.CNBarCodeMode Mode5/Modalità 5: ""
+*it.Translation BindEdge/Posizione di rilegatura: ""
+*it.BindEdge Left/Lato lungo (Sinistro): ""
+*it.BindEdge Top/Lato corto (Superiore): ""
+*it.Translation Collate/Finitura: ""
+*it.Collate Group/Raggruppa: ""
+*it.Translation CNColorMode/Modalità colore: ""
+*it.CNColorMode color/Colore: ""
+*it.CNColorMode mono/Bianco e Nero: ""
+*it.Translation CNColorHalftone/Mezzitoni colore: ""
+*it.CNColorHalftone Resolution/Risoluzione: ""
+*it.CNColorHalftone Gradation/Gradazione: ""
+*it.Translation CNHalftone/Mezzi toni bianco e nero: ""
+*it.CNHalftone Resolution/Risoluzione: ""
+*it.CNHalftone Gradation/Gradazione: ""
+*it.Translation CNSpecialSmooth/Modalità gradazione speciale: ""
+*it.CNSpecialSmooth Mode4/Modalità 4: ""
+*it.Translation PageSize/Formato pagina: ""
+*it.PageSize Letter/Letter: ""
+*it.PageSize Legal/Legal: ""
+*it.PageSize Statement/Statement: ""
+*it.PageSize Executive/Executive: ""
+*it.PageSize A5/A5: ""
+*it.PageSize B5/B5: ""
+*it.PageSize A4/A4: ""
+*it.PageSize Monarch/Busta Monarch: ""
+*it.PageSize Com10/Busta No.10 (COM10): ""
+*it.PageSize dl_envelope/Busta DL: ""
+*it.PageSize Envelope_C5/Busta C5: ""
+*it.PageSize Foolscap/Foolscap: ""
+*it.PageSize Index_3x5/Scheda di indice: ""
+*it.PageSize 16K/16K: ""
+*it.Translation PageRegion/Area di stampa: ""
+*it.PageRegion Letter/Letter: ""
+*it.PageRegion Legal/Legal: ""
+*it.PageRegion Statement/Statement: ""
+*it.PageRegion Executive/Executive: ""
+*it.PageRegion A5/A5: ""
+*it.PageRegion B5/B5: ""
+*it.PageRegion A4/A4: ""
+*it.PageRegion Monarch/Busta Monarch: ""
+*it.PageRegion Com10/Busta No.10 (COM10): ""
+*it.PageRegion dl_envelope/Busta DL: ""
+*it.PageRegion Envelope_C5/Busta C5: ""
+*it.PageRegion Foolscap/Foolscap: ""
+*it.PageRegion Index_3x5/Scheda di indice: ""
+*it.PageRegion 16K/16K: ""
+
+*ja.Translation Resolution/解像度 : ""
+*ja.Resolution 600/ファイン(600 dpi): ""
+*ja.Translation CNDraftMode/トナー節約モード : ""
+*ja.CNDraftMode True/使う: ""
+*ja.CNDraftMode False/使わない: ""
+*ja.Translation MediaType/用紙種類 : ""
+*ja.MediaType Auto/自動: ""
+*ja.MediaType PlainPaper1/普通紙1: ""
+*ja.MediaType PlainPaper2/普通紙2: ""
+*ja.MediaType PlainPaper3/普通紙3: ""
+*ja.MediaType RECYCLED/再生紙: ""
+*ja.MediaType COLOR/色紙: ""
+*ja.MediaType HEAVY1/厚紙1: ""
+*ja.MediaType HEAVY2/厚紙2: ""
+*ja.MediaType OHP/OHPフィルム: ""
+*ja.MediaType LABELS/ラベル用紙: ""
+*ja.MediaType ENVELOPE/封筒: ""
+*ja.MediaType PlainPaperL/薄紙: ""
+*ja.MediaType 1SIDECOATED1/コート紙1: ""
+*ja.MediaType 1SIDECOATED2/コート紙2: ""
+*ja.MediaType 1SIDECOATED3/コート紙3: ""
+*ja.MediaType 1SIDECOATED4/コート紙4: ""
+*ja.Translation InputSlot/給紙部 : ""
+*ja.InputSlot Auto/自動: ""
+*ja.InputSlot Manual/手差し: ""
+*ja.InputSlot Cas1/カセット1: ""
+*ja.Translation OutputBin/排紙先 : ""
+*ja.OutputBin Auto/自動: ""
+*ja.Translation CNBarCodeMode/特殊設定1 : ""
+*ja.CNBarCodeMode None/しない: ""
+*ja.CNBarCodeMode Mode1/モード1: ""
+*ja.CNBarCodeMode Mode2/モード2: ""
+*ja.CNBarCodeMode Mode3/モード3: ""
+*ja.CNBarCodeMode Mode4/モード4: ""
+*ja.CNBarCodeMode Mode5/モード5: ""
+*ja.Translation BindEdge/とじ方向: ""
+*ja.BindEdge Left/長辺とじ(左): ""
+*ja.BindEdge Top/短辺とじ(上): ""
+*ja.Translation Collate/排紙方法: ""
+*ja.Collate Group/グループ: ""
+*ja.Translation CNColorMode/カラーモード : ""
+*ja.CNColorMode color/カラー: ""
+*ja.CNColorMode mono/モノクロ: ""
+*ja.Translation CNColorHalftone/カラー中間調 : ""
+*ja.CNColorHalftone Resolution/解像度: ""
+*ja.CNColorHalftone Gradation/階調: ""
+*ja.Translation CNHalftone/モノクロ中間調 : ""
+*ja.CNHalftone Resolution/解像度: ""
+*ja.CNHalftone Gradation/階調: ""
+*ja.Translation CNSpecialSmooth/特殊スムージングモード : ""
+*ja.CNSpecialSmooth Mode4/モード4: ""
+*ja.Translation PageSize/原稿サイズ : ""
+*ja.PageSize Letter/レター: ""
+*ja.PageSize Legal/リーガル: ""
+*ja.PageSize Statement/Statement: ""
+*ja.PageSize Executive/エグゼクティブ: ""
+*ja.PageSize A5/A5: ""
+*ja.PageSize B5/B5: ""
+*ja.PageSize A4/A4: ""
+*ja.PageSize Monarch/封筒 Monarch: ""
+*ja.PageSize Com10/封筒 No.10(COM10): ""
+*ja.PageSize dl_envelope/封筒 DL: ""
+*ja.PageSize Envelope_C5/封筒 C5: ""
+*ja.PageSize Foolscap/Foolscap: ""
+*ja.PageSize Index_3x5/Index Card: ""
+*ja.PageSize 16K/16K: ""
+*ja.Translation PageRegion/印刷領域: ""
+*ja.PageRegion Letter/レター: ""
+*ja.PageRegion Legal/リーガル: ""
+*ja.PageRegion Statement/Statement: ""
+*ja.PageRegion Executive/エグゼクティブ: ""
+*ja.PageRegion A5/A5: ""
+*ja.PageRegion B5/B5: ""
+*ja.PageRegion A4/A4: ""
+*ja.PageRegion Monarch/封筒 Monarch: ""
+*ja.PageRegion Com10/封筒 No.10(COM10): ""
+*ja.PageRegion dl_envelope/封筒 DL: ""
+*ja.PageRegion Envelope_C5/封筒 C5: ""
+*ja.PageRegion Foolscap/Foolscap: ""
+*ja.PageRegion Index_3x5/Index Card: ""
+*ja.PageRegion 16K/16K: ""
+
+*ko.Translation Resolution/해상도: ""
+*ko.Resolution 600/600dpi: ""
+*ko.Translation CNDraftMode/토너 절약: ""
+*ko.CNDraftMode True/설정: ""
+*ko.CNDraftMode False/해제: ""
+*ko.Translation MediaType/용지 종류: ""
+*ko.MediaType Auto/자동: ""
+*ko.MediaType PlainPaper1/일반 용지 1: ""
+*ko.MediaType PlainPaper2/일반 용지 2: ""
+*ko.MediaType PlainPaper3/일반 용지 3: ""
+*ko.MediaType RECYCLED/재생 용지: ""
+*ko.MediaType COLOR/컬러 용지: ""
+*ko.MediaType HEAVY1/두꺼운 용지 1: ""
+*ko.MediaType HEAVY2/두꺼운 용지 2: ""
+*ko.MediaType OHP/투명 용지: ""
+*ko.MediaType LABELS/라벨 용지: ""
+*ko.MediaType ENVELOPE/봉투: ""
+*ko.MediaType PlainPaperL/얇은 용지: ""
+*ko.MediaType 1SIDECOATED1/코팅 용지 1: ""
+*ko.MediaType 1SIDECOATED2/코팅 용지 2: ""
+*ko.MediaType 1SIDECOATED3/코팅 용지 3: ""
+*ko.MediaType 1SIDECOATED4/코팅 용지 4: ""
+*ko.Translation InputSlot/용지 공급원: ""
+*ko.InputSlot Auto/자동: ""
+*ko.InputSlot Manual/다용도 트레이: ""
+*ko.InputSlot Cas1/카세트 1: ""
+*ko.Translation OutputBin/용지 출력: ""
+*ko.OutputBin Auto/자동: ""
+*ko.Translation CNBarCodeMode/특수 설정 1: ""
+*ko.CNBarCodeMode None/해제: ""
+*ko.CNBarCodeMode Mode1/모드 1: ""
+*ko.CNBarCodeMode Mode2/모드 2: ""
+*ko.CNBarCodeMode Mode3/모드 3: ""
+*ko.CNBarCodeMode Mode4/모드 4: ""
+*ko.CNBarCodeMode Mode5/모드 5: ""
+*ko.Translation BindEdge/제본 위치: ""
+*ko.BindEdge Left/긴 가장자리(왼쪽): ""
+*ko.BindEdge Top/짧은 가장자리(위쪽): ""
+*ko.Translation Collate/마무리: ""
+*ko.Collate Group/페이지별 인쇄: ""
+*ko.Translation CNColorMode/컬러 모드: ""
+*ko.CNColorMode color/컬러: ""
+*ko.CNColorMode mono/흑백: ""
+*ko.Translation CNColorHalftone/컬러 중간톤: ""
+*ko.CNColorHalftone Resolution/해상도: ""
+*ko.CNColorHalftone Gradation/계조: ""
+*ko.Translation CNHalftone/흑백 중간톤: ""
+*ko.CNHalftone Resolution/해상도: ""
+*ko.CNHalftone Gradation/계조: ""
+*ko.Translation CNSpecialSmooth/특수 처리 모드: ""
+*ko.CNSpecialSmooth Mode4/모드 4: ""
+*ko.Translation PageSize/페이지 크기: ""
+*ko.PageSize Letter/Letter: ""
+*ko.PageSize Legal/Legal: ""
+*ko.PageSize Statement/Statement: ""
+*ko.PageSize Executive/Executive: ""
+*ko.PageSize A5/A5: ""
+*ko.PageSize B5/B5: ""
+*ko.PageSize A4/A4: ""
+*ko.PageSize Monarch/Envelope Monarch: ""
+*ko.PageSize Com10/Envelope No.10(COM10): ""
+*ko.PageSize dl_envelope/Envelope DL: ""
+*ko.PageSize Envelope_C5/Envelope C5: ""
+*ko.PageSize Foolscap/Foolscap: ""
+*ko.PageSize Index_3x5/Index Card: ""
+*ko.PageSize 16K/16K: ""
+*ko.Translation PageRegion/인쇄 영역: ""
+*ko.PageRegion Letter/Letter: ""
+*ko.PageRegion Legal/Legal: ""
+*ko.PageRegion Statement/Statement: ""
+*ko.PageRegion Executive/Executive: ""
+*ko.PageRegion A5/A5: ""
+*ko.PageRegion B5/B5: ""
+*ko.PageRegion A4/A4: ""
+*ko.PageRegion Monarch/Envelope Monarch: ""
+*ko.PageRegion Com10/Envelope No.10(COM10): ""
+*ko.PageRegion dl_envelope/Envelope DL: ""
+*ko.PageRegion Envelope_C5/Envelope C5: ""
+*ko.PageRegion Foolscap/Foolscap: ""
+*ko.PageRegion Index_3x5/Index Card: ""
+*ko.PageRegion 16K/16K: ""
+
+*zh_CN.Translation Resolution/分辨率: ""
+*zh_CN.Resolution 600/600 dpi: ""
+*zh_CN.Translation CNDraftMode/节省墨粉: ""
+*zh_CN.CNDraftMode True/开: ""
+*zh_CN.CNDraftMode False/关: ""
+*zh_CN.Translation MediaType/纸张类型: ""
+*zh_CN.MediaType Auto/自动: ""
+*zh_CN.MediaType PlainPaper1/普通纸 1: ""
+*zh_CN.MediaType PlainPaper2/普通纸 2: ""
+*zh_CN.MediaType PlainPaper3/普通纸 3: ""
+*zh_CN.MediaType RECYCLED/再生纸: ""
+*zh_CN.MediaType COLOR/彩色纸: ""
+*zh_CN.MediaType HEAVY1/重磅纸 1: ""
+*zh_CN.MediaType HEAVY2/重磅纸 2: ""
+*zh_CN.MediaType OHP/透明胶片: ""
+*zh_CN.MediaType LABELS/标签: ""
+*zh_CN.MediaType ENVELOPE/信封: ""
+*zh_CN.MediaType PlainPaperL/薄纸: ""
+*zh_CN.MediaType 1SIDECOATED1/覆膜纸 1: ""
+*zh_CN.MediaType 1SIDECOATED2/覆膜纸 2: ""
+*zh_CN.MediaType 1SIDECOATED3/覆膜纸 3: ""
+*zh_CN.MediaType 1SIDECOATED4/覆膜纸 4: ""
+*zh_CN.Translation InputSlot/纸张来源: ""
+*zh_CN.InputSlot Auto/自动: ""
+*zh_CN.InputSlot Manual/多功能托盘: ""
+*zh_CN.InputSlot Cas1/纸盒 1: ""
+*zh_CN.Translation OutputBin/纸张输出: ""
+*zh_CN.OutputBin Auto/自动: ""
+*zh_CN.Translation CNBarCodeMode/特殊设置 1: ""
+*zh_CN.CNBarCodeMode None/关: ""
+*zh_CN.CNBarCodeMode Mode1/模式 1: ""
+*zh_CN.CNBarCodeMode Mode2/模式 2: ""
+*zh_CN.CNBarCodeMode Mode3/模式 3: ""
+*zh_CN.CNBarCodeMode Mode4/模式 4: ""
+*zh_CN.CNBarCodeMode Mode5/模式 5: ""
+*zh_CN.Translation BindEdge/装订位置: ""
+*zh_CN.BindEdge Left/长边 (左): ""
+*zh_CN.BindEdge Top/短边 (顶): ""
+*zh_CN.Translation Collate/完成方式: ""
+*zh_CN.Collate Group/分组: ""
+*zh_CN.Translation CNColorMode/色彩模式: ""
+*zh_CN.CNColorMode color/彩色: ""
+*zh_CN.CNColorMode mono/黑白: ""
+*zh_CN.Translation CNColorHalftone/彩色半色调: ""
+*zh_CN.CNColorHalftone Resolution/分辨率: ""
+*zh_CN.CNColorHalftone Gradation/渐变: ""
+*zh_CN.Translation CNHalftone/黑白半色调: ""
+*zh_CN.CNHalftone Resolution/分辨率: ""
+*zh_CN.CNHalftone Gradation/渐变: ""
+*zh_CN.Translation CNSpecialSmooth/特殊平滑模式: ""
+*zh_CN.CNSpecialSmooth Mode4/模式 4: ""
+*zh_CN.Translation PageSize/页面尺寸: ""
+*zh_CN.PageSize Letter/Letter: ""
+*zh_CN.PageSize Legal/Legal: ""
+*zh_CN.PageSize Statement/Statement: ""
+*zh_CN.PageSize Executive/Executive: ""
+*zh_CN.PageSize A5/A5: ""
+*zh_CN.PageSize B5/B5: ""
+*zh_CN.PageSize A4/A4: ""
+*zh_CN.PageSize Monarch/Envelope Monarch: ""
+*zh_CN.PageSize Com10/Envelope No.10 (COM10): ""
+*zh_CN.PageSize dl_envelope/Envelope DL: ""
+*zh_CN.PageSize Envelope_C5/Envelope C5: ""
+*zh_CN.PageSize Foolscap/Foolscap: ""
+*zh_CN.PageSize Index_3x5/Index Card: ""
+*zh_CN.PageSize 16K/16K: ""
+*zh_CN.Translation PageRegion/打印区域: ""
+*zh_CN.PageRegion Letter/Letter: ""
+*zh_CN.PageRegion Legal/Legal: ""
+*zh_CN.PageRegion Statement/Statement: ""
+*zh_CN.PageRegion Executive/Executive: ""
+*zh_CN.PageRegion A5/A5: ""
+*zh_CN.PageRegion B5/B5: ""
+*zh_CN.PageRegion A4/A4: ""
+*zh_CN.PageRegion Monarch/Envelope Monarch: ""
+*zh_CN.PageRegion Com10/Envelope No.10 (COM10): ""
+*zh_CN.PageRegion dl_envelope/Envelope DL: ""
+*zh_CN.PageRegion Envelope_C5/Envelope C5: ""
+*zh_CN.PageRegion Foolscap/Foolscap: ""
+*zh_CN.PageRegion Index_3x5/Index Card: ""
+*zh_CN.PageRegion 16K/16K: ""
+
+*zh_TW.Translation Resolution/解析度: ""
+*zh_TW.Resolution 600/600 dpi: ""
+*zh_TW.Translation CNDraftMode/節省碳粉: ""
+*zh_TW.CNDraftMode True/開: ""
+*zh_TW.CNDraftMode False/關: ""
+*zh_TW.Translation MediaType/紙張類型: ""
+*zh_TW.MediaType Auto/自動: ""
+*zh_TW.MediaType PlainPaper1/普通紙 1: ""
+*zh_TW.MediaType PlainPaper2/普通紙 2: ""
+*zh_TW.MediaType PlainPaper3/普通紙 3: ""
+*zh_TW.MediaType RECYCLED/再生紙: ""
+*zh_TW.MediaType COLOR/彩色紙: ""
+*zh_TW.MediaType HEAVY1/重磅紙 1: ""
+*zh_TW.MediaType HEAVY2/重磅紙 2: ""
+*zh_TW.MediaType OHP/投影片: ""
+*zh_TW.MediaType LABELS/標籤: ""
+*zh_TW.MediaType ENVELOPE/信封: ""
+*zh_TW.MediaType PlainPaperL/輕磅紙: ""
+*zh_TW.MediaType 1SIDECOATED1/塗料紙 1: ""
+*zh_TW.MediaType 1SIDECOATED2/塗料紙 2: ""
+*zh_TW.MediaType 1SIDECOATED3/塗料紙 3: ""
+*zh_TW.MediaType 1SIDECOATED4/塗料紙 4: ""
+*zh_TW.Translation InputSlot/紙張來源: ""
+*zh_TW.InputSlot Auto/自動: ""
+*zh_TW.InputSlot Manual/多用途紙盤: ""
+*zh_TW.InputSlot Cas1/紙匣 1: ""
+*zh_TW.Translation OutputBin/紙張輸出: ""
+*zh_TW.OutputBin Auto/自動: ""
+*zh_TW.Translation CNBarCodeMode/特殊設定 1: ""
+*zh_TW.CNBarCodeMode None/關: ""
+*zh_TW.CNBarCodeMode Mode1/模式 1: ""
+*zh_TW.CNBarCodeMode Mode2/模式 2: ""
+*zh_TW.CNBarCodeMode Mode3/模式 3: ""
+*zh_TW.CNBarCodeMode Mode4/模式 4: ""
+*zh_TW.CNBarCodeMode Mode5/模式 5: ""
+*zh_TW.Translation BindEdge/裝訂位置: ""
+*zh_TW.BindEdge Left/長邊 (左方): ""
+*zh_TW.BindEdge Top/短邊 (頂端): ""
+*zh_TW.Translation Collate/完稿: ""
+*zh_TW.Collate Group/群組: ""
+*zh_TW.Translation CNColorMode/色彩模式: ""
+*zh_TW.CNColorMode color/彩色: ""
+*zh_TW.CNColorMode mono/黑白: ""
+*zh_TW.Translation CNColorHalftone/彩色半色調: ""
+*zh_TW.CNColorHalftone Resolution/解析度: ""
+*zh_TW.CNColorHalftone Gradation/漸層: ""
+*zh_TW.Translation CNHalftone/黑白半色調: ""
+*zh_TW.CNHalftone Resolution/解析度: ""
+*zh_TW.CNHalftone Gradation/漸層: ""
+*zh_TW.Translation CNSpecialSmooth/特殊平滑模式: ""
+*zh_TW.CNSpecialSmooth Mode4/模式 4: ""
+*zh_TW.Translation PageSize/頁面大小: ""
+*zh_TW.PageSize Letter/Letter: ""
+*zh_TW.PageSize Legal/Legal: ""
+*zh_TW.PageSize Statement/Statement: ""
+*zh_TW.PageSize Executive/行政用紙 (Executive): ""
+*zh_TW.PageSize A5/A5: ""
+*zh_TW.PageSize B5/B5: ""
+*zh_TW.PageSize A4/A4: ""
+*zh_TW.PageSize Monarch/Envelope Monarch: ""
+*zh_TW.PageSize Com10/Envelope No.10 (COM10): ""
+*zh_TW.PageSize dl_envelope/Envelope DL: ""
+*zh_TW.PageSize Envelope_C5/Envelope C5: ""
+*zh_TW.PageSize Foolscap/Foolscap: ""
+*zh_TW.PageSize Index_3x5/Index Card: ""
+*zh_TW.PageSize 16K/16K: ""
+*zh_TW.Translation PageRegion/列印區域: ""
+*zh_TW.PageRegion Letter/Letter: ""
+*zh_TW.PageRegion Legal/Legal: ""
+*zh_TW.PageRegion Statement/Statement: ""
+*zh_TW.PageRegion Executive/行政用紙 (Executive): ""
+*zh_TW.PageRegion A5/A5: ""
+*zh_TW.PageRegion B5/B5: ""
+*zh_TW.PageRegion A4/A4: ""
+*zh_TW.PageRegion Monarch/Envelope Monarch: ""
+*zh_TW.PageRegion Com10/Envelope No.10 (COM10): ""
+*zh_TW.PageRegion dl_envelope/Envelope DL: ""
+*zh_TW.PageRegion Envelope_C5/Envelope C5: ""
+*zh_TW.PageRegion Foolscap/Foolscap: ""
+*zh_TW.PageRegion Index_3x5/Index Card: ""
+*zh_TW.PageRegion 16K/16K: ""

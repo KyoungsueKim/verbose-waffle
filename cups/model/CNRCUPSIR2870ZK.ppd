@@ -1,0 +1,2265 @@
+*PPD-Adobe: "4.3"
+*%
+*%  Copyright CANON INC. 2004
+*%  CUPS printer driver for Canon printer devices
+*%
+*%  This program is free software; you can redistribute it and/or modify
+*%  it under the terms of the GNU General Public License as published by
+*%  the Free Software Foundation; either version 2 of the License, or
+*%  (at your option) any later version.
+*%
+*%  This program is distributed in the hope that it will be useful,
+*%  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*%  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*%  GNU General Public License for more details.
+*%
+*%  You should have received a copy of the GNU General Public License
+*%  along with this program; if not, write to the Free Software
+*%  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*%
+
+*FormatVersion: "4.3"
+*FileVersion: "5.0"
+*LanguageVersion: English
+*LanguageEncoding: ISOLatin1
+*PCFileName: "CNI227ZK.PPD"
+*Manufacturer: "Canon"
+*Product: "(ir2270/ir2870)"
+*cupsVersion: 1.1
+*cupsManualCopies: False
+*cupsModelNumber: 05
+*cupsFilter: "application/vnd.cups-raster 0 rastertoufr2"
+*ModelName: "Canon iR2270/iR2870 UFR II"
+*ShortNickName: "iR2270/iR2870"
+*NickName: "Canon iR2270/iR2870 UFR II"
+*PSVersion: "(3010.000) 550"
+*PSVersion: "(3010.000) 651"
+*LanguageLevel: "3"
+*ColorDevice: False
+*DefaultColorSpace: Gray
+*FileSystem: False
+*Throughput: "28"
+*LandscapeOrientation: Plus90
+*VariablePaperSize: False
+*TTRasterizer: Type42
+*%CNGPLPLIBNAMER: "uictlufr2r"
+*%CNGPLPLIBNAMERVER: "1.0.0"
+
+*%CNPrintLang: UFR2
+
+*OpenGroup: InstallableOptions/Attached Options
+
+*OpenUI *CNFinisher/Output Option: PickOne
+*DefaultCNFinisher: None
+*CNFinisher None/Not Installed: "<< >>setpagedevice"
+*CNFinisher IN2TRAY/Inner 2way Tray: "<< >>setpagedevice"
+*CNFinisher FINS1/Finisher-S1: "<< >>setpagedevice"
+*CNFinisher FINQ3/Finisher-Q3: "<< >>setpagedevice"
+*CNFinisher SFINQ4/Saddle Finisher-Q4: "<< >>setpagedevice"
+*CloseUI: *CNFinisher
+
+*OpenUI *CNPuncher/Puncher Unit: Boolean
+*DefaultCNPuncher: False
+*CNPuncher True/Installed: "<< >>setpagedevice"
+*CNPuncher False/Not Installed: "<< >>setpagedevice"
+*CloseUI: *CNPuncher
+
+*CloseGroup: InstallableOptions
+
+*OpenUI *Resolution/Resolution : PickOne
+*DefaultResolution: 600
+*Resolution 600/600 dpi: "<</HWResolution[600 600]/cupsColorSpace 1/cupsColorOrder 0/cupsBitsPerColor 8>>setpagedevice"
+*CloseUI: *Resolution
+
+*OpenUI *CNTonerSaving/Toner Save : PickOne
+*DefaultCNTonerSaving: Auto
+*CNTonerSaving Auto/Auto: "<< >>setpagedevice"
+*CNTonerSaving True/ON: "<< >>setpagedevice"
+*CNTonerSaving False/OFF: "<< >>setpagedevice"
+*CloseUI: *CNTonerSaving
+
+*OpenUI *MediaType/Media Type : PickOne
+*DefaultMediaType: Auto
+*MediaType Auto/Auto: "<</MediaType(Auto)>>setpagedevice"
+*MediaType PlainPaper/Plain Paper: "<</MediaType(PlainPaper)>>setpagedevice"
+*MediaType RECYCLED/Recycled Paper: "<</MediaType(RECYCLED)>>setpagedevice"
+*MediaType COLOR/Color Paper: "<</MediaType(COLOR)>>setpagedevice"
+*MediaType PREPUNCHED/Pre Punched Paper: "<</MediaType(PREPUNCHED)>>setpagedevice"
+*MediaType BOND/Bond Paper: "<</MediaType(BOND)>>setpagedevice"
+*MediaType HEAVY/Heavy Paper: "<</MediaType(HEAVY)>>setpagedevice"
+*MediaType OHP/OHP: "<</MediaType(OHP)>>setpagedevice"
+*MediaType LABELS/Labels: "<</MediaType(LABELS)>>setpagedevice"
+*MediaType TRACING/Tracing Paper: "<</MediaType(TRACING)>>setpagedevice"
+*MediaType ENVELOPE/Envelope: "<</MediaType(ENVELOPE)>>setpagedevice"
+*CloseUI: *MediaType
+
+*OpenUI *InputSlot/Paper Source: PickOne
+*DefaultInputSlot: Auto
+*InputSlot Auto/Auto : ""
+*InputSlot Manual/Manual : ""
+*InputSlot Cas1/Drawer 1 : ""
+*InputSlot Cas2/Drawer 2 : ""
+*InputSlot Cas3/Drawer 3 : ""
+*InputSlot Cas4/Drawer 4 : ""
+*InputSlot SideDeck/Side Paper Deck : ""
+*InputSlot Env/Envelope Feeder : ""
+*CloseUI: *InputSlot
+
+*OpenUI *CNInterleafSheet/Insert Interleaf Sheets: PickOne
+*DefaultCNInterleafSheet: None
+*CNInterleafSheet None/None : "<< >>setpagedevice"
+*CNInterleafSheet True/ON : "<< >>setpagedevice"
+*CNInterleafSheet False/OFF : "<< >>setpagedevice"
+*CloseUI: *CNInterleafSheet
+
+*OpenUI *CNInterleafMediaType/Interleaf Media Type: PickOne
+*DefaultCNInterleafMediaType: Auto
+*CNInterleafMediaType Auto/Auto: "<< >>setpagedevice"
+*CNInterleafMediaType PlainPaper/Plain Paper: "<< >>setpagedevice"
+*CNInterleafMediaType RECYCLED/Recycled Paper: "<< >>setpagedevice"
+*CNInterleafMediaType COLOR/Color Paper: "<< >>setpagedevice"
+*CNInterleafMediaType PREPUNCHED/Pre Punched Paper: "<< >>setpagedevice"
+*CloseUI: *CNInterleafMediaType
+
+*OpenUI *CNInterleafPrint/Print on Interleaf Sheets: PickOne
+*DefaultCNInterleafPrint: None
+*CNInterleafPrint None/None : "<< >>setpagedevice"
+*CNInterleafPrint True/ON : "<< >>setpagedevice"
+*CNInterleafPrint False/OFF : "<< >>setpagedevice"
+*CloseUI: *CNInterleafPrint
+
+*OpenUI *OutputBin/Paper Destination: PickOne
+*DefaultOutputBin: Auto
+*OutputBin Auto/Auto : "<< >>setpagedevice"
+*CloseUI: *OutputBin
+
+*OpenUI *Duplex/Duplex: PickOne
+*DefaultDuplex: None
+*Duplex None/OFF: "<</Duplex false>>setpagedevice"
+*Duplex DuplexNoTumble/ON (Long-edged Binding): "<</Duplex true/Tumble false>>setpagedevice"
+*Duplex DuplexTumble/ON (Short-edged Binding): "<</Duplex true/Tumble true>>setpagedevice"
+*CloseUI: *Duplex
+
+*OpenUI *BindEdge/BindingEdge: PickOne
+*DefaultBindEdge: Left
+*BindEdge Left/Left: "<< >>setpagedevice"
+*BindEdge Top/Top: "<< >>setpagedevice"
+*CloseUI: *BindEdge
+
+*OpenUI *Booklet/Booklet Printing: PickOne
+*DefaultBooklet: None
+*Booklet None/None: "<< >>setpagedevice"
+*Booklet Left/Left: "<< >>setpagedevice"
+*CloseUI: *Booklet
+
+*OpenUI *CNOutputPartition/Output Partition: PickOne
+*DefaultCNOutputPartition: None
+*CNOutputPartition None/None: "<< >>setpagedevice"
+*CNOutputPartition offset/Offset: "<< >>setpagedevice"
+*CNOutputPartition rotation/Rotation: "<< >>setpagedevice"
+*CloseUI: *CNOutputPartition
+
+*OpenUI *Collate/Collate: PickOne
+*DefaultCollate: True
+*Collate False/No Collate: "<< >>setpagedevice"
+*Collate True/Collate: "<< >>setpagedevice"
+*Collate Group/Group: "<< >>setpagedevice"
+*Collate Staple/Staple: "<< >>setpagedevice"
+*CloseUI: *Collate
+
+*OpenUI *StapleLocation/Staple Location: PickOne
+*DefaultStapleLocation: TopLeft
+*StapleLocation None/No Stapling : "<< >>setpagedevice"
+*StapleLocation TopLeft/Upper Left[Single] : "<< >>setpagedevice"
+*StapleLocation Top/Top[Double] : "<< >>setpagedevice"
+*StapleLocation TopRight/Upper Right[Single] : "<< >>setpagedevice"
+*StapleLocation Left/Left[Double] : "<< >>setpagedevice"
+*StapleLocation BottomLeft/Lower Left[Single] : "<< >>setpagedevice"
+*CloseUI: *StapleLocation
+
+*OpenUI *CNSaddleStitch/Saddle Stitch: PickOne
+*DefaultCNSaddleStitch: None
+*CNSaddleStitch None/None: "<< >>setpagedevice"
+*CNSaddleStitch True/ON: "<< >>setpagedevice"
+*CNSaddleStitch False/OFF: "<< >>setpagedevice"
+*CloseUI: *CNSaddleStitch
+
+*OpenUI *CNPunch/Hole Punch: PickOne
+*DefaultCNPunch: None
+*CNPunch None/None: "<< >>setpagedevice"
+*CNPunch Left/Left: "<< >>setpagedevice"
+*CNPunch Top/Top: "<< >>setpagedevice"
+*CloseUI: *CNPunch
+
+*OpenUI *CNCopySetNumbering/Copy Set Numbering: PickOne
+*DefaultCNCopySetNumbering: None
+*CNCopySetNumbering None/None: "<< >>setpagedevice"
+*CNCopySetNumbering True/ON: "<< >>setpagedevice"
+*CNCopySetNumbering False/OFF: "<< >>setpagedevice"
+*CloseUI: *CNCopySetNumbering
+
+*OpenUI *CNImageRefinement/Image Refinement: PickOne
+*DefaultCNImageRefinement: None
+*CNImageRefinement None/Printer Default: "<< >>setpagedevice"
+*CNImageRefinement True/On: "<< >>setpagedevice"
+*CNImageRefinement False/Off: "<< >>setpagedevice"
+*CloseUI: *CNImageRefinement
+
+*OpenUI *CNLineRefinement/Line Refinement: PickOne
+*DefaultCNLineRefinement: None
+*CNLineRefinement None/Printer Default: "<< >>setpagedevice"
+*CNLineRefinement True/On: "<< >>setpagedevice"
+*CNLineRefinement False/Off: "<< >>setpagedevice"
+*CloseUI: *CNLineRefinement
+
+*OpenUI *CNHalftone/Halftones : PickOne
+*DefaultCNHalftone: Gradation
+*CNHalftone Resolution/Resolution: "<< >>setpagedevice"
+*CNHalftone Gradation/Gradation: "<< >>setpagedevice"
+*CNHalftone ColorTone/ColorTone: "<< >>setpagedevice"
+*CloseUI: *CNHalftone
+
+*OpenUI *CNJobExecMode/Job Execution Mode: PickOne
+*DefaultCNJobExecMode: print
+*CNJobExecMode print/Print: "<< >>setpagedevice"
+*CNJobExecMode secured/Secured Print: "<< >>setpagedevice"
+*CNJobExecMode store/Store: "<< >>setpagedevice"
+*CloseUI: *CNJobExecMode
+
+*OpenUI *PageSize/Page Size: PickOne
+*DefaultPageSize: A4
+*PageSize Letter: "<</PageSize[612 792]/ImagingBBox null>>setpagedevice"
+*PageSize 11x17: "<</PageSize[792 1224]/ImagingBBox null>>setpagedevice"
+*PageSize Legal: "<</PageSize[612 1008]/ImagingBBox null>>setpagedevice"
+*PageSize Statement: "<</PageSize[396 612]/ImagingBBox null>>setpagedevice"
+*PageSize Executive: "<</PageSize[522 756]/ImagingBBox null>>setpagedevice"
+*PageSize A5: "<</PageSize[419.5 595.3]/ImagingBBox null>>setpagedevice"
+*PageSize B5: "<</PageSize[515.9 728.5]/ImagingBBox null>>setpagedevice"
+*PageSize A4: "<</PageSize[595.3 841.9]/ImagingBBox null>>setpagedevice"
+*PageSize B4: "<</PageSize[728.5 1031.8]/ImagingBBox null>>setpagedevice"
+*PageSize A3: "<</PageSize[841.9 1190.5]/ImagingBBox null>>setpagedevice"
+*PageSize Monarch: "<</PageSize[279 540]/ImagingBBox null>>setpagedevice"
+*PageSize Com10: "<</PageSize[297 684]/ImagingBBox null>>setpagedevice"
+*PageSize dl_envelope: "<</PageSize[311.8 623.6]/ImagingBBox null>>setpagedevice"
+*PageSize Envelope_C5: "<</PageSize[459.2 649.1]/ImagingBBox null>>setpagedevice"
+*PageSize Envelope_B5: "<</PageSize[498.8 708.7]/ImagingBBox null>>setpagedevice"
+*CloseUI: *PageSize
+
+*OpenUI *PageRegion: PickOne
+*DefaultPageRegion: A4
+*PageRegion Letter: "<</PageSize[612 792]/ImagingBBox null>>setpagedevice"
+*PageRegion 11x17: "<</PageSize[792 1224]/ImagingBBox null>>setpagedevice"
+*PageRegion Legal: "<</PageSize[612 1008]/ImagingBBox null>>setpagedevice"
+*PageRegion Statement: "<</PageSize[396 612]/ImagingBBox null>>setpagedevice"
+*PageRegion Executive: "<</PageSize[522 756]/ImagingBBox null>>setpagedevice"
+*PageRegion A5: "<</PageSize[419.5 595.3]/ImagingBBox null>>setpagedevice"
+*PageRegion B5: "<</PageSize[515.9 728.5]/ImagingBBox null>>setpagedevice"
+*PageRegion A4: "<</PageSize[595.3 841.9]/ImagingBBox null>>setpagedevice"
+*PageRegion B4: "<</PageSize[728.5 1031.8]/ImagingBBox null>>setpagedevice"
+*PageRegion A3: "<</PageSize[841.9 1190.5]/ImagingBBox null>>setpagedevice"
+*PageRegion Monarch: "<</PageSize[279 540]/ImagingBBox null>>setpagedevice"
+*PageRegion Com10: "<</PageSize[297 684]/ImagingBBox null>>setpagedevice"
+*PageRegion dl_envelope: "<</PageSize[311.8 623.6]/ImagingBBox null>>setpagedevice"
+*PageRegion Envelope_C5: "<</PageSize[459.2 649.1]/ImagingBBox null>>setpagedevice"
+*PageRegion Envelope_B5: "<</PageSize[498.8 708.7]/ImagingBBox null>>setpagedevice"
+*CloseUI: *PageRegion
+
+*DefaultImageableArea: A4
+*ImageableArea Letter: "14.173 14.173 597.827 777.827"
+*ImageableArea 11x17: "14.173 14.173 777.827 1209.827"
+*ImageableArea Legal: "14.173 14.173 597.827 993.827"
+*ImageableArea Statement: "14.173 14.173 381.827 597.827"
+*ImageableArea Executive: "14.173 14.173 507.827 741.827"
+*ImageableArea A5: "14.173 14.173 405.327 581.127"
+*ImageableArea B5: "14.173 14.173 501.727 714.327"
+*ImageableArea A4: "14.173 14.173 581.127 827.727"
+*ImageableArea B4: "14.173 14.173 714.327 1017.627"
+*ImageableArea A3: "14.173 14.173 827.727 1176.327"
+*ImageableArea Monarch: "28.346 28.346 250.654 511.654"
+*ImageableArea Com10: "28.346 28.346 268.654 655.654"
+*ImageableArea dl_envelope: "28.346 28.346 283.454 595.254"
+*ImageableArea Envelope_C5: "28.346 28.346 430.854 620.754"
+*ImageableArea Envelope_B5: "28.346 28.346 470.454 680.354"
+
+*DefaultPaperDimension: A4
+*PaperDimension Letter: "612 792"
+*PaperDimension 11x17: "792 1224"
+*PaperDimension Legal: "612 1008"
+*PaperDimension Statement: "396 612"
+*PaperDimension Executive: "522 756"
+*PaperDimension A5: "419.5 595.3"
+*PaperDimension B5: "515.9 728.5"
+*PaperDimension A4: "595.3 841.9"
+*PaperDimension B4: "728.5 1031.8"
+*PaperDimension A3: "841.9 1190.5"
+*PaperDimension Monarch: "279 540"
+*PaperDimension Com10: "297 684"
+*PaperDimension dl_envelope: "311.8 623.6"
+*PaperDimension Envelope_C5: "459.2 649.1"
+*PaperDimension Envelope_B5: "498.8 708.7"
+
+*%CNJobAccount: True
+*%CNSecuredPrint: True
+*%CNMailBox: True
+*%CNInputSelect: True
+
+*CNOEFLibName: "ufr2filterr"
+*CNOptDevType: "0"
+*CNOptCalibType: "0"
+*CNPrinterName: "Canon iR2270/iR2870 UFR II"
+*CNPDLType: "UFR2"
+*CNPrtColorSpace: "K"
+*CN_PdlWrapper_PdlPath: "libcanonufr2r"
+*CNFeedDirection: "Executive:3"
+
+*CNTblFormat: "0"
+*CNTblInputSlot: "1"
+*CNTblDuplex: "1"
+*CNTblOutputBin: "0"
+*CNTblOutputPartition: "0"
+*CNTblSubstitute: "1"
+*CNModelMethod: "12"
+*CNMaxBoxNum: "99"
+*CNMaxDocStr: "32"
+*CNMaxCopies: "9999"
+*CNMaxGutter: "50"
+
+*UIConstraints: *BindEdge Left *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexTumble *BindEdge Left
+*UIConstraints: *BindEdge Top *Duplex DuplexNoTumble
+*UIConstraints: *Duplex DuplexNoTumble *BindEdge Top
+
+*UIConstraints: *CNCopySetNumbering True *Collate Group
+*UIConstraints: *Collate Group *CNCopySetNumbering True
+
+*UIConstraints: *CNSaddleStitch True *Booklet None
+*UIConstraints: *Booklet None *CNSaddleStitch True
+
+*UIConstraints: *Collate False *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition offset *Collate False
+
+*UIConstraints: *StapleLocation Left *BindEdge Top
+*UIConstraints: *BindEdge Top *StapleLocation Left
+*UIConstraints: *StapleLocation BottomLeft *BindEdge Top
+*UIConstraints: *BindEdge Top *StapleLocation BottomLeft
+*UIConstraints: *StapleLocation Top *BindEdge Left
+*UIConstraints: *BindEdge Left *StapleLocation Top
+*UIConstraints: *StapleLocation TopRight *BindEdge Left
+*UIConstraints: *BindEdge Left *StapleLocation TopRight
+
+*UIConstraints: *CNPunch Left *StapleLocation TopRight
+*UIConstraints: *StapleLocation TopRight *CNPunch Left
+*UIConstraints: *CNPunch Top *StapleLocation BottomLeft
+*UIConstraints: *StapleLocation BottomLeft *CNPunch Top
+*UIConstraints: *CNPunch Top *StapleLocation Left
+*UIConstraints: *StapleLocation Left *CNPunch Top
+*UIConstraints: *CNPunch Left *StapleLocation Top
+*UIConstraints: *StapleLocation Top *CNPunch Left
+
+*UIConstraints: *Booklet Left *CNPunch Left
+*UIConstraints: *CNPunch Left *Booklet Left
+*UIConstraints: *Booklet Left *CNPunch Top
+*UIConstraints: *CNPunch Top *Booklet Left
+
+*UIConstraints: *Booklet Left *Duplex DuplexNoTumble
+*UIConstraints: *Duplex DuplexNoTumble *Booklet Left
+*UIConstraints: *Booklet Left *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexTumble *Booklet Left
+
+*UIConstraints: *CNOutputPartition offset *Booklet Left
+*UIConstraints: *Booklet Left *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *Booklet Left
+*UIConstraints: *Booklet Left *CNOutputPartition rotation
+
+*UIConstraints: *CNInterleafPrint True *CNInterleafSheet None
+*UIConstraints: *CNInterleafSheet None *CNInterleafPrint True
+*UIConstraints: *CNInterleafPrint True *CNInterleafSheet False
+*UIConstraints: *CNInterleafSheet False *CNInterleafPrint True
+
+*% Finishing Details
+*%CNUIValue: *CNFinDetails(True):False
+
+*UIConstraints: *CNPuncher True *CNFinisher None
+*UIConstraints: *CNFinisher None *CNPuncher True
+*UIConstraints: *CNPuncher True *CNFinisher IN2TRAY
+*UIConstraints: *CNFinisher IN2TRAY *CNPuncher True
+
+*UIConstraints: *CNOutputPartition offset *CNFinisher None
+*UIConstraints: *CNFinisher None *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition offset *CNFinisher IN2TRAY
+*UIConstraints: *CNFinisher IN2TRAY *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *CNFinisher FINS1
+*UIConstraints: *CNFinisher FINS1 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *CNFinisher FINQ3
+*UIConstraints: *CNFinisher FINQ3 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *CNFinisher SFINQ4
+*UIConstraints: *CNFinisher SFINQ4 *CNOutputPartition rotation
+
+*UIConstraints: *CNOutputPartition rotation *InputSlot Manual
+*UIConstraints: *InputSlot Manual *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *InputSlot Cas1
+*UIConstraints: *InputSlot Cas1 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *InputSlot Cas2
+*UIConstraints: *InputSlot Cas2 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *InputSlot Cas3
+*UIConstraints: *InputSlot Cas3 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *InputSlot Cas4
+*UIConstraints: *InputSlot Cas4 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *InputSlot SideDeck
+*UIConstraints: *InputSlot SideDeck *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *InputSlot Env
+*UIConstraints: *InputSlot Env *CNOutputPartition rotation
+
+*UIConstraints: *Collate Staple *CNFinisher None
+*UIConstraints: *CNFinisher None *Collate Staple
+*UIConstraints: *Collate Staple *CNFinisher IN2TRAY
+*UIConstraints: *CNFinisher IN2TRAY *Collate Staple
+
+*UIConstraints: *CNSaddleStitch True *CNFinisher None
+*UIConstraints: *CNFinisher None *CNSaddleStitch True
+*UIConstraints: *CNSaddleStitch True *CNFinisher IN2TRAY
+*UIConstraints: *CNFinisher IN2TRAY *CNSaddleStitch True
+*UIConstraints: *CNSaddleStitch True *CNFinisher FINS1
+*UIConstraints: *CNFinisher FINS1 *CNSaddleStitch True
+*UIConstraints: *CNSaddleStitch True *CNFinisher FINQ3
+*UIConstraints: *CNFinisher FINQ3 *CNSaddleStitch True
+
+*UIConstraints: *CNPunch Left *CNFinisher None
+*UIConstraints: *CNFinisher None *CNPunch Left
+*UIConstraints: *CNPunch Top *CNFinisher None
+*UIConstraints: *CNFinisher None *CNPunch Top
+*UIConstraints: *CNPunch Left *CNFinisher IN2TRAY
+*UIConstraints: *CNFinisher IN2TRAY *CNPunch Left
+*UIConstraints: *CNPunch Top *CNFinisher IN2TRAY
+*UIConstraints: *CNFinisher IN2TRAY *CNPunch Top
+
+*UIConstraints: *CNPuncher False *CNPunch Left
+*UIConstraints: *CNPunch Left *CNPuncher False
+*UIConstraints: *CNPuncher False *CNPunch Top
+*UIConstraints: *CNPunch Top *CNPuncher False
+
+*UIConstraints: *Collate Staple *Booklet Left
+*UIConstraints: *Booklet Left *Collate Staple
+
+*UIConstraints: *CNSaddleStitch True *Collate Staple
+*UIConstraints: *Collate Staple *CNSaddleStitch True
+
+*UIConstraints: *Collate Staple *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition offset *Collate Staple
+*UIConstraints: *Collate Staple *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *Collate Staple
+
+*UIConstraints: *InputSlot Cas1 *PageSize A3
+*UIConstraints: *PageSize A3 *InputSlot Cas1
+*UIConstraints: *InputSlot SideDeck *PageSize A3
+*UIConstraints: *PageSize A3 *InputSlot SideDeck
+*UIConstraints: *InputSlot Env *PageSize A3
+*UIConstraints: *PageSize A3 *InputSlot Env
+*UIConstraints: *InputSlot SideDeck *PageSize Legal
+*UIConstraints: *PageSize Legal *InputSlot SideDeck
+*UIConstraints: *InputSlot Env *PageSize Legal
+*UIConstraints: *PageSize Legal *InputSlot Env
+*UIConstraints: *InputSlot SideDeck *PageSize A5
+*UIConstraints: *PageSize A5 *InputSlot SideDeck
+*UIConstraints: *InputSlot Env *PageSize A5
+*UIConstraints: *PageSize A5 *InputSlot Env
+*UIConstraints: *InputSlot SideDeck *PageSize B5
+*UIConstraints: *PageSize B5 *InputSlot SideDeck
+*UIConstraints: *InputSlot Env *PageSize B5
+*UIConstraints: *PageSize B5 *InputSlot Env
+*UIConstraints: *InputSlot SideDeck *PageSize B4
+*UIConstraints: *PageSize B4 *InputSlot SideDeck
+*UIConstraints: *InputSlot Env *PageSize B4
+*UIConstraints: *PageSize B4 *InputSlot Env
+*UIConstraints: *InputSlot SideDeck *PageSize Executive
+*UIConstraints: *PageSize Executive *InputSlot SideDeck
+*UIConstraints: *InputSlot Env *PageSize Executive
+*UIConstraints: *PageSize Executive *InputSlot Env
+*UIConstraints: *InputSlot Env *PageSize Letter
+*UIConstraints: *PageSize Letter *InputSlot Env
+*UIConstraints: *InputSlot Env *PageSize A4
+*UIConstraints: *PageSize A4 *InputSlot Env
+*UIConstraints: *InputSlot Cas1 *PageSize 11x17
+*UIConstraints: *PageSize 11x17 *InputSlot Cas1
+*UIConstraints: *InputSlot SideDeck *PageSize 11x17
+*UIConstraints: *PageSize 11x17 *InputSlot SideDeck
+*UIConstraints: *InputSlot Env *PageSize 11x17
+*UIConstraints: *PageSize 11x17 *InputSlot Env
+*UIConstraints: *InputSlot Cas1 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *InputSlot Cas1
+*UIConstraints: *InputSlot Cas2 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *InputSlot Cas2
+*UIConstraints: *InputSlot Cas3 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *InputSlot Cas3
+*UIConstraints: *InputSlot Cas4 *PageSize Monarch
+*UIConstraints: *PageSize Monarch *InputSlot Cas4
+*UIConstraints: *InputSlot SideDeck *PageSize Monarch
+*UIConstraints: *PageSize Monarch *InputSlot SideDeck
+*UIConstraints: *InputSlot Cas1 *PageSize Com10
+*UIConstraints: *PageSize Com10 *InputSlot Cas1
+*UIConstraints: *InputSlot Cas2 *PageSize Com10
+*UIConstraints: *PageSize Com10 *InputSlot Cas2
+*UIConstraints: *InputSlot Cas3 *PageSize Com10
+*UIConstraints: *PageSize Com10 *InputSlot Cas3
+*UIConstraints: *InputSlot Cas4 *PageSize Com10
+*UIConstraints: *PageSize Com10 *InputSlot Cas4
+*UIConstraints: *InputSlot SideDeck *PageSize Com10
+*UIConstraints: *PageSize Com10 *InputSlot SideDeck
+*UIConstraints: *InputSlot Cas1 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *InputSlot Cas1
+*UIConstraints: *InputSlot Cas2 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *InputSlot Cas2
+*UIConstraints: *InputSlot Cas3 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *InputSlot Cas3
+*UIConstraints: *InputSlot Cas4 *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *InputSlot Cas4
+*UIConstraints: *InputSlot SideDeck *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *InputSlot SideDeck
+*UIConstraints: *InputSlot Cas1 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *InputSlot Cas1
+*UIConstraints: *InputSlot Cas2 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *InputSlot Cas2
+*UIConstraints: *InputSlot Cas3 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *InputSlot Cas3
+*UIConstraints: *InputSlot Cas4 *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *InputSlot Cas4
+*UIConstraints: *InputSlot SideDeck *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *InputSlot SideDeck
+*UIConstraints: *InputSlot Cas1 *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *InputSlot Cas1
+*UIConstraints: *InputSlot Cas2 *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *InputSlot Cas2
+*UIConstraints: *InputSlot Cas3 *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *InputSlot Cas3
+*UIConstraints: *InputSlot Cas4 *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *InputSlot Cas4
+*UIConstraints: *InputSlot SideDeck *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *InputSlot SideDeck
+*UIConstraints: *InputSlot SideDeck *PageSize Statement
+*UIConstraints: *PageSize Statement *InputSlot SideDeck
+*UIConstraints: *InputSlot Env *PageSize Statement
+*UIConstraints: *PageSize Statement *InputSlot Env
+
+*UIConstraints: *Duplex DuplexTumble *PageSize Monarch
+*UIConstraints: *PageSize Monarch *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexNoTumble *PageSize Monarch
+*UIConstraints: *PageSize Monarch *Duplex DuplexNoTumble
+*UIConstraints: *Duplex DuplexTumble *PageSize Com10
+*UIConstraints: *PageSize Com10 *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexNoTumble *PageSize Com10
+*UIConstraints: *PageSize Com10 *Duplex DuplexNoTumble
+*UIConstraints: *Duplex DuplexTumble *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexNoTumble *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *Duplex DuplexNoTumble
+*UIConstraints: *Duplex DuplexTumble *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexNoTumble *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *Duplex DuplexNoTumble
+*UIConstraints: *Duplex DuplexTumble *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexNoTumble *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *Duplex DuplexNoTumble
+
+*UIConstraints: *Collate Staple *PageSize A5
+*UIConstraints: *PageSize A5 *Collate Staple
+*UIConstraints: *Collate Staple *PageSize Monarch
+*UIConstraints: *PageSize Monarch *Collate Staple
+*UIConstraints: *Collate True *PageSize Monarch
+*UIConstraints: *PageSize Monarch *Collate True
+*UIConstraints: *Collate Staple *PageSize Com10
+*UIConstraints: *PageSize Com10 *Collate Staple
+*UIConstraints: *Collate True *PageSize Com10
+*UIConstraints: *PageSize Com10 *Collate True
+*UIConstraints: *Collate Staple *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *Collate Staple
+*UIConstraints: *Collate True *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *Collate True
+*UIConstraints: *Collate Staple *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *Collate Staple
+*UIConstraints: *Collate True *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *Collate True
+*UIConstraints: *Collate Staple *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *Collate Staple
+*UIConstraints: *Collate True *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *Collate True
+*UIConstraints: *Collate Staple *PageSize Statement
+*UIConstraints: *PageSize Statement *Collate Staple
+
+*UIConstraints: *CNOutputPartition rotation *PageSize A3
+*UIConstraints: *PageSize A3 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *PageSize Legal
+*UIConstraints: *PageSize Legal *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition offset *PageSize A5
+*UIConstraints: *PageSize A5 *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *PageSize A5
+*UIConstraints: *PageSize A5 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *PageSize B4
+*UIConstraints: *PageSize B4 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *PageSize Executive
+*UIConstraints: *PageSize Executive *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *PageSize 11x17
+*UIConstraints: *PageSize 11x17 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition offset *PageSize Monarch
+*UIConstraints: *PageSize Monarch *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *PageSize Monarch
+*UIConstraints: *PageSize Monarch *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition offset *PageSize Com10
+*UIConstraints: *PageSize Com10 *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *PageSize Com10
+*UIConstraints: *PageSize Com10 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition offset *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition offset *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition offset *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition offset *PageSize Statement
+*UIConstraints: *PageSize Statement *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *PageSize Statement
+*UIConstraints: *PageSize Statement *CNOutputPartition rotation
+
+*UIConstraints: *Booklet Left *PageSize A3
+*UIConstraints: *PageSize A3 *Booklet Left
+*UIConstraints: *Booklet Left *PageSize Legal
+*UIConstraints: *PageSize Legal *Booklet Left
+*UIConstraints: *Booklet Left *PageSize B4
+*UIConstraints: *PageSize B4 *Booklet Left
+*UIConstraints: *Booklet Left *PageSize Executive
+*UIConstraints: *PageSize Executive *Booklet Left
+*UIConstraints: *Booklet Left *PageSize 11x17
+*UIConstraints: *PageSize 11x17 *Booklet Left
+*UIConstraints: *Booklet Left *PageSize Monarch
+*UIConstraints: *PageSize Monarch *Booklet Left
+*UIConstraints: *Booklet Left *PageSize Com10
+*UIConstraints: *PageSize Com10 *Booklet Left
+*UIConstraints: *Booklet Left *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *Booklet Left
+*UIConstraints: *Booklet Left *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *Booklet Left
+*UIConstraints: *Booklet Left *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *Booklet Left
+
+*UIConstraints: *CNPunch Left *PageSize A3
+*UIConstraints: *PageSize A3 *CNPunch Left
+*UIConstraints: *CNPunch Left *PageSize Legal
+*UIConstraints: *PageSize Legal *CNPunch Left
+*UIConstraints: *CNPunch Left *PageSize A5
+*UIConstraints: *PageSize A5 *CNPunch Left
+*UIConstraints: *CNPunch Top *PageSize A5
+*UIConstraints: *PageSize A5 *CNPunch Top
+*UIConstraints: *CNPunch Left *PageSize B4
+*UIConstraints: *PageSize B4 *CNPunch Left
+*UIConstraints: *CNPunch Left *PageSize 11x17
+*UIConstraints: *PageSize 11x17 *CNPunch Left
+*UIConstraints: *CNPunch Left *PageSize Monarch
+*UIConstraints: *PageSize Monarch *CNPunch Left
+*UIConstraints: *CNPunch Top *PageSize Monarch
+*UIConstraints: *PageSize Monarch *CNPunch Top
+*UIConstraints: *CNPunch Left *PageSize Com10
+*UIConstraints: *PageSize Com10 *CNPunch Left
+*UIConstraints: *CNPunch Top *PageSize Com10
+*UIConstraints: *PageSize Com10 *CNPunch Top
+*UIConstraints: *CNPunch Left *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *CNPunch Left
+*UIConstraints: *CNPunch Top *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *CNPunch Top
+*UIConstraints: *CNPunch Left *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *CNPunch Left
+*UIConstraints: *CNPunch Top *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *CNPunch Top
+*UIConstraints: *CNPunch Left *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *CNPunch Left
+*UIConstraints: *CNPunch Top *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *CNPunch Top
+*UIConstraints: *CNPunch Left *PageSize Statement
+*UIConstraints: *PageSize Statement *CNPunch Left
+*UIConstraints: *CNPunch Top *PageSize Statement
+*UIConstraints: *PageSize Statement *CNPunch Top
+
+*UIConstraints: *StapleLocation Left *PageSize A3
+*UIConstraints: *PageSize A3 *StapleLocation Left
+*UIConstraints: *StapleLocation Top *PageSize Legal
+*UIConstraints: *PageSize Legal *StapleLocation Top
+*UIConstraints: *StapleLocation Top *PageSize B5
+*UIConstraints: *PageSize B5 *StapleLocation Top
+*UIConstraints: *StapleLocation Left *PageSize B4
+*UIConstraints: *PageSize B4 *StapleLocation Left
+*UIConstraints: *StapleLocation Top *PageSize Letter
+*UIConstraints: *PageSize Letter *StapleLocation Top
+*UIConstraints: *StapleLocation Top *PageSize A4
+*UIConstraints: *PageSize A4 *StapleLocation Top
+*UIConstraints: *StapleLocation Left *PageSize 11x17
+*UIConstraints: *PageSize 11x17 *StapleLocation Left
+
+*UIConstraints: *CNFinisher FINS1 *StapleLocation Left
+*UIConstraints: *StapleLocation Left *CNFinisher FINS1
+*UIConstraints: *CNFinisher FINS1 *StapleLocation Top
+*UIConstraints: *StapleLocation Top *CNFinisher FINS1
+
+*UIConstraints: *Collate Staple *MediaType HEAVY
+*UIConstraints: *MediaType HEAVY *Collate Staple
+*UIConstraints: *Collate Staple *MediaType OHP
+*UIConstraints: *MediaType OHP *Collate Staple
+*UIConstraints: *Collate Staple *MediaType LABELS
+*UIConstraints: *MediaType LABELS *Collate Staple
+*UIConstraints: *Collate Staple *MediaType TRACING
+*UIConstraints: *MediaType TRACING *Collate Staple
+
+*UIConstraints: *CNPunch Left *MediaType HEAVY
+*UIConstraints: *MediaType HEAVY *CNPunch Left
+*UIConstraints: *CNPunch Top *MediaType HEAVY
+*UIConstraints: *MediaType HEAVY *CNPunch Top
+*UIConstraints: *CNPunch Left *MediaType OHP
+*UIConstraints: *MediaType OHP *CNPunch Left
+*UIConstraints: *CNPunch Top *MediaType OHP
+*UIConstraints: *MediaType OHP *CNPunch Top
+*UIConstraints: *CNPunch Left *MediaType LABELS
+*UIConstraints: *MediaType LABELS *CNPunch Left
+*UIConstraints: *CNPunch Top *MediaType LABELS
+*UIConstraints: *MediaType LABELS *CNPunch Top
+*UIConstraints: *CNPunch Left *MediaType PREPUNCHED
+*UIConstraints: *MediaType PREPUNCHED *CNPunch Left
+*UIConstraints: *CNPunch Top *MediaType PREPUNCHED
+*UIConstraints: *MediaType PREPUNCHED *CNPunch Top
+*UIConstraints: *CNPunch Left *MediaType TRACING
+*UIConstraints: *MediaType TRACING *CNPunch Left
+*UIConstraints: *CNPunch Top *MediaType TRACING
+*UIConstraints: *MediaType TRACING *CNPunch Top
+
+*UIConstraints: *Booklet Left *MediaType HEAVY
+*UIConstraints: *MediaType HEAVY *Booklet Left
+*UIConstraints: *Booklet Left *MediaType OHP
+*UIConstraints: *MediaType OHP *Booklet Left
+*UIConstraints: *Booklet Left *MediaType LABELS
+*UIConstraints: *MediaType LABELS *Booklet Left
+*UIConstraints: *Booklet Left *MediaType TRACING
+*UIConstraints: *MediaType TRACING *Booklet Left
+
+*UIConstraints: *InputSlot Cas3 *MediaType HEAVY
+*UIConstraints: *MediaType HEAVY *InputSlot Cas3
+*UIConstraints: *InputSlot Cas4 *MediaType HEAVY
+*UIConstraints: *MediaType HEAVY *InputSlot Cas4
+*UIConstraints: *InputSlot Cas1 *MediaType OHP
+*UIConstraints: *MediaType OHP *InputSlot Cas1
+*UIConstraints: *InputSlot Cas2 *MediaType OHP
+*UIConstraints: *MediaType OHP *InputSlot Cas2
+*UIConstraints: *InputSlot Cas3 *MediaType OHP
+*UIConstraints: *MediaType OHP *InputSlot Cas3
+*UIConstraints: *InputSlot Cas4 *MediaType OHP
+*UIConstraints: *MediaType OHP *InputSlot Cas4
+*UIConstraints: *InputSlot SideDeck *MediaType OHP
+*UIConstraints: *MediaType OHP *InputSlot SideDeck
+*UIConstraints: *InputSlot Cas1 *MediaType LABELS
+*UIConstraints: *MediaType LABELS *InputSlot Cas1
+*UIConstraints: *InputSlot Cas2 *MediaType LABELS
+*UIConstraints: *MediaType LABELS *InputSlot Cas2
+*UIConstraints: *InputSlot Cas3 *MediaType LABELS
+*UIConstraints: *MediaType LABELS *InputSlot Cas3
+*UIConstraints: *InputSlot Cas4 *MediaType LABELS
+*UIConstraints: *MediaType LABELS *InputSlot Cas4
+*UIConstraints: *InputSlot SideDeck *MediaType LABELS
+*UIConstraints: *MediaType LABELS *InputSlot SideDeck
+*UIConstraints: *InputSlot Cas1 *MediaType TRACING
+*UIConstraints: *MediaType TRACING *InputSlot Cas1
+*UIConstraints: *InputSlot Cas2 *MediaType TRACING
+*UIConstraints: *MediaType TRACING *InputSlot Cas2
+*UIConstraints: *InputSlot Cas3 *MediaType TRACING
+*UIConstraints: *MediaType TRACING *InputSlot Cas3
+*UIConstraints: *InputSlot Cas4 *MediaType TRACING
+*UIConstraints: *MediaType TRACING *InputSlot Cas4
+*UIConstraints: *InputSlot SideDeck *MediaType TRACING
+*UIConstraints: *MediaType TRACING *InputSlot SideDeck
+
+*UIConstraints: *Duplex DuplexTumble *MediaType OHP
+*UIConstraints: *MediaType OHP *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexNoTumble *MediaType OHP
+*UIConstraints: *MediaType OHP *Duplex DuplexNoTumble
+*UIConstraints: *Duplex DuplexTumble *MediaType LABELS
+*UIConstraints: *MediaType LABELS *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexNoTumble *MediaType LABELS
+*UIConstraints: *MediaType LABELS *Duplex DuplexNoTumble
+*UIConstraints: *Duplex DuplexTumble *MediaType ENVELOPE
+*UIConstraints: *MediaType ENVELOPE *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexNoTumble *MediaType ENVELOPE
+*UIConstraints: *MediaType ENVELOPE *Duplex DuplexNoTumble
+*UIConstraints: *Duplex DuplexTumble *MediaType TRACING
+*UIConstraints: *MediaType TRACING *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexNoTumble *MediaType TRACING
+*UIConstraints: *MediaType TRACING *Duplex DuplexNoTumble
+*UIConstraints: *Duplex DuplexTumble *MediaType BOND
+*UIConstraints: *MediaType BOND *Duplex DuplexTumble
+*UIConstraints: *Duplex DuplexNoTumble *MediaType BOND
+*UIConstraints: *MediaType BOND *Duplex DuplexNoTumble
+
+*UIConstraints: *CNOutputPartition offset *MediaType OHP
+*UIConstraints: *MediaType OHP *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *MediaType OHP
+*UIConstraints: *MediaType OHP *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition offset *MediaType LABELS
+*UIConstraints: *MediaType LABELS *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *MediaType LABELS
+*UIConstraints: *MediaType LABELS *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition rotation *MediaType PREPUNCHED
+*UIConstraints: *MediaType PREPUNCHED *CNOutputPartition rotation
+*UIConstraints: *CNOutputPartition offset *MediaType TRACING
+*UIConstraints: *MediaType TRACING *CNOutputPartition offset
+*UIConstraints: *CNOutputPartition rotation *MediaType TRACING
+*UIConstraints: *MediaType TRACING *CNOutputPartition rotation
+
+*UIConstraints: *MediaType OHP *PageSize A3
+*UIConstraints: *PageSize A3 *MediaType OHP
+*UIConstraints: *MediaType ENVELOPE *PageSize A3
+*UIConstraints: *PageSize A3 *MediaType ENVELOPE
+*UIConstraints: *MediaType OHP *PageSize Legal
+*UIConstraints: *PageSize Legal *MediaType OHP
+*UIConstraints: *MediaType ENVELOPE *PageSize Legal
+*UIConstraints: *PageSize Legal *MediaType ENVELOPE
+*UIConstraints: *MediaType OHP *PageSize A5
+*UIConstraints: *PageSize A5 *MediaType OHP
+*UIConstraints: *MediaType ENVELOPE *PageSize A5
+*UIConstraints: *PageSize A5 *MediaType ENVELOPE
+*UIConstraints: *MediaType OHP *PageSize B5
+*UIConstraints: *PageSize B5 *MediaType OHP
+*UIConstraints: *MediaType ENVELOPE *PageSize B5
+*UIConstraints: *PageSize B5 *MediaType ENVELOPE
+*UIConstraints: *MediaType OHP *PageSize B4
+*UIConstraints: *PageSize B4 *MediaType OHP
+*UIConstraints: *MediaType ENVELOPE *PageSize B4
+*UIConstraints: *PageSize B4 *MediaType ENVELOPE
+*UIConstraints: *MediaType OHP *PageSize Executive
+*UIConstraints: *PageSize Executive *MediaType OHP
+*UIConstraints: *MediaType ENVELOPE *PageSize Executive
+*UIConstraints: *PageSize Executive *MediaType ENVELOPE
+*UIConstraints: *MediaType ENVELOPE *PageSize Letter
+*UIConstraints: *PageSize Letter *MediaType ENVELOPE
+*UIConstraints: *MediaType ENVELOPE *PageSize A4
+*UIConstraints: *PageSize A4 *MediaType ENVELOPE
+*UIConstraints: *MediaType OHP *PageSize 11x17
+*UIConstraints: *PageSize 11x17 *MediaType OHP
+*UIConstraints: *MediaType ENVELOPE *PageSize 11x17
+*UIConstraints: *PageSize 11x17 *MediaType ENVELOPE
+*UIConstraints: *MediaType HEAVY *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType HEAVY
+*UIConstraints: *MediaType OHP *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType LABELS
+*UIConstraints: *MediaType PREPUNCHED *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType PREPUNCHED
+*UIConstraints: *MediaType TRACING *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType TRACING
+*UIConstraints: *MediaType PlainPaper *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType PlainPaper
+*UIConstraints: *MediaType RECYCLED *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType RECYCLED
+*UIConstraints: *MediaType COLOR *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType COLOR
+*UIConstraints: *MediaType BOND *PageSize Monarch
+*UIConstraints: *PageSize Monarch *MediaType BOND
+*UIConstraints: *MediaType HEAVY *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType HEAVY
+*UIConstraints: *MediaType OHP *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType LABELS
+*UIConstraints: *MediaType PREPUNCHED *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType PREPUNCHED
+*UIConstraints: *MediaType TRACING *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType TRACING
+*UIConstraints: *MediaType PlainPaper *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType PlainPaper
+*UIConstraints: *MediaType RECYCLED *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType RECYCLED
+*UIConstraints: *MediaType COLOR *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType COLOR
+*UIConstraints: *MediaType BOND *PageSize Com10
+*UIConstraints: *PageSize Com10 *MediaType BOND
+*UIConstraints: *MediaType HEAVY *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType HEAVY
+*UIConstraints: *MediaType OHP *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType LABELS
+*UIConstraints: *MediaType PREPUNCHED *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType PREPUNCHED
+*UIConstraints: *MediaType TRACING *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType TRACING
+*UIConstraints: *MediaType PlainPaper *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType PlainPaper
+*UIConstraints: *MediaType RECYCLED *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType RECYCLED
+*UIConstraints: *MediaType COLOR *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType COLOR
+*UIConstraints: *MediaType BOND *PageSize dl_envelope
+*UIConstraints: *PageSize dl_envelope *MediaType BOND
+*UIConstraints: *MediaType HEAVY *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType HEAVY
+*UIConstraints: *MediaType OHP *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType LABELS
+*UIConstraints: *MediaType PREPUNCHED *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType PREPUNCHED
+*UIConstraints: *MediaType TRACING *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType TRACING
+*UIConstraints: *MediaType PlainPaper *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType PlainPaper
+*UIConstraints: *MediaType RECYCLED *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType RECYCLED
+*UIConstraints: *MediaType COLOR *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType COLOR
+*UIConstraints: *MediaType BOND *PageSize Envelope_C5
+*UIConstraints: *PageSize Envelope_C5 *MediaType BOND
+*UIConstraints: *MediaType HEAVY *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *MediaType HEAVY
+*UIConstraints: *MediaType OHP *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *MediaType OHP
+*UIConstraints: *MediaType LABELS *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *MediaType LABELS
+*UIConstraints: *MediaType PREPUNCHED *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *MediaType PREPUNCHED
+*UIConstraints: *MediaType TRACING *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *MediaType TRACING
+*UIConstraints: *MediaType PlainPaper *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *MediaType PlainPaper
+*UIConstraints: *MediaType RECYCLED *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *MediaType RECYCLED
+*UIConstraints: *MediaType COLOR *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *MediaType COLOR
+*UIConstraints: *MediaType BOND *PageSize Envelope_B5
+*UIConstraints: *PageSize Envelope_B5 *MediaType BOND
+*UIConstraints: *MediaType OHP *PageSize Statement
+*UIConstraints: *PageSize Statement *MediaType OHP
+*UIConstraints: *MediaType ENVELOPE *PageSize Statement
+*UIConstraints: *PageSize Statement *MediaType ENVELOPE
+
+*UIConstraints: *CNCopySetNumbering True *Booklet Left
+*UIConstraints: *Booklet Left *CNCopySetNumbering True
+
+*UIConstraints: *CNCopySetNumbering True *MediaType OHP
+*UIConstraints: *MediaType OHP *CNCopySetNumbering True
+
+*UIConstraints: *CNJobExecMode store *CNCopySetNumbering True
+*UIConstraints: *CNCopySetNumbering True *CNJobExecMode store
+
+*UIConstraints: *CNInterleafSheet True *MediaType HEAVY
+*UIConstraints: *MediaType HEAVY *CNInterleafSheet True
+*UIConstraints: *CNInterleafSheet True *MediaType LABELS
+*UIConstraints: *MediaType LABELS *CNInterleafSheet True
+*UIConstraints: *CNInterleafSheet True *MediaType ENVELOPE
+*UIConstraints: *MediaType ENVELOPE *CNInterleafSheet True
+*UIConstraints: *CNInterleafSheet True *MediaType PREPUNCHED
+*UIConstraints: *MediaType PREPUNCHED *CNInterleafSheet True
+*UIConstraints: *CNInterleafSheet True *MediaType TRACING
+*UIConstraints: *MediaType TRACING *CNInterleafSheet True
+*UIConstraints: *CNInterleafSheet True *MediaType PlainPaper
+*UIConstraints: *MediaType PlainPaper *CNInterleafSheet True
+*UIConstraints: *CNInterleafSheet True *MediaType RECYCLED
+*UIConstraints: *MediaType RECYCLED *CNInterleafSheet True
+*UIConstraints: *CNInterleafSheet True *MediaType COLOR
+*UIConstraints: *MediaType COLOR *CNInterleafSheet True
+*UIConstraints: *CNInterleafSheet True *MediaType Auto
+*UIConstraints: *MediaType Auto *CNInterleafSheet True
+*UIConstraints: *CNInterleafSheet True *MediaType BOND
+*UIConstraints: *MediaType BOND *CNInterleafSheet True
+
+*DefaultFont: Courier
+*Font AvantGarde-Book: Standard "(001.006S)" Standard ROM
+*Font AvantGarde-BookOblique: Standard "(001.006S)" Standard ROM
+*Font AvantGarde-Demi: Standard "(001.007S)" Standard ROM
+*Font AvantGarde-DemiOblique: Standard "(001.007S)" Standard ROM
+*Font Bookman-Demi: Standard "(001.004S)" Standard ROM
+*Font Bookman-DemiItalic: Standard "(001.004S)" Standard ROM
+*Font Bookman-Light: Standard "(001.004S)" Standard ROM
+*Font Bookman-LightItalic: Standard "(001.004S)" Standard ROM
+*Font Courier: Standard "(002.004S)" Standard ROM
+*Font Courier-Bold: Standard "(002.004S)" Standard ROM
+*Font Courier-BoldOblique: Standard "(002.004S)" Standard ROM
+*Font Courier-Oblique: Standard "(002.004S)" Standard ROM
+*Font Helvetica: Standard "(001.006S)" Standard ROM
+*Font Helvetica-Bold: Standard "(001.007S)" Standard ROM
+*Font Helvetica-BoldOblique: Standard "(001.007S)" Standard ROM
+*Font Helvetica-Narrow: Standard "(001.006S)" Standard ROM
+*Font Helvetica-Narrow-Bold: Standard "(001.007S)" Standard ROM
+*Font Helvetica-Narrow-BoldOblique: Standard "(001.007S)" Standard ROM
+*Font Helvetica-Narrow-Oblique: Standard "(001.006S)" Standard ROM
+*Font Helvetica-Oblique: Standard "(001.006S)" Standard ROM
+*Font NewCenturySchlbk-Bold: Standard "(001.009S)" Standard ROM
+*Font NewCenturySchlbk-BoldItalic: Standard "(001.007S)" Standard ROM
+*Font NewCenturySchlbk-Italic: Standard "(001.006S)" Standard ROM
+*Font NewCenturySchlbk-Roman: Standard "(001.007S)" Standard ROM
+*Font Palatino-Bold: Standard "(001.005S)" Standard ROM
+*Font Palatino-BoldItalic: Standard "(001.005S)" Standard ROM
+*Font Palatino-Italic: Standard "(001.005S)" Standard ROM
+*Font Palatino-Roman: Standard "(001.005S)" Standard ROM
+*Font Symbol: Special "(001.007S)" Special ROM
+*Font Times-Bold: Standard "(001.007S)" Standard ROM
+*Font Times-BoldItalic: Standard "(001.009S)" Standard ROM
+*Font Times-Italic: Standard "(001.007S)" Standard ROM
+*Font Times-Roman: Standard "(001.007S)" Standard ROM
+*Font ZapfChancery-MediumItalic: Standard "(001.007S)" Standard ROM
+*Font ZapfDingbats: Special "(001.004S)" Standard ROM
+
+*%
+*% End of PPD file.
+*%
+
+*cupsLanguages: "de en es fr it ja ko zh_CN zh_TW"
+
+*de.Translation CNFinisher/Ausgabeoptionen: ""
+*de.CNFinisher None/Kein: ""
+*de.CNFinisher IN2TRAY/Internes 2-Wege-Fach: ""
+*de.CNFinisher FINS1/Finisher-S1: ""
+*de.CNFinisher FINQ3/Finisher-Q3: ""
+*de.CNFinisher SFINQ4/Sattel-Finisher-Q4: ""
+*de.Translation CNPuncher/Lochereinheit: ""
+*de.CNPuncher True/Unterstützt: ""
+*de.CNPuncher False/Nicht unterstützt: ""
+*de.Translation Resolution/Auflösung: ""
+*de.Resolution 600/600 dpi: ""
+*de.Translation CNTonerSaving/Toner sparen: ""
+*de.CNTonerSaving Auto/Druckerstandard: ""
+*de.CNTonerSaving True/Ein: ""
+*de.CNTonerSaving False/Aus: ""
+*de.Translation MediaType/Papiertyp: ""
+*de.MediaType Auto/Auto: ""
+*de.MediaType PlainPaper/Normalpapier: ""
+*de.MediaType RECYCLED/Recyclingpapier: ""
+*de.MediaType COLOR/Farbpapier: ""
+*de.MediaType PREPUNCHED/Vorgelochtes Papier: ""
+*de.MediaType BOND/Bond Papier: ""
+*de.MediaType HEAVY/Schweres Papier: ""
+*de.MediaType OHP/Folie: ""
+*de.MediaType LABELS/Etiketten: ""
+*de.MediaType TRACING/Pauspapier: ""
+*de.MediaType ENVELOPE/Briefumschlag: ""
+*de.Translation InputSlot/Papierzufuhr: ""
+*de.InputSlot Auto/Auto: ""
+*de.InputSlot Manual/Mehrzweck-Papierfach: ""
+*de.InputSlot Cas1/Einzug 1: ""
+*de.InputSlot Cas2/Einzug 2: ""
+*de.InputSlot Cas3/Einzug 3: ""
+*de.InputSlot Cas4/Einzug 4: ""
+*de.InputSlot SideDeck/Seitliches Papiermagazin: ""
+*de.InputSlot Env/Einzug für Briefumschläge: ""
+*de.Translation CNInterleafSheet/Durchschussblätter einlegen: ""
+*de.CNInterleafSheet None/Nicht angeben: ""
+*de.CNInterleafSheet True/Ein: ""
+*de.CNInterleafSheet False/Aus: ""
+*de.Translation CNInterleafMediaType/Durchschusspapiertyp: ""
+*de.CNInterleafMediaType Auto/Auto: ""
+*de.CNInterleafMediaType PlainPaper/Normalpapier: ""
+*de.CNInterleafMediaType RECYCLED/Recyclingpapier: ""
+*de.CNInterleafMediaType COLOR/Farbpapier: ""
+*de.CNInterleafMediaType PREPUNCHED/Vorgelochtes Papier: ""
+*de.Translation CNInterleafPrint/Auf Zwischenblätter drucken: ""
+*de.CNInterleafPrint None/Nicht angeben: ""
+*de.CNInterleafPrint True/Ein: ""
+*de.CNInterleafPrint False/Aus: ""
+*de.Translation OutputBin/Papierausgabe: ""
+*de.OutputBin Auto/Auto: ""
+*de.Translation Duplex/Doppelseitiger Druck: ""
+*de.Duplex None/Aus: ""
+*de.Duplex DuplexNoTumble/Lange Seite: ""
+*de.Duplex DuplexTumble/Kurze Seite: ""
+*de.Translation BindEdge/Bindung: ""
+*de.BindEdge Left/Lange Seite (links): ""
+*de.BindEdge Top/Kurze Seite (oben): ""
+*de.Translation Booklet/Broschürendruck: ""
+*de.Booklet None/Aus: ""
+*de.Booklet Left/Bindung links: ""
+*de.Translation CNOutputPartition/Versetzte Ausgabe/Drehen: ""
+*de.CNOutputPartition None/Aus: ""
+*de.CNOutputPartition offset/Versetzte Ausgabe: ""
+*de.CNOutputPartition rotation/Drehen: ""
+*de.Translation Collate/Endverarbeitung: ""
+*de.Collate False/Aus: ""
+*de.Collate True/Sortieren: ""
+*de.Collate Group/Gruppieren: ""
+*de.Collate Staple/Heften: ""
+*de.Translation StapleLocation/Heftposition: ""
+*de.StapleLocation None/Aus: ""
+*de.StapleLocation TopLeft/Oben links (Einfach): ""
+*de.StapleLocation Top/Oben (Doppelt): ""
+*de.StapleLocation TopRight/Oben rechts (Einfach): ""
+*de.StapleLocation Left/Links (Doppelt): ""
+*de.StapleLocation BottomLeft/Unten links (Einfach): ""
+*de.Translation CNSaddleStitch/Sattelheftung: ""
+*de.CNSaddleStitch None/Nicht angeben: ""
+*de.CNSaddleStitch True/Ein: ""
+*de.CNSaddleStitch False/Aus: ""
+*de.Translation CNPunch/Locherposition: ""
+*de.CNPunch None/Nicht angeben: ""
+*de.CNPunch Left/Links: ""
+*de.CNPunch Top/Oben: ""
+*de.Translation CNCopySetNumbering/Kopiensatz nummerieren: ""
+*de.CNCopySetNumbering None/Nicht angeben: ""
+*de.CNCopySetNumbering True/Ein: ""
+*de.CNCopySetNumbering False/Aus: ""
+*de.Translation CNImageRefinement/Kantenglättung: ""
+*de.CNImageRefinement None/Druckerstandard: ""
+*de.CNImageRefinement True/Ein: ""
+*de.CNImageRefinement False/Aus: ""
+*de.Translation CNLineRefinement/Linienglättung: ""
+*de.CNLineRefinement None/Druckerstandard: ""
+*de.CNLineRefinement True/Ein: ""
+*de.CNLineRefinement False/Aus: ""
+*de.Translation CNHalftone/Halbton: ""
+*de.CNHalftone Resolution/Auflösung: ""
+*de.CNHalftone Gradation/Farbabstufung: ""
+*de.CNHalftone ColorTone/Farbton: ""
+*de.Translation CNJobExecMode/Ausgabemethode: ""
+*de.CNJobExecMode print/Drucken: ""
+*de.CNJobExecMode secured/Geschützter Druck: ""
+*de.CNJobExecMode store/Speichern: ""
+*de.Translation PageSize/Seitenformat: ""
+*de.PageSize Letter/Letter: ""
+*de.PageSize 11x17/11x17: ""
+*de.PageSize Legal/Legal: ""
+*de.PageSize Statement/Statement: ""
+*de.PageSize Executive/Executive: ""
+*de.PageSize A5/A5: ""
+*de.PageSize B5/B5: ""
+*de.PageSize A4/A4: ""
+*de.PageSize B4/B4: ""
+*de.PageSize A3/A3: ""
+*de.PageSize Monarch/Briefumschlag Catalog Glove No.8: ""
+*de.PageSize Com10/Briefumschlag No.10 (COM10): ""
+*de.PageSize dl_envelope/Briefumschlag DL: ""
+*de.PageSize Envelope_C5/Briefumschlag C5: ""
+*de.PageSize Envelope_B5/Briefumschlag B5: ""
+*de.Translation PageRegion/Druckfläche: ""
+*de.PageRegion Letter/Letter: ""
+*de.PageRegion 11x17/11x17: ""
+*de.PageRegion Legal/Legal: ""
+*de.PageRegion Statement/Statement: ""
+*de.PageRegion Executive/Executive: ""
+*de.PageRegion A5/A5: ""
+*de.PageRegion B5/B5: ""
+*de.PageRegion A4/A4: ""
+*de.PageRegion B4/B4: ""
+*de.PageRegion A3/A3: ""
+*de.PageRegion Monarch/Briefumschlag Catalog Glove No.8: ""
+*de.PageRegion Com10/Briefumschlag No.10 (COM10): ""
+*de.PageRegion dl_envelope/Briefumschlag DL: ""
+*de.PageRegion Envelope_C5/Briefumschlag C5: ""
+*de.PageRegion Envelope_B5/Briefumschlag B5: ""
+
+*en.Translation CNFinisher/Output Options: ""
+*en.CNFinisher None/None : ""
+*en.CNFinisher IN2TRAY/Inner 2way Tray: ""
+*en.CNFinisher FINS1/Finisher-S1: ""
+*en.CNFinisher FINQ3/Finisher-Q3: ""
+*en.CNFinisher SFINQ4/Saddle Finisher-Q4: ""
+*en.Translation CNPuncher/Puncher Unit: ""
+*en.CNPuncher True/Supported: ""
+*en.CNPuncher False/Not Supported: ""
+*en.Translation Resolution/Resolution: ""
+*en.Resolution 600/600 dpi: ""
+*en.Translation CNTonerSaving/Toner Save: ""
+*en.CNTonerSaving Auto/Printer Default: ""
+*en.CNTonerSaving True/On: ""
+*en.CNTonerSaving False/Off: ""
+*en.Translation MediaType/Paper Type: ""
+*en.MediaType Auto/Auto: ""
+*en.MediaType PlainPaper/Plain Paper: ""
+*en.MediaType RECYCLED/Recycled Paper: ""
+*en.MediaType COLOR/Color Paper: ""
+*en.MediaType PREPUNCHED/Pre-punched Paper: ""
+*en.MediaType BOND/Bond Paper: ""
+*en.MediaType HEAVY/Heavy Paper: ""
+*en.MediaType OHP/Transparency: ""
+*en.MediaType LABELS/Labels: ""
+*en.MediaType TRACING/Tracing Paper: ""
+*en.MediaType ENVELOPE/Envelope: ""
+*en.Translation InputSlot/Paper Source: ""
+*en.InputSlot Auto/Auto: ""
+*en.InputSlot Manual/Multi-purpose Tray : ""
+*en.InputSlot Cas1/Drawer 1: ""
+*en.InputSlot Cas2/Drawer 2: ""
+*en.InputSlot Cas3/Drawer 3: ""
+*en.InputSlot Cas4/Drawer 4: ""
+*en.InputSlot SideDeck/Side Paper Deck: ""
+*en.InputSlot Env/Envelope Feeder: ""
+*en.Translation CNInterleafSheet/Insert Interleaf Sheets: ""
+*en.CNInterleafSheet None/Do Not Specify: ""
+*en.CNInterleafSheet True/On : ""
+*en.CNInterleafSheet False/Off : ""
+*en.Translation CNInterleafMediaType/Interleaf Paper Type: ""
+*en.CNInterleafMediaType Auto/Auto: ""
+*en.CNInterleafMediaType PlainPaper/Plain Paper: ""
+*en.CNInterleafMediaType RECYCLED/Recycled Paper: ""
+*en.CNInterleafMediaType COLOR/Color Paper: ""
+*en.CNInterleafMediaType PREPUNCHED/Pre-punched Paper: ""
+*en.Translation CNInterleafPrint/Print on Interleaf Sheets: ""
+*en.CNInterleafPrint None/Do Not Specify: ""
+*en.CNInterleafPrint True/On : ""
+*en.CNInterleafPrint False/Off : ""
+*en.Translation OutputBin/Paper Output: ""
+*en.OutputBin Auto/Auto: ""
+*en.Translation Duplex/2-sided Printing: ""
+*en.Duplex None/Off : ""
+*en.Duplex DuplexNoTumble/Long Edge: ""
+*en.Duplex DuplexTumble/Short Edge: ""
+*en.Translation BindEdge/Binding Location: ""
+*en.BindEdge Left/Long Edge (Left): ""
+*en.BindEdge Top/Short Edge (Top): ""
+*en.Translation Booklet/Booklet Printing: ""
+*en.Booklet None/Off : ""
+*en.Booklet Left/Left Binding: ""
+*en.Translation CNOutputPartition/Offset/Rotate: ""
+*en.CNOutputPartition None/Off : ""
+*en.CNOutputPartition offset/Offset: ""
+*en.CNOutputPartition rotation/Rotate: ""
+*en.Translation Collate/Finishing: ""
+*en.Collate False/Off  : ""
+*en.Collate True/Collate : ""
+*en.Collate Group/Group: ""
+*en.Collate Staple/Staple: ""
+*en.Translation StapleLocation/Staple Position: ""
+*en.StapleLocation None/No Stapling: ""
+*en.StapleLocation TopLeft/Upper Left (Single): ""
+*en.StapleLocation Top/Top (Double): ""
+*en.StapleLocation TopRight/Upper Right (Single): ""
+*en.StapleLocation Left/Left (Double): ""
+*en.StapleLocation BottomLeft/Lower Left (Single): ""
+*en.Translation CNSaddleStitch/Saddle Stitch: ""
+*en.CNSaddleStitch None/Do Not Specify: ""
+*en.CNSaddleStitch True/On : ""
+*en.CNSaddleStitch False/Off : ""
+*en.Translation CNPunch/Hole Punch Position: ""
+*en.CNPunch None/Do Not Specify: ""
+*en.CNPunch Left/Left: ""
+*en.CNPunch Top/Top: ""
+*en.Translation CNCopySetNumbering/Copy Set Numbering: ""
+*en.CNCopySetNumbering None/Do Not Specify: ""
+*en.CNCopySetNumbering True/On : ""
+*en.CNCopySetNumbering False/Off : ""
+*en.Translation CNImageRefinement/Image Refinement: ""
+*en.CNImageRefinement None/Printer Default: ""
+*en.CNImageRefinement True/On: ""
+*en.CNImageRefinement False/Off: ""
+*en.Translation CNLineRefinement/Line Refinement: ""
+*en.CNLineRefinement None/Printer Default: ""
+*en.CNLineRefinement True/On: ""
+*en.CNLineRefinement False/Off: ""
+*en.Translation CNHalftone/Halftones: ""
+*en.CNHalftone Resolution/Resolution: ""
+*en.CNHalftone Gradation/Gradation: ""
+*en.CNHalftone ColorTone/Color Tone: ""
+*en.Translation CNJobExecMode/Output Method: ""
+*en.CNJobExecMode print/Print: ""
+*en.CNJobExecMode secured/Secured Print: ""
+*en.CNJobExecMode store/Store: ""
+*en.Translation PageSize/Page Size: ""
+*en.PageSize Letter/Letter: ""
+*en.PageSize 11x17/11x17: ""
+*en.PageSize Legal/Legal: ""
+*en.PageSize Statement/Statement: ""
+*en.PageSize Executive/Executive: ""
+*en.PageSize A5/A5: ""
+*en.PageSize B5/B5: ""
+*en.PageSize A4/A4: ""
+*en.PageSize B4/B4: ""
+*en.PageSize A3/A3: ""
+*en.PageSize Monarch/Envelope Catalog Glove No.8: ""
+*en.PageSize Com10/Envelope No.10 (COM10): ""
+*en.PageSize dl_envelope/Envelope DL: ""
+*en.PageSize Envelope_C5/Envelope C5: ""
+*en.PageSize Envelope_B5/Envelope B5: ""
+*en.Translation PageRegion/Print Area: ""
+*en.PageRegion Letter/Letter: ""
+*en.PageRegion 11x17/11x17: ""
+*en.PageRegion Legal/Legal: ""
+*en.PageRegion Statement/Statement: ""
+*en.PageRegion Executive/Executive: ""
+*en.PageRegion A5/A5: ""
+*en.PageRegion B5/B5: ""
+*en.PageRegion A4/A4: ""
+*en.PageRegion B4/B4: ""
+*en.PageRegion A3/A3: ""
+*en.PageRegion Monarch/Envelope Catalog Glove No.8: ""
+*en.PageRegion Com10/Envelope No.10 (COM10): ""
+*en.PageRegion dl_envelope/Envelope DL: ""
+*en.PageRegion Envelope_C5/Envelope C5: ""
+*en.PageRegion Envelope_B5/Envelope B5: ""
+
+*es.Translation CNFinisher/Opciones de salida: ""
+*es.CNFinisher None/Ninguno: ""
+*es.CNFinisher IN2TRAY/Bandeja interior de 2 vías: ""
+*es.CNFinisher FINS1/Unidad de acabado-S1: ""
+*es.CNFinisher FINQ3/Unidad de acabado-Q3: ""
+*es.CNFinisher SFINQ4/Unidad de acabado de cuadernillos-Q4: ""
+*es.Translation CNPuncher/Unidad taladradora: ""
+*es.CNPuncher True/Compatible: ""
+*es.CNPuncher False/Incompatible: ""
+*es.Translation Resolution/Resolución: ""
+*es.Resolution 600/600 ppp: ""
+*es.Translation CNTonerSaving/Ahorro de tóner: ""
+*es.CNTonerSaving Auto/Impresora predeterminada: ""
+*es.CNTonerSaving True/Activado: ""
+*es.CNTonerSaving False/Desactivado: ""
+*es.Translation MediaType/Tipo de papel: ""
+*es.MediaType Auto/Auto: ""
+*es.MediaType PlainPaper/Papel normal: ""
+*es.MediaType RECYCLED/Papel reciclado: ""
+*es.MediaType COLOR/Papel de color: ""
+*es.MediaType PREPUNCHED/Papel pre-perforado: ""
+*es.MediaType BOND/Papel Bond: ""
+*es.MediaType HEAVY/Papel grueso: ""
+*es.MediaType OHP/Transparencia: ""
+*es.MediaType LABELS/Etiquetas: ""
+*es.MediaType TRACING/Papel vegetal: ""
+*es.MediaType ENVELOPE/Sobre: ""
+*es.Translation InputSlot/Origen del papel: ""
+*es.InputSlot Auto/Auto: ""
+*es.InputSlot Manual/Bandeja multiuso: ""
+*es.InputSlot Cas1/Cassette 1: ""
+*es.InputSlot Cas2/Cassette 2: ""
+*es.InputSlot Cas3/Cassette 3: ""
+*es.InputSlot Cas4/Cassette 4: ""
+*es.InputSlot SideDeck/Depósito de papel lateral: ""
+*es.InputSlot Env/Alimentador de sobres: ""
+*es.Translation CNInterleafSheet/Insertar hojas intercaladas: ""
+*es.CNInterleafSheet None/No especificar: ""
+*es.CNInterleafSheet True/Activado: ""
+*es.CNInterleafSheet False/Desactivado: ""
+*es.Translation CNInterleafMediaType/Tipo de papel intercalado: ""
+*es.CNInterleafMediaType Auto/Auto: ""
+*es.CNInterleafMediaType PlainPaper/Papel normal: ""
+*es.CNInterleafMediaType RECYCLED/Papel reciclado: ""
+*es.CNInterleafMediaType COLOR/Papel de color: ""
+*es.CNInterleafMediaType PREPUNCHED/Papel pre-perforado: ""
+*es.Translation CNInterleafPrint/Imprimir en las hojas intercaladas: ""
+*es.CNInterleafPrint None/No especificar: ""
+*es.CNInterleafPrint True/Activado: ""
+*es.CNInterleafPrint False/Desactivado: ""
+*es.Translation OutputBin/Salida del papel: ""
+*es.OutputBin Auto/Auto: ""
+*es.Translation Duplex/Impresión a doble cara: ""
+*es.Duplex None/Desactivado: ""
+*es.Duplex DuplexNoTumble/Lado largo: ""
+*es.Duplex DuplexTumble/Lado corto: ""
+*es.Translation BindEdge/Ubicación de la encuadernación: ""
+*es.BindEdge Left/Lado largo (izquierda): ""
+*es.BindEdge Top/Lado corto (superior): ""
+*es.Translation Booklet/Impresión en folleto: ""
+*es.Booklet None/Desactivado: ""
+*es.Booklet Left/Encuadernación por la izquierda: ""
+*es.Translation CNOutputPartition/Desplazar/Girar: ""
+*es.CNOutputPartition None/Desactivado: ""
+*es.CNOutputPartition offset/Desplazar: ""
+*es.CNOutputPartition rotation/Girar: ""
+*es.Translation Collate/Acabado: ""
+*es.Collate False/Desactivado: ""
+*es.Collate True/Intercalar: ""
+*es.Collate Group/Agrupar: ""
+*es.Collate Staple/Grapa: ""
+*es.Translation StapleLocation/Posición de las grapas: ""
+*es.StapleLocation None/Desactivado: ""
+*es.StapleLocation TopLeft/Izquierdo superior (simple): ""
+*es.StapleLocation Top/Superior (doble): ""
+*es.StapleLocation TopRight/Derecho superior (simple): ""
+*es.StapleLocation Left/Izquierda (doble): ""
+*es.StapleLocation BottomLeft/Izquierdo inferior (simple): ""
+*es.Translation CNSaddleStitch/Grapado de cuadernillo: ""
+*es.CNSaddleStitch None/No especificar: ""
+*es.CNSaddleStitch True/Activado: ""
+*es.CNSaddleStitch False/Desactivado: ""
+*es.Translation CNPunch/Posición de perforación: ""
+*es.CNPunch None/No especificar: ""
+*es.CNPunch Left/Izquierda: ""
+*es.CNPunch Top/Superior: ""
+*es.Translation CNCopySetNumbering/Numeración de juegos de copia: ""
+*es.CNCopySetNumbering None/No especificar: ""
+*es.CNCopySetNumbering True/Activado: ""
+*es.CNCopySetNumbering False/Desactivado: ""
+*es.Translation CNImageRefinement/Refinamiento de imágenes: ""
+*es.CNImageRefinement None/Impresora predeterminada: ""
+*es.CNImageRefinement True/Activado: ""
+*es.CNImageRefinement False/Desactivado: ""
+*es.Translation CNLineRefinement/Refinado de líneas: ""
+*es.CNLineRefinement None/Impresora predeterminada: ""
+*es.CNLineRefinement True/Activado: ""
+*es.CNLineRefinement False/Desactivado: ""
+*es.Translation CNHalftone/Medios tonos: ""
+*es.CNHalftone Resolution/Resolución: ""
+*es.CNHalftone Gradation/Gradación: ""
+*es.CNHalftone ColorTone/Tono de color: ""
+*es.Translation CNJobExecMode/Método de salida: ""
+*es.CNJobExecMode print/Imprimir: ""
+*es.CNJobExecMode secured/Prot. con contras.: ""
+*es.CNJobExecMode store/Almacenar: ""
+*es.Translation PageSize/Tamaño de página: ""
+*es.PageSize Letter/Carta: ""
+*es.PageSize 11x17/11x17: ""
+*es.PageSize Legal/Legal: ""
+*es.PageSize Statement/Informe: ""
+*es.PageSize Executive/Executive: ""
+*es.PageSize A5/A5: ""
+*es.PageSize B5/B5: ""
+*es.PageSize A4/A4: ""
+*es.PageSize B4/B4: ""
+*es.PageSize A3/A3: ""
+*es.PageSize Monarch/Sobre Catalog Glove nº 8: ""
+*es.PageSize Com10/Sobre nº 10 (COM10): ""
+*es.PageSize dl_envelope/Sobre DL: ""
+*es.PageSize Envelope_C5/Sobre C5: ""
+*es.PageSize Envelope_B5/Sobre B5: ""
+*es.Translation PageRegion/Área de impresión: ""
+*es.PageRegion Letter/Carta: ""
+*es.PageRegion 11x17/11x17: ""
+*es.PageRegion Legal/Legal: ""
+*es.PageRegion Statement/Informe: ""
+*es.PageRegion Executive/Executive: ""
+*es.PageRegion A5/A5: ""
+*es.PageRegion B5/B5: ""
+*es.PageRegion A4/A4: ""
+*es.PageRegion B4/B4: ""
+*es.PageRegion A3/A3: ""
+*es.PageRegion Monarch/Sobre Catalog Glove nº 8: ""
+*es.PageRegion Com10/Sobre nº 10 (COM10): ""
+*es.PageRegion dl_envelope/Sobre DL: ""
+*es.PageRegion Envelope_C5/Sobre C5: ""
+*es.PageRegion Envelope_B5/Sobre B5: ""
+
+*fr.Translation CNFinisher/Options de sortie : ""
+*fr.CNFinisher None/Aucun: ""
+*fr.CNFinisher IN2TRAY/Bac interne double: ""
+*fr.CNFinisher FINS1/Module de finition-S1: ""
+*fr.CNFinisher FINQ3/Module de finition-Q3: ""
+*fr.CNFinisher SFINQ4/Module de finition brochage-Q4: ""
+*fr.Translation CNPuncher/Perforateur: ""
+*fr.CNPuncher True/Prise en charge: ""
+*fr.CNPuncher False/Non prise en charge: ""
+*fr.Translation Resolution/Résolution : ""
+*fr.Resolution 600/600 ppp: ""
+*fr.Translation CNTonerSaving/Economie d'encre : ""
+*fr.CNTonerSaving Auto/Paramètre par défaut de l'imprimante: ""
+*fr.CNTonerSaving True/Activé: ""
+*fr.CNTonerSaving False/Désactivé: ""
+*fr.Translation MediaType/Type de papier : ""
+*fr.MediaType Auto/Auto: ""
+*fr.MediaType PlainPaper/Papier ordinaire: ""
+*fr.MediaType RECYCLED/Papier recyclé: ""
+*fr.MediaType COLOR/Papier de couleur: ""
+*fr.MediaType PREPUNCHED/Papier pré-perforé: ""
+*fr.MediaType BOND/Papier de luxe: ""
+*fr.MediaType HEAVY/Papier épais: ""
+*fr.MediaType OHP/Transparent: ""
+*fr.MediaType LABELS/Etiquettes: ""
+*fr.MediaType TRACING/Papier calque: ""
+*fr.MediaType ENVELOPE/Enveloppe: ""
+*fr.Translation InputSlot/Alimentation papier : ""
+*fr.InputSlot Auto/Auto: ""
+*fr.InputSlot Manual/Bac multifonctions: ""
+*fr.InputSlot Cas1/Cassette 1: ""
+*fr.InputSlot Cas2/Cassette 2: ""
+*fr.InputSlot Cas3/Cassette 3: ""
+*fr.InputSlot Cas4/Cassette 4: ""
+*fr.InputSlot SideDeck/Magasin à papier latéral: ""
+*fr.InputSlot Env/Module d'enveloppe: ""
+*fr.Translation CNInterleafSheet/Insérer des feuilles intercalaires: ""
+*fr.CNInterleafSheet None/Ne pas spécifier: ""
+*fr.CNInterleafSheet True/Activé: ""
+*fr.CNInterleafSheet False/Désactivé: ""
+*fr.Translation CNInterleafMediaType/Type de feuille intercalaire: ""
+*fr.CNInterleafMediaType Auto/Auto: ""
+*fr.CNInterleafMediaType PlainPaper/Papier ordinaire: ""
+*fr.CNInterleafMediaType RECYCLED/Papier recyclé: ""
+*fr.CNInterleafMediaType COLOR/Papier de couleur: ""
+*fr.CNInterleafMediaType PREPUNCHED/Papier pré-perforé: ""
+*fr.Translation CNInterleafPrint/Imprimer sur des feuilles intercalaires: ""
+*fr.CNInterleafPrint None/Ne pas spécifier: ""
+*fr.CNInterleafPrint True/Activé: ""
+*fr.CNInterleafPrint False/Désactivé: ""
+*fr.Translation OutputBin/Sortie papier : ""
+*fr.OutputBin Auto/Auto: ""
+*fr.Translation Duplex/Impression recto-verso: ""
+*fr.Duplex None/Désactivé: ""
+*fr.Duplex DuplexNoTumble/Bord long: ""
+*fr.Duplex DuplexTumble/Bord court: ""
+*fr.Translation BindEdge/Emplacement de la reliure: ""
+*fr.BindEdge Left/Bord long (Gauche): ""
+*fr.BindEdge Top/Bord court (Haut): ""
+*fr.Translation Booklet/Impression au format brochure: ""
+*fr.Booklet None/Désactivé: ""
+*fr.Booklet Left/Reliure gauche: ""
+*fr.Translation CNOutputPartition/Décalage/Rotation: ""
+*fr.CNOutputPartition None/Désactivé: ""
+*fr.CNOutputPartition offset/Décalage: ""
+*fr.CNOutputPartition rotation/Rotation: ""
+*fr.Translation Collate/Finition: ""
+*fr.Collate False/Désactivé: ""
+*fr.Collate True/Assembler: ""
+*fr.Collate Group/Grouper: ""
+*fr.Collate Staple/Agrafer: ""
+*fr.Translation StapleLocation/Emplacement des agrafes : ""
+*fr.StapleLocation None/Désactivé: ""
+*fr.StapleLocation TopLeft/En haut, à gauche (une agrafe): ""
+*fr.StapleLocation Top/En haut (deux agrafes): ""
+*fr.StapleLocation TopRight/En haut, à droite (une agrafe): ""
+*fr.StapleLocation Left/Gauche (deux agrafes): ""
+*fr.StapleLocation BottomLeft/En bas, à gauche (une agrafe): ""
+*fr.Translation CNSaddleStitch/Piqûre à cheval: ""
+*fr.CNSaddleStitch None/Ne pas spécifier: ""
+*fr.CNSaddleStitch True/Activé: ""
+*fr.CNSaddleStitch False/Désactivé: ""
+*fr.Translation CNPunch/Position de perforation: ""
+*fr.CNPunch None/Ne pas spécifier: ""
+*fr.CNPunch Left/Gauche: ""
+*fr.CNPunch Top/Haut: ""
+*fr.Translation CNCopySetNumbering/Numérotation des copies: ""
+*fr.CNCopySetNumbering None/Ne pas spécifier: ""
+*fr.CNCopySetNumbering True/Activé: ""
+*fr.CNCopySetNumbering False/Désactivé: ""
+*fr.Translation CNImageRefinement/Lissage de l'image : ""
+*fr.CNImageRefinement None/Paramètre par défaut de l'imprimante: ""
+*fr.CNImageRefinement True/Activé: ""
+*fr.CNImageRefinement False/Désactivé: ""
+*fr.Translation CNLineRefinement/Affinage des lignes : ""
+*fr.CNLineRefinement None/Paramètre par défaut de l'imprimante: ""
+*fr.CNLineRefinement True/Activé: ""
+*fr.CNLineRefinement False/Désactivé: ""
+*fr.Translation CNHalftone/Demi-tons : ""
+*fr.CNHalftone Resolution/Résolution: ""
+*fr.CNHalftone Gradation/Gradation: ""
+*fr.CNHalftone ColorTone/Ton de couleur: ""
+*fr.Translation CNJobExecMode/Méthode de sortie : ""
+*fr.CNJobExecMode print/Imprimer: ""
+*fr.CNJobExecMode secured/Impression sécurisée: ""
+*fr.CNJobExecMode store/Stocker: ""
+*fr.Translation PageSize/Format de page : ""
+*fr.PageSize Letter/Lettre: ""
+*fr.PageSize 11x17/11x17: ""
+*fr.PageSize Legal/Légal: ""
+*fr.PageSize Statement/Statement US: ""
+*fr.PageSize Executive/Executive: ""
+*fr.PageSize A5/A5: ""
+*fr.PageSize B5/B5: ""
+*fr.PageSize A4/A4: ""
+*fr.PageSize B4/B4: ""
+*fr.PageSize A3/A3: ""
+*fr.PageSize Monarch/Enveloppe Catalog Glove n°8: ""
+*fr.PageSize Com10/Enveloppe n°10 (COM10): ""
+*fr.PageSize dl_envelope/Enveloppe DL: ""
+*fr.PageSize Envelope_C5/Enveloppe C5: ""
+*fr.PageSize Envelope_B5/Enveloppe B5: ""
+*fr.Translation PageRegion/Zone d'impression: ""
+*fr.PageRegion Letter/Lettre: ""
+*fr.PageRegion 11x17/11x17: ""
+*fr.PageRegion Legal/Légal: ""
+*fr.PageRegion Statement/Statement US: ""
+*fr.PageRegion Executive/Executive: ""
+*fr.PageRegion A5/A5: ""
+*fr.PageRegion B5/B5: ""
+*fr.PageRegion A4/A4: ""
+*fr.PageRegion B4/B4: ""
+*fr.PageRegion A3/A3: ""
+*fr.PageRegion Monarch/Enveloppe Catalog Glove n°8: ""
+*fr.PageRegion Com10/Enveloppe n°10 (COM10): ""
+*fr.PageRegion dl_envelope/Enveloppe DL: ""
+*fr.PageRegion Envelope_C5/Enveloppe C5: ""
+*fr.PageRegion Envelope_B5/Enveloppe B5: ""
+
+*it.Translation CNFinisher/Opzioni di stampa: ""
+*it.CNFinisher None/Nessuno: ""
+*it.CNFinisher IN2TRAY/Vassoio interno a due vie: ""
+*it.CNFinisher FINS1/Finisher-S1: ""
+*it.CNFinisher FINQ3/Finisher-Q3: ""
+*it.CNFinisher SFINQ4/Finisher con pinz. a sella-Q4: ""
+*it.Translation CNPuncher/Unità di foratura: ""
+*it.CNPuncher True/Supportato: ""
+*it.CNPuncher False/Non supportato: ""
+*it.Translation Resolution/Risoluzione: ""
+*it.Resolution 600/600 dpi: ""
+*it.Translation CNTonerSaving/Risparmio toner: ""
+*it.CNTonerSaving Auto/Predefinite stampante: ""
+*it.CNTonerSaving True/Attivato: ""
+*it.CNTonerSaving False/Disattivato: ""
+*it.Translation MediaType/Tipo di carta: ""
+*it.MediaType Auto/Auto: ""
+*it.MediaType PlainPaper/Carta comune: ""
+*it.MediaType RECYCLED/Carta riciclata: ""
+*it.MediaType COLOR/Carta colorata: ""
+*it.MediaType PREPUNCHED/Carta preforata: ""
+*it.MediaType BOND/Carta ad alta qualità: ""
+*it.MediaType HEAVY/Carta spessa: ""
+*it.MediaType OHP/Lucido: ""
+*it.MediaType LABELS/Etichette: ""
+*it.MediaType TRACING/Traslucido: ""
+*it.MediaType ENVELOPE/Buste: ""
+*it.Translation InputSlot/Alimentazione carta: ""
+*it.InputSlot Auto/Auto: ""
+*it.InputSlot Manual/Vassoio multiuso: ""
+*it.InputSlot Cas1/Cassetto 1: ""
+*it.InputSlot Cas2/Cassetto 2: ""
+*it.InputSlot Cas3/Cassetto 3: ""
+*it.InputSlot Cas4/Cassetto 4: ""
+*it.InputSlot SideDeck/Paper deck laterale: ""
+*it.InputSlot Env/Alimentatore buste: ""
+*it.Translation CNInterleafSheet/Inserisci fogli tra i lucidi: ""
+*it.CNInterleafSheet None/Non specificare: ""
+*it.CNInterleafSheet True/Attivato: ""
+*it.CNInterleafSheet False/Disattivato: ""
+*it.Translation CNInterleafMediaType/Tipo di carta tra i lucidi: ""
+*it.CNInterleafMediaType Auto/Auto: ""
+*it.CNInterleafMediaType PlainPaper/Carta comune: ""
+*it.CNInterleafMediaType RECYCLED/Carta riciclata: ""
+*it.CNInterleafMediaType COLOR/Carta colorata: ""
+*it.CNInterleafMediaType PREPUNCHED/Carta preforata: ""
+*it.Translation CNInterleafPrint/Stampa sui fogli tra i lucidi: ""
+*it.CNInterleafPrint None/Non specificare: ""
+*it.CNInterleafPrint True/Attivato: ""
+*it.CNInterleafPrint False/Disattivato: ""
+*it.Translation OutputBin/Uscita carta: ""
+*it.OutputBin Auto/Auto: ""
+*it.Translation Duplex/Stampa fronte/retro: ""
+*it.Duplex None/Disattivato: ""
+*it.Duplex DuplexNoTumble/Lato lungo: ""
+*it.Duplex DuplexTumble/Lato corto: ""
+*it.Translation BindEdge/Posizione di rilegatura: ""
+*it.BindEdge Left/Lato lungo (Sinistro): ""
+*it.BindEdge Top/Lato corto (Superiore): ""
+*it.Translation Booklet/Stampa opuscolo: ""
+*it.Booklet None/Disattivato: ""
+*it.Booklet Left/Rilegatura a sinistra: ""
+*it.Translation CNOutputPartition/Scostamento/Ruota: ""
+*it.CNOutputPartition None/Disattivato: ""
+*it.CNOutputPartition offset/Scostamento: ""
+*it.CNOutputPartition rotation/Ruota: ""
+*it.Translation Collate/Finitura: ""
+*it.Collate False/Disattivato: ""
+*it.Collate True/Fascicola: ""
+*it.Collate Group/Raggruppa: ""
+*it.Collate Staple/Pinzatura: ""
+*it.Translation StapleLocation/Posizione di pinzatura: ""
+*it.StapleLocation None/Disattivato: ""
+*it.StapleLocation TopLeft/In alto a sinistra (Singola): ""
+*it.StapleLocation Top/Superiore (Doppia): ""
+*it.StapleLocation TopRight/In alto a destra (Singola): ""
+*it.StapleLocation Left/Sinistra (Doppia): ""
+*it.StapleLocation BottomLeft/In basso a sinistra (Singola): ""
+*it.Translation CNSaddleStitch/Pinzatura a sella: ""
+*it.CNSaddleStitch None/Non specificare: ""
+*it.CNSaddleStitch True/Attivato: ""
+*it.CNSaddleStitch False/Disattivato: ""
+*it.Translation CNPunch/Posizione di foratura: ""
+*it.CNPunch None/Non specificare: ""
+*it.CNPunch Left/Sinistro: ""
+*it.CNPunch Top/Superiore: ""
+*it.Translation CNCopySetNumbering/Numerazione serie di copie: ""
+*it.CNCopySetNumbering None/Non specificare: ""
+*it.CNCopySetNumbering True/Attivato: ""
+*it.CNCopySetNumbering False/Disattivato: ""
+*it.Translation CNImageRefinement/Miglioramento immagine: ""
+*it.CNImageRefinement None/Predefinite stampante: ""
+*it.CNImageRefinement True/Attivato: ""
+*it.CNImageRefinement False/Disattivato: ""
+*it.Translation CNLineRefinement/Miglioramento riga: ""
+*it.CNLineRefinement None/Predefinite stampante: ""
+*it.CNLineRefinement True/Attivato: ""
+*it.CNLineRefinement False/Disattivato: ""
+*it.Translation CNHalftone/Mezzitoni: ""
+*it.CNHalftone Resolution/Risoluzione: ""
+*it.CNHalftone Gradation/Gradazione: ""
+*it.CNHalftone ColorTone/Tono colore: ""
+*it.Translation CNJobExecMode/Metodo di stampa: ""
+*it.CNJobExecMode print/Stampa: ""
+*it.CNJobExecMode secured/Stampa protetta: ""
+*it.CNJobExecMode store/Memorizza: ""
+*it.Translation PageSize/Formato pagina: ""
+*it.PageSize Letter/Letter: ""
+*it.PageSize 11x17/11x17: ""
+*it.PageSize Legal/Legal: ""
+*it.PageSize Statement/Statement: ""
+*it.PageSize Executive/Executive: ""
+*it.PageSize A5/A5: ""
+*it.PageSize B5/B5: ""
+*it.PageSize A4/A4: ""
+*it.PageSize B4/B4: ""
+*it.PageSize A3/A3: ""
+*it.PageSize Monarch/Busta Catalog Glove No.8: ""
+*it.PageSize Com10/Busta No.10 (COM10): ""
+*it.PageSize dl_envelope/Busta DL: ""
+*it.PageSize Envelope_C5/Busta C5: ""
+*it.PageSize Envelope_B5/Busta B5: ""
+*it.Translation PageRegion/Area di stampa: ""
+*it.PageRegion Letter/Letter: ""
+*it.PageRegion 11x17/11x17: ""
+*it.PageRegion Legal/Legal: ""
+*it.PageRegion Statement/Statement: ""
+*it.PageRegion Executive/Executive: ""
+*it.PageRegion A5/A5: ""
+*it.PageRegion B5/B5: ""
+*it.PageRegion A4/A4: ""
+*it.PageRegion B4/B4: ""
+*it.PageRegion A3/A3: ""
+*it.PageRegion Monarch/Busta Catalog Glove No.8: ""
+*it.PageRegion Com10/Busta No.10 (COM10): ""
+*it.PageRegion dl_envelope/Busta DL: ""
+*it.PageRegion Envelope_C5/Busta C5: ""
+*it.PageRegion Envelope_B5/Busta B5: ""
+
+*ja.Translation CNFinisher/排紙オプション : ""
+*ja.CNFinisher None/なし: ""
+*ja.CNFinisher IN2TRAY/インナー2ウェイトレイ: ""
+*ja.CNFinisher FINS1/フィニッシャー･S1: ""
+*ja.CNFinisher FINQ3/フィニッシャー･Q3: ""
+*ja.CNFinisher SFINQ4/サドルフィニッシャー･Q4: ""
+*ja.Translation CNPuncher/パンチャーユニット: ""
+*ja.CNPuncher True/あり: ""
+*ja.CNPuncher False/なし: ""
+*ja.Translation Resolution/解像度 : ""
+*ja.Resolution 600/ファイン(600 dpi): ""
+*ja.Translation CNTonerSaving/トナー節約モード : ""
+*ja.CNTonerSaving Auto/パネル優先: ""
+*ja.CNTonerSaving True/使う: ""
+*ja.CNTonerSaving False/使わない: ""
+*ja.Translation MediaType/用紙種類 : ""
+*ja.MediaType Auto/自動: ""
+*ja.MediaType PlainPaper/普通紙: ""
+*ja.MediaType RECYCLED/再生紙: ""
+*ja.MediaType COLOR/色紙: ""
+*ja.MediaType PREPUNCHED/パンチ済み紙: ""
+*ja.MediaType BOND/ボンド紙: ""
+*ja.MediaType HEAVY/厚紙: ""
+*ja.MediaType OHP/OHPフィルム: ""
+*ja.MediaType LABELS/ラベル用紙: ""
+*ja.MediaType TRACING/第2原図: ""
+*ja.MediaType ENVELOPE/封筒: ""
+*ja.Translation InputSlot/給紙部 : ""
+*ja.InputSlot Auto/自動: ""
+*ja.InputSlot Manual/手差し(トレイ): ""
+*ja.InputSlot Cas1/カセット1: ""
+*ja.InputSlot Cas2/カセット2: ""
+*ja.InputSlot Cas3/カセット3: ""
+*ja.InputSlot Cas4/カセット4: ""
+*ja.InputSlot SideDeck/サイドペーパーデッキ: ""
+*ja.InputSlot Env/封筒フィーダ: ""
+*ja.Translation CNInterleafSheet/用紙の中差し: ""
+*ja.CNInterleafSheet None/指定しない: ""
+*ja.CNInterleafSheet True/する: ""
+*ja.CNInterleafSheet False/しない: ""
+*ja.Translation CNInterleafMediaType/中差し用紙の種類: ""
+*ja.CNInterleafMediaType Auto/自動: ""
+*ja.CNInterleafMediaType PlainPaper/普通紙: ""
+*ja.CNInterleafMediaType RECYCLED/再生紙: ""
+*ja.CNInterleafMediaType COLOR/色紙: ""
+*ja.CNInterleafMediaType PREPUNCHED/パンチ済み紙: ""
+*ja.Translation CNInterleafPrint/中差し用紙への印刷: ""
+*ja.CNInterleafPrint None/指定しない: ""
+*ja.CNInterleafPrint True/する: ""
+*ja.CNInterleafPrint False/しない: ""
+*ja.Translation OutputBin/排紙先 : ""
+*ja.OutputBin Auto/自動: ""
+*ja.Translation Duplex/両面印刷: ""
+*ja.Duplex None/しない: ""
+*ja.Duplex DuplexNoTumble/長辺とじ: ""
+*ja.Duplex DuplexTumble/短辺とじ: ""
+*ja.Translation BindEdge/とじ方向: ""
+*ja.BindEdge Left/長辺とじ(左): ""
+*ja.BindEdge Top/短辺とじ(上): ""
+*ja.Translation Booklet/製本印刷: ""
+*ja.Booklet None/しない: ""
+*ja.Booklet Left/左開き: ""
+*ja.Translation CNOutputPartition/シフト/回転: ""
+*ja.CNOutputPartition None/しない: ""
+*ja.CNOutputPartition offset/シフト: ""
+*ja.CNOutputPartition rotation/回転: ""
+*ja.Translation Collate/排紙方法: ""
+*ja.Collate False/指定しない: ""
+*ja.Collate True/ソート: ""
+*ja.Collate Group/グループ: ""
+*ja.Collate Staple/ステイプル: ""
+*ja.Translation StapleLocation/ステイプル位置 : ""
+*ja.StapleLocation None/しない: ""
+*ja.StapleLocation TopLeft/左上(1ヵ所): ""
+*ja.StapleLocation Top/上辺(2ヵ所): ""
+*ja.StapleLocation TopRight/右上(1ヵ所): ""
+*ja.StapleLocation Left/左辺(2ヵ所): ""
+*ja.StapleLocation BottomLeft/左下(1ヵ所): ""
+*ja.Translation CNSaddleStitch/中とじ: ""
+*ja.CNSaddleStitch None/指定しない: ""
+*ja.CNSaddleStitch True/する: ""
+*ja.CNSaddleStitch False/しない: ""
+*ja.Translation CNPunch/パンチ穴の位置: ""
+*ja.CNPunch None/指定しない: ""
+*ja.CNPunch Left/左: ""
+*ja.CNPunch Top/上: ""
+*ja.Translation CNCopySetNumbering/部数印字: ""
+*ja.CNCopySetNumbering None/指定しない: ""
+*ja.CNCopySetNumbering True/する: ""
+*ja.CNCopySetNumbering False/しない: ""
+*ja.Translation CNImageRefinement/スーパースムーズを使う : ""
+*ja.CNImageRefinement None/パネル優先: ""
+*ja.CNImageRefinement True/使う: ""
+*ja.CNImageRefinement False/使わない: ""
+*ja.Translation CNLineRefinement/細線補正 : ""
+*ja.CNLineRefinement None/パネル優先: ""
+*ja.CNLineRefinement True/使う: ""
+*ja.CNLineRefinement False/使わない: ""
+*ja.Translation CNHalftone/中間調 : ""
+*ja.CNHalftone Resolution/解像度: ""
+*ja.CNHalftone Gradation/階調: ""
+*ja.CNHalftone ColorTone/色調: ""
+*ja.Translation CNJobExecMode/出力方法 : ""
+*ja.CNJobExecMode print/印刷: ""
+*ja.CNJobExecMode secured/セキュアプリント: ""
+*ja.CNJobExecMode store/保存: ""
+*ja.Translation PageSize/原稿サイズ : ""
+*ja.PageSize Letter/レター: ""
+*ja.PageSize 11x17/レジャー: ""
+*ja.PageSize Legal/リーガル: ""
+*ja.PageSize Statement/Statement: ""
+*ja.PageSize Executive/エグゼクティブ: ""
+*ja.PageSize A5/A5: ""
+*ja.PageSize B5/B5: ""
+*ja.PageSize A4/A4: ""
+*ja.PageSize B4/B4: ""
+*ja.PageSize A3/A3: ""
+*ja.PageSize Monarch/封筒 Catalog Glove No.8: ""
+*ja.PageSize Com10/封筒 No.10(COM10): ""
+*ja.PageSize dl_envelope/封筒 DL: ""
+*ja.PageSize Envelope_C5/封筒 C5: ""
+*ja.PageSize Envelope_B5/封筒 B5: ""
+*ja.Translation PageRegion/印刷領域: ""
+*ja.PageRegion Letter/レター: ""
+*ja.PageRegion 11x17/レジャー: ""
+*ja.PageRegion Legal/リーガル: ""
+*ja.PageRegion Statement/Statement: ""
+*ja.PageRegion Executive/エグゼクティブ: ""
+*ja.PageRegion A5/A5: ""
+*ja.PageRegion B5/B5: ""
+*ja.PageRegion A4/A4: ""
+*ja.PageRegion B4/B4: ""
+*ja.PageRegion A3/A3: ""
+*ja.PageRegion Monarch/封筒 Catalog Glove No.8: ""
+*ja.PageRegion Com10/封筒 No.10(COM10): ""
+*ja.PageRegion dl_envelope/封筒 DL: ""
+*ja.PageRegion Envelope_C5/封筒 C5: ""
+*ja.PageRegion Envelope_B5/封筒 B5: ""
+
+*ko.Translation CNFinisher/출력 옵션: ""
+*ko.CNFinisher None/없음: ""
+*ko.CNFinisher IN2TRAY/내부 2단 트레이: ""
+*ko.CNFinisher FINS1/Finisher-S1: ""
+*ko.CNFinisher FINQ3/Finisher-Q3: ""
+*ko.CNFinisher SFINQ4/Saddle Finisher-Q4: ""
+*ko.Translation CNPuncher/펀쳐 유니트: ""
+*ko.CNPuncher True/지원됨: ""
+*ko.CNPuncher False/지원되지 않음: ""
+*ko.Translation Resolution/해상도: ""
+*ko.Resolution 600/600dpi: ""
+*ko.Translation CNTonerSaving/토너 절약: ""
+*ko.CNTonerSaving Auto/프린터 기본값: ""
+*ko.CNTonerSaving True/설정: ""
+*ko.CNTonerSaving False/해제: ""
+*ko.Translation MediaType/용지 종류: ""
+*ko.MediaType Auto/자동: ""
+*ko.MediaType PlainPaper/일반 용지: ""
+*ko.MediaType RECYCLED/재생 용지: ""
+*ko.MediaType COLOR/컬러 용지: ""
+*ko.MediaType PREPUNCHED/천공 용지: ""
+*ko.MediaType BOND/본드지: ""
+*ko.MediaType HEAVY/두꺼운 용지: ""
+*ko.MediaType OHP/투명 용지: ""
+*ko.MediaType LABELS/라벨 용지: ""
+*ko.MediaType TRACING/트레이싱 용지: ""
+*ko.MediaType ENVELOPE/봉투: ""
+*ko.Translation InputSlot/용지 공급원: ""
+*ko.InputSlot Auto/자동: ""
+*ko.InputSlot Manual/다용도 트레이: ""
+*ko.InputSlot Cas1/카세트 1: ""
+*ko.InputSlot Cas2/카세트 2: ""
+*ko.InputSlot Cas3/카세트 3: ""
+*ko.InputSlot Cas4/카세트 4: ""
+*ko.InputSlot SideDeck/대용량 급지 장치: ""
+*ko.InputSlot Env/봉투 급지대: ""
+*ko.Translation CNInterleafSheet/간지 삽입: ""
+*ko.CNInterleafSheet None/지정 안 함: ""
+*ko.CNInterleafSheet True/설정: ""
+*ko.CNInterleafSheet False/해제: ""
+*ko.Translation CNInterleafMediaType/간지 용지 종류: ""
+*ko.CNInterleafMediaType Auto/자동: ""
+*ko.CNInterleafMediaType PlainPaper/일반 용지: ""
+*ko.CNInterleafMediaType RECYCLED/재생 용지: ""
+*ko.CNInterleafMediaType COLOR/컬러 용지: ""
+*ko.CNInterleafMediaType PREPUNCHED/천공 용지: ""
+*ko.Translation CNInterleafPrint/간지에 인쇄: ""
+*ko.CNInterleafPrint None/지정 안 함: ""
+*ko.CNInterleafPrint True/설정: ""
+*ko.CNInterleafPrint False/해제: ""
+*ko.Translation OutputBin/용지 출력: ""
+*ko.OutputBin Auto/자동: ""
+*ko.Translation Duplex/양면 인쇄: ""
+*ko.Duplex None/해제: ""
+*ko.Duplex DuplexNoTumble/긴 가장자리: ""
+*ko.Duplex DuplexTumble/짧은 가장자리: ""
+*ko.Translation BindEdge/제본 위치: ""
+*ko.BindEdge Left/긴 가장자리(왼쪽): ""
+*ko.BindEdge Top/짧은 가장자리(위쪽): ""
+*ko.Translation Booklet/소책자 인쇄: ""
+*ko.Booklet None/해제: ""
+*ko.Booklet Left/왼쪽 제본: ""
+*ko.Translation CNOutputPartition/옵셋/회전: ""
+*ko.CNOutputPartition None/해제: ""
+*ko.CNOutputPartition offset/옵셋: ""
+*ko.CNOutputPartition rotation/회전: ""
+*ko.Translation Collate/마무리: ""
+*ko.Collate False/해제: ""
+*ko.Collate True/한 부씩 인쇄: ""
+*ko.Collate Group/페이지별 인쇄: ""
+*ko.Collate Staple/스테이플: ""
+*ko.Translation StapleLocation/스테이플 위치: ""
+*ko.StapleLocation None/스테이플 안 함: ""
+*ko.StapleLocation TopLeft/왼쪽 상단(단일): ""
+*ko.StapleLocation Top/상단(이중): ""
+*ko.StapleLocation TopRight/오른쪽 상단(단일): ""
+*ko.StapleLocation Left/왼쪽(이중): ""
+*ko.StapleLocation BottomLeft/왼쪽 하단(단일): ""
+*ko.Translation CNSaddleStitch/중철: ""
+*ko.CNSaddleStitch None/지정 안 함: ""
+*ko.CNSaddleStitch True/설정: ""
+*ko.CNSaddleStitch False/해제: ""
+*ko.Translation CNPunch/천공 위치: ""
+*ko.CNPunch None/지정 안 함: ""
+*ko.CNPunch Left/좌: ""
+*ko.CNPunch Top/상: ""
+*ko.Translation CNCopySetNumbering/사본 번호 매김 설정: ""
+*ko.CNCopySetNumbering None/지정 안 함: ""
+*ko.CNCopySetNumbering True/설정: ""
+*ko.CNCopySetNumbering False/해제: ""
+*ko.Translation CNImageRefinement/이미지 정밀처리: ""
+*ko.CNImageRefinement None/프린터 기본값: ""
+*ko.CNImageRefinement True/설정: ""
+*ko.CNImageRefinement False/해제: ""
+*ko.Translation CNLineRefinement/라인 정밀처리: ""
+*ko.CNLineRefinement None/프린터 기본값: ""
+*ko.CNLineRefinement True/설정: ""
+*ko.CNLineRefinement False/해제: ""
+*ko.Translation CNHalftone/중간톤: ""
+*ko.CNHalftone Resolution/해상도: ""
+*ko.CNHalftone Gradation/계조: ""
+*ko.CNHalftone ColorTone/색조: ""
+*ko.Translation CNJobExecMode/출력 방법: ""
+*ko.CNJobExecMode print/인쇄: ""
+*ko.CNJobExecMode secured/보안 인쇄: ""
+*ko.CNJobExecMode store/저장: ""
+*ko.Translation PageSize/페이지 크기: ""
+*ko.PageSize Letter/Letter: ""
+*ko.PageSize 11x17/11x17: ""
+*ko.PageSize Legal/Legal: ""
+*ko.PageSize Statement/Statement: ""
+*ko.PageSize Executive/Executive: ""
+*ko.PageSize A5/A5: ""
+*ko.PageSize B5/B5: ""
+*ko.PageSize A4/A4: ""
+*ko.PageSize B4/B4: ""
+*ko.PageSize A3/A3: ""
+*ko.PageSize Monarch/Envelope Catalog Glove No.8: ""
+*ko.PageSize Com10/Envelope No.10(COM10): ""
+*ko.PageSize dl_envelope/Envelope DL: ""
+*ko.PageSize Envelope_C5/Envelope C5: ""
+*ko.PageSize Envelope_B5/Envelope B5: ""
+*ko.Translation PageRegion/인쇄 영역: ""
+*ko.PageRegion Letter/Letter: ""
+*ko.PageRegion 11x17/11x17: ""
+*ko.PageRegion Legal/Legal: ""
+*ko.PageRegion Statement/Statement: ""
+*ko.PageRegion Executive/Executive: ""
+*ko.PageRegion A5/A5: ""
+*ko.PageRegion B5/B5: ""
+*ko.PageRegion A4/A4: ""
+*ko.PageRegion B4/B4: ""
+*ko.PageRegion A3/A3: ""
+*ko.PageRegion Monarch/Envelope Catalog Glove No.8: ""
+*ko.PageRegion Com10/Envelope No.10(COM10): ""
+*ko.PageRegion dl_envelope/Envelope DL: ""
+*ko.PageRegion Envelope_C5/Envelope C5: ""
+*ko.PageRegion Envelope_B5/Envelope B5: ""
+
+*zh_CN.Translation CNFinisher/输出选项: ""
+*zh_CN.CNFinisher None/无: ""
+*zh_CN.CNFinisher IN2TRAY/内置式双路托盘: ""
+*zh_CN.CNFinisher FINS1/分页装订处理器-S1: ""
+*zh_CN.CNFinisher FINQ3/分页装订处理器-Q3: ""
+*zh_CN.CNFinisher SFINQ4/鞍式分页装订处理器-Q4: ""
+*zh_CN.Translation CNPuncher/打孔组件: ""
+*zh_CN.CNPuncher True/支持: ""
+*zh_CN.CNPuncher False/不支持: ""
+*zh_CN.Translation Resolution/分辨率: ""
+*zh_CN.Resolution 600/600 dpi: ""
+*zh_CN.Translation CNTonerSaving/节省墨粉: ""
+*zh_CN.CNTonerSaving Auto/打印机预设: ""
+*zh_CN.CNTonerSaving True/开: ""
+*zh_CN.CNTonerSaving False/关: ""
+*zh_CN.Translation MediaType/纸张类型: ""
+*zh_CN.MediaType Auto/自动: ""
+*zh_CN.MediaType PlainPaper/普通纸: ""
+*zh_CN.MediaType RECYCLED/再生纸: ""
+*zh_CN.MediaType COLOR/彩色纸: ""
+*zh_CN.MediaType PREPUNCHED/带孔纸: ""
+*zh_CN.MediaType BOND/证券纸: ""
+*zh_CN.MediaType HEAVY/重磅纸: ""
+*zh_CN.MediaType OHP/透明胶片: ""
+*zh_CN.MediaType LABELS/标签: ""
+*zh_CN.MediaType TRACING/描图纸: ""
+*zh_CN.MediaType ENVELOPE/信封: ""
+*zh_CN.Translation InputSlot/纸张来源: ""
+*zh_CN.InputSlot Auto/自动: ""
+*zh_CN.InputSlot Manual/多功能托盘: ""
+*zh_CN.InputSlot Cas1/纸盒 1: ""
+*zh_CN.InputSlot Cas2/纸盒 2: ""
+*zh_CN.InputSlot Cas3/纸盒 3: ""
+*zh_CN.InputSlot Cas4/纸盒 4: ""
+*zh_CN.InputSlot SideDeck/侧纸仓: ""
+*zh_CN.InputSlot Env/信封输送器: ""
+*zh_CN.Translation CNInterleafSheet/插入插页: ""
+*zh_CN.CNInterleafSheet None/不指定: ""
+*zh_CN.CNInterleafSheet True/开: ""
+*zh_CN.CNInterleafSheet False/关: ""
+*zh_CN.Translation CNInterleafMediaType/插页纸张类型: ""
+*zh_CN.CNInterleafMediaType Auto/自动: ""
+*zh_CN.CNInterleafMediaType PlainPaper/普通纸: ""
+*zh_CN.CNInterleafMediaType RECYCLED/再生纸: ""
+*zh_CN.CNInterleafMediaType COLOR/彩色纸: ""
+*zh_CN.CNInterleafMediaType PREPUNCHED/带孔纸: ""
+*zh_CN.Translation CNInterleafPrint/打印在插页上: ""
+*zh_CN.CNInterleafPrint None/不指定: ""
+*zh_CN.CNInterleafPrint True/开: ""
+*zh_CN.CNInterleafPrint False/关: ""
+*zh_CN.Translation OutputBin/纸张输出: ""
+*zh_CN.OutputBin Auto/自动: ""
+*zh_CN.Translation Duplex/双面打印: ""
+*zh_CN.Duplex None/关: ""
+*zh_CN.Duplex DuplexNoTumble/长边: ""
+*zh_CN.Duplex DuplexTumble/短边: ""
+*zh_CN.Translation BindEdge/装订位置: ""
+*zh_CN.BindEdge Left/长边 (左): ""
+*zh_CN.BindEdge Top/短边 (顶): ""
+*zh_CN.Translation Booklet/手册打印: ""
+*zh_CN.Booklet None/关: ""
+*zh_CN.Booklet Left/左边装订: ""
+*zh_CN.Translation CNOutputPartition/偏移/旋转: ""
+*zh_CN.CNOutputPartition None/关: ""
+*zh_CN.CNOutputPartition offset/偏移: ""
+*zh_CN.CNOutputPartition rotation/旋转: ""
+*zh_CN.Translation Collate/完成方式: ""
+*zh_CN.Collate False/关: ""
+*zh_CN.Collate True/逐份: ""
+*zh_CN.Collate Group/分组: ""
+*zh_CN.Collate Staple/装订: ""
+*zh_CN.Translation StapleLocation/装订位置: ""
+*zh_CN.StapleLocation None/不装订: ""
+*zh_CN.StapleLocation TopLeft/左上 (单针): ""
+*zh_CN.StapleLocation Top/顶部 (双针): ""
+*zh_CN.StapleLocation TopRight/右上 (单针): ""
+*zh_CN.StapleLocation Left/左 (双针): ""
+*zh_CN.StapleLocation BottomLeft/左下 (单针): ""
+*zh_CN.Translation CNSaddleStitch/鞍式装订: ""
+*zh_CN.CNSaddleStitch None/不指定: ""
+*zh_CN.CNSaddleStitch True/开: ""
+*zh_CN.CNSaddleStitch False/关: ""
+*zh_CN.Translation CNPunch/打孔位置: ""
+*zh_CN.CNPunch None/不指定: ""
+*zh_CN.CNPunch Left/左: ""
+*zh_CN.CNPunch Top/顶: ""
+*zh_CN.Translation CNCopySetNumbering/复制集编号: ""
+*zh_CN.CNCopySetNumbering None/不指定: ""
+*zh_CN.CNCopySetNumbering True/开: ""
+*zh_CN.CNCopySetNumbering False/关: ""
+*zh_CN.Translation CNImageRefinement/图像细化: ""
+*zh_CN.CNImageRefinement None/打印机预设: ""
+*zh_CN.CNImageRefinement True/开: ""
+*zh_CN.CNImageRefinement False/关: ""
+*zh_CN.Translation CNLineRefinement/线条细化: ""
+*zh_CN.CNLineRefinement None/打印机预设: ""
+*zh_CN.CNLineRefinement True/开: ""
+*zh_CN.CNLineRefinement False/关: ""
+*zh_CN.Translation CNHalftone/半色调: ""
+*zh_CN.CNHalftone Resolution/分辨率: ""
+*zh_CN.CNHalftone Gradation/渐变: ""
+*zh_CN.CNHalftone ColorTone/颜色色调: ""
+*zh_CN.Translation CNJobExecMode/输出方法: ""
+*zh_CN.CNJobExecMode print/打印: ""
+*zh_CN.CNJobExecMode secured/保密打印: ""
+*zh_CN.CNJobExecMode store/存储: ""
+*zh_CN.Translation PageSize/页面尺寸: ""
+*zh_CN.PageSize Letter/Letter: ""
+*zh_CN.PageSize 11x17/11x17: ""
+*zh_CN.PageSize Legal/Legal: ""
+*zh_CN.PageSize Statement/Statement: ""
+*zh_CN.PageSize Executive/Executive: ""
+*zh_CN.PageSize A5/A5: ""
+*zh_CN.PageSize B5/B5: ""
+*zh_CN.PageSize A4/A4: ""
+*zh_CN.PageSize B4/B4: ""
+*zh_CN.PageSize A3/A3: ""
+*zh_CN.PageSize Monarch/Envelope Catalog Glove No.8: ""
+*zh_CN.PageSize Com10/Envelope No.10 (COM10): ""
+*zh_CN.PageSize dl_envelope/Envelope DL: ""
+*zh_CN.PageSize Envelope_C5/Envelope C5: ""
+*zh_CN.PageSize Envelope_B5/Envelope B5: ""
+*zh_CN.Translation PageRegion/打印区域: ""
+*zh_CN.PageRegion Letter/Letter: ""
+*zh_CN.PageRegion 11x17/11x17: ""
+*zh_CN.PageRegion Legal/Legal: ""
+*zh_CN.PageRegion Statement/Statement: ""
+*zh_CN.PageRegion Executive/Executive: ""
+*zh_CN.PageRegion A5/A5: ""
+*zh_CN.PageRegion B5/B5: ""
+*zh_CN.PageRegion A4/A4: ""
+*zh_CN.PageRegion B4/B4: ""
+*zh_CN.PageRegion A3/A3: ""
+*zh_CN.PageRegion Monarch/Envelope Catalog Glove No.8: ""
+*zh_CN.PageRegion Com10/Envelope No.10 (COM10): ""
+*zh_CN.PageRegion dl_envelope/Envelope DL: ""
+*zh_CN.PageRegion Envelope_C5/Envelope C5: ""
+*zh_CN.PageRegion Envelope_B5/Envelope B5: ""
+
+*zh_TW.Translation CNFinisher/輸出選項: ""
+*zh_TW.CNFinisher None/無: ""
+*zh_TW.CNFinisher IN2TRAY/內置式雙向紙盤: ""
+*zh_TW.CNFinisher FINS1/裝訂分頁機-S1: ""
+*zh_TW.CNFinisher FINQ3/Finisher-Q3: ""
+*zh_TW.CNFinisher SFINQ4/Saddle Finisher-Q4: ""
+*zh_TW.Translation CNPuncher/打孔組件: ""
+*zh_TW.CNPuncher True/支援: ""
+*zh_TW.CNPuncher False/不支援: ""
+*zh_TW.Translation Resolution/解析度: ""
+*zh_TW.Resolution 600/600 dpi: ""
+*zh_TW.Translation CNTonerSaving/節省碳粉: ""
+*zh_TW.CNTonerSaving Auto/印表機預設值: ""
+*zh_TW.CNTonerSaving True/開: ""
+*zh_TW.CNTonerSaving False/關: ""
+*zh_TW.Translation MediaType/紙張類型: ""
+*zh_TW.MediaType Auto/自動: ""
+*zh_TW.MediaType PlainPaper/普通紙: ""
+*zh_TW.MediaType RECYCLED/再生紙: ""
+*zh_TW.MediaType COLOR/彩色紙: ""
+*zh_TW.MediaType PREPUNCHED/打孔紙: ""
+*zh_TW.MediaType BOND/證券紙: ""
+*zh_TW.MediaType HEAVY/重磅紙: ""
+*zh_TW.MediaType OHP/投影片: ""
+*zh_TW.MediaType LABELS/標籤: ""
+*zh_TW.MediaType TRACING/描圖紙: ""
+*zh_TW.MediaType ENVELOPE/信封: ""
+*zh_TW.Translation InputSlot/紙張來源: ""
+*zh_TW.InputSlot Auto/自動: ""
+*zh_TW.InputSlot Manual/多用途紙盤: ""
+*zh_TW.InputSlot Cas1/紙匣 1: ""
+*zh_TW.InputSlot Cas2/紙匣 2: ""
+*zh_TW.InputSlot Cas3/紙匣 3: ""
+*zh_TW.InputSlot Cas4/紙匣 4: ""
+*zh_TW.InputSlot SideDeck/大容量側紙匣: ""
+*zh_TW.InputSlot Env/信封送稿機: ""
+*zh_TW.Translation CNInterleafSheet/插入插頁: ""
+*zh_TW.CNInterleafSheet None/不指定: ""
+*zh_TW.CNInterleafSheet True/開: ""
+*zh_TW.CNInterleafSheet False/關: ""
+*zh_TW.Translation CNInterleafMediaType/插页紙張類型: ""
+*zh_TW.CNInterleafMediaType Auto/自動: ""
+*zh_TW.CNInterleafMediaType PlainPaper/普通紙: ""
+*zh_TW.CNInterleafMediaType RECYCLED/再生紙: ""
+*zh_TW.CNInterleafMediaType COLOR/彩色紙: ""
+*zh_TW.CNInterleafMediaType PREPUNCHED/打孔紙: ""
+*zh_TW.Translation CNInterleafPrint/插頁列印: ""
+*zh_TW.CNInterleafPrint None/不指定: ""
+*zh_TW.CNInterleafPrint True/開: ""
+*zh_TW.CNInterleafPrint False/關: ""
+*zh_TW.Translation OutputBin/紙張輸出: ""
+*zh_TW.OutputBin Auto/自動: ""
+*zh_TW.Translation Duplex/雙面列印: ""
+*zh_TW.Duplex None/關: ""
+*zh_TW.Duplex DuplexNoTumble/長邊: ""
+*zh_TW.Duplex DuplexTumble/短邊: ""
+*zh_TW.Translation BindEdge/裝訂位置: ""
+*zh_TW.BindEdge Left/長邊 (左方): ""
+*zh_TW.BindEdge Top/短邊 (頂端): ""
+*zh_TW.Translation Booklet/製冊列印: ""
+*zh_TW.Booklet None/關: ""
+*zh_TW.Booklet Left/左邊裝訂: ""
+*zh_TW.Translation CNOutputPartition/偏移/旋轉: ""
+*zh_TW.CNOutputPartition None/關: ""
+*zh_TW.CNOutputPartition offset/偏移: ""
+*zh_TW.CNOutputPartition rotation/旋轉: ""
+*zh_TW.Translation Collate/完稿: ""
+*zh_TW.Collate False/關: ""
+*zh_TW.Collate True/自動分頁: ""
+*zh_TW.Collate Group/群組: ""
+*zh_TW.Collate Staple/裝訂: ""
+*zh_TW.Translation StapleLocation/裝訂位置: ""
+*zh_TW.StapleLocation None/不裝訂: ""
+*zh_TW.StapleLocation TopLeft/左上方 (單針): ""
+*zh_TW.StapleLocation Top/正上方 (雙針): ""
+*zh_TW.StapleLocation TopRight/右上方 (單針): ""
+*zh_TW.StapleLocation Left/左方 (雙針): ""
+*zh_TW.StapleLocation BottomLeft/左下方 (單針): ""
+*zh_TW.Translation CNSaddleStitch/騎馬釘: ""
+*zh_TW.CNSaddleStitch None/不指定: ""
+*zh_TW.CNSaddleStitch True/開: ""
+*zh_TW.CNSaddleStitch False/關: ""
+*zh_TW.Translation CNPunch/打孔位置: ""
+*zh_TW.CNPunch None/不指定: ""
+*zh_TW.CNPunch Left/左: ""
+*zh_TW.CNPunch Top/上: ""
+*zh_TW.Translation CNCopySetNumbering/副本集編號: ""
+*zh_TW.CNCopySetNumbering None/不指定: ""
+*zh_TW.CNCopySetNumbering True/開: ""
+*zh_TW.CNCopySetNumbering False/關: ""
+*zh_TW.Translation CNImageRefinement/影像精細化: ""
+*zh_TW.CNImageRefinement None/印表機預設值: ""
+*zh_TW.CNImageRefinement True/開: ""
+*zh_TW.CNImageRefinement False/關: ""
+*zh_TW.Translation CNLineRefinement/線條精細化: ""
+*zh_TW.CNLineRefinement None/印表機預設值: ""
+*zh_TW.CNLineRefinement True/開: ""
+*zh_TW.CNLineRefinement False/關: ""
+*zh_TW.Translation CNHalftone/半色調: ""
+*zh_TW.CNHalftone Resolution/解析度: ""
+*zh_TW.CNHalftone Gradation/漸層: ""
+*zh_TW.CNHalftone ColorTone/色調: ""
+*zh_TW.Translation CNJobExecMode/輸出方法: ""
+*zh_TW.CNJobExecMode print/列印: ""
+*zh_TW.CNJobExecMode secured/機密列印: ""
+*zh_TW.CNJobExecMode store/儲存: ""
+*zh_TW.Translation PageSize/頁面大小: ""
+*zh_TW.PageSize Letter/Letter: ""
+*zh_TW.PageSize 11x17/11x17: ""
+*zh_TW.PageSize Legal/Legal: ""
+*zh_TW.PageSize Statement/Statement: ""
+*zh_TW.PageSize Executive/行政用紙 (Executive): ""
+*zh_TW.PageSize A5/A5: ""
+*zh_TW.PageSize B5/B5: ""
+*zh_TW.PageSize A4/A4: ""
+*zh_TW.PageSize B4/B4: ""
+*zh_TW.PageSize A3/A3: ""
+*zh_TW.PageSize Monarch/Envelope Catalog Glove No.8: ""
+*zh_TW.PageSize Com10/Envelope No.10 (COM10): ""
+*zh_TW.PageSize dl_envelope/Envelope DL: ""
+*zh_TW.PageSize Envelope_C5/Envelope C5: ""
+*zh_TW.PageSize Envelope_B5/Envelope B5: ""
+*zh_TW.Translation PageRegion/列印區域: ""
+*zh_TW.PageRegion Letter/Letter: ""
+*zh_TW.PageRegion 11x17/11x17: ""
+*zh_TW.PageRegion Legal/Legal: ""
+*zh_TW.PageRegion Statement/Statement: ""
+*zh_TW.PageRegion Executive/行政用紙 (Executive): ""
+*zh_TW.PageRegion A5/A5: ""
+*zh_TW.PageRegion B5/B5: ""
+*zh_TW.PageRegion A4/A4: ""
+*zh_TW.PageRegion B4/B4: ""
+*zh_TW.PageRegion A3/A3: ""
+*zh_TW.PageRegion Monarch/Envelope Catalog Glove No.8: ""
+*zh_TW.PageRegion Com10/Envelope No.10 (COM10): ""
+*zh_TW.PageRegion dl_envelope/Envelope DL: ""
+*zh_TW.PageRegion Envelope_C5/Envelope C5: ""
+*zh_TW.PageRegion Envelope_B5/Envelope B5: ""
