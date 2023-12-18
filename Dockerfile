@@ -8,6 +8,9 @@ COPY requirements.txt /opt/project
 
 RUN apt-get update && apt-get install -y cups libcups2-dev
 COPY cups-files.conf /etc/cups/cups-files.conf
+COPY ./verbose-waffle/CNRCUPSIRADV45453ZK.ppd /etc/cups/ppd/CNRCUPSIRADV45453ZK.ppd
+COPY ./verbose-waffle/CNRCUPSIRADV45453ZK.ppd /usr/share/cups/model/CNRCUPSIRADV45453ZK.ppd
+COPY ./verbose-waffle/CNRCUPSIRADV45453ZK.ppd /usr/share/ppd/CNRCUPSIRADV45453ZK.ppd
 RUN service cups start
 
 RUN pip install --no-cache-dir --upgrade -r /opt/project/requirements.txt
