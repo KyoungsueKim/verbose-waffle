@@ -8,11 +8,11 @@ from fastapi.responses import HTMLResponse
 app = FastAPI()
 
 @app.get("/")
-def root():
+async def root():
     return HTMLResponse(content=html_content.html_content, status_code=200)
 
 @app.post("/upload_file/")
-def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
+async def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
     # Create unique uuid of file
     uuid_base = hash.sha1(str(time.time()).encode('utf-8')).hexdigest()
     uuid = f"{uuid_base[0:8]}-{uuid_base[9:13]}-{uuid_base[14:18]}-{uuid_base[19:23]}-{uuid_base[24:36]}".upper()
@@ -30,7 +30,7 @@ def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
     # Send pdf file to printer
     data_result = send_print_data(uuid)
     register_result = send_register_doc(uuid, file.filename, phone_number, page_count)
-    delete_print_data(uuid)
+    await delete_print_data(uuid)
 
     print(f"[Print Job]: {file.filename}, page_count: {page_count}, phone_number: {phone_number}, data_result: {data_result}, register_result: {register_result}")
     return {"phone_number": phone_number, "file_name": file.filename}

@@ -1,4 +1,6 @@
-fastapi
-uvicorn[standard]
+fastapi[all]
 PyPDF2
+httpx
+python-multipart
+pycups
 requests
