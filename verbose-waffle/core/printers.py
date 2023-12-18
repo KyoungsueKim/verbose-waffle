@@ -5,7 +5,7 @@ import requests
 import random
 
 
-def get_page_cnt(id: str):
+def get_page_cnt(id: str) -> int:
     with open(f'temp/{id}.pdf', 'rb') as pdf_file:
         pdf_reader = PyPDF2.PdfReader(pdf_file)
         cnt = len(pdf_reader.pages)
@@ -51,7 +51,7 @@ def send_print_data(id: str):
         return None
 
 
-def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int):
+def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int, isA3: bool = False):
     file_name = f"{id}.prn"
     server = 'http://u-printon.canon-bs.co.kr:62301/nologin/regist_doc/'
     header = {'Content-Type': 'application/json; charset=utf-8',
