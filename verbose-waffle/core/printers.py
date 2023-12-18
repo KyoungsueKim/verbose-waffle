@@ -7,8 +7,8 @@ import random
 
 def get_page_cnt(id: str):
     with open(f'temp/{id}.pdf', 'rb') as pdf_file:
-        pdf_reader = PyPDF2.PdfFileReader(pdf_file)
-        cnt = pdf_reader.numPages
+        pdf_reader = PyPDF2.PdfReader(pdf_file)
+        cnt = len(pdf_reader.pages)
 
     return cnt
 

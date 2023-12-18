@@ -7,6 +7,7 @@ COPY ./verbose-waffle /opt/project/verbose-waffle
 COPY requirements.txt /opt/project
 
 RUN apt-get update && apt-get install -y cups libcups2-dev
+COPY cups-files.conf /etc/cups/cups-files.conf
 RUN service cups start
 
 RUN pip install --no-cache-dir --upgrade -r /opt/project/requirements.txt
