@@ -1,0 +1,29 @@
+version: '3'
+services:
+  talkable_server:
+    image: python:3.11.2
+    volumes:
+      - .:${CONTAINER_BASE_DIR}
+    working_dir: ${CONTAINER_BASE_DIR}
+    command: /bin/bash -c "pip install -r services/Talkable_Server/requirements.txt && python services/Talkable_Server/main.py"
+    depends_on:
+      - talkable_rdb
+      - talkable_redis
+    environment:
+      - DIR=${CONTAINER_BASE_DIR}
+      - rdb_hostname=talkable_rdb
+      - rdb_port=3306
+      - rdb_user=root
+      - rdb_password=${rdb_password}
+      - rdb_database=${rdb_database}
+      - Talkable_Server_port=${Talkable_Server_port}
+      - redis_hostname=talkable_redis
+      - redis_port=6379
+      - redis_db=0
+      - complete_queue_name=${complete_queue_name}
+      - ready_queue_name=${ready_queue_name}
+      - PYTHONPATH=${PYTHONPATH}:${CONTAINER_BASE_DIR}
+    networks:
+      - default
+    ports:
+      - "${Talkable_Server_port}:20228"
