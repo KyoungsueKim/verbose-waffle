@@ -6,8 +6,9 @@ services:
       - C:\Certbot\archive\kksoft.kr:/etc/letsencrypt/live/kksoft.kr
       - ./verbose-waffle:/opt/project/verbose-waffle
     working_dir: /
-#    command: /bin/sh -c "python3 /opt/project/verbose-waffle/main.py"
+#    command: /bin/sh -c "python3 /opt/project/verbose-waffle/main.py"  -> This execution order is already in the base-image.
     networks:
       - default
     ports:
       - "64550:64550"
+    restart: always
