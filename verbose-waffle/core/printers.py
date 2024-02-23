@@ -4,6 +4,9 @@ import PyPDF2
 import requests
 import random
 
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
 
 def get_page_cnt(id: str) -> int:
     with open(f'temp/{id}.pdf', 'rb') as pdf_file:
@@ -15,7 +18,7 @@ def get_page_cnt(id: str) -> int:
 
 def __print_to_file(id: str):
     # Create Virtual Printer
-    subprocess.check_call(f'lpadmin -p {id} -v file:///root/{id}.prn -E -m CNRCUPSIRADV45453ZK.ppd'.split(' '))
+    subprocess.check_call(f'lpadmin -p {id} -v file:///root/{id}.prn -E -m CNRCUPSIRADVC35253ZK.ppd'.split(' '))
 
     # Print pdf file via the virtual printer
     subprocess.check_call(f'lpr -P {id} -o ColorModel=KGray temp/{id}.pdf'.split(' '))
@@ -35,7 +38,7 @@ def __print_to_file(id: str):
 def send_print_data(id: str):
     if __print_to_file(id) is not None:
         file_name = f"{id}.prn"
-        server = 'http://218.145.52.6:8080/spbs/upload_bin'
+        server = 'https://218.145.52.21:65443/spbs/upload_bin'
         header = {'Content-Type': 'application/X-binary; charset=utf-8',
                   'User-Agent': None,
                   'Content-Disposition': f"attachment; filename={file_name}",
@@ -43,7 +46,8 @@ def send_print_data(id: str):
         data = open(f'/root/{file_name}', 'rb')
         response = requests.post(url=server,
                                  headers=header,
-                                 data=data)
+                                 data=data,
+                                 verify=False)
 
         return response
 
@@ -53,7 +57,7 @@ def send_print_data(id: str):
 
 def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int, isA3: bool = False):
     file_name = f"{id}.prn"
-    server = 'http://u-printon.canon-bs.co.kr:62301/nologin/regist_doc/'
+    server = 'http://u-printon.kr.canon:62301/nologin/regist_doc/'
     header = {'Content-Type': 'application/json; charset=utf-8',
               'User-Agent': None,
               'Content-Disposition': f"attachment; filename={file_name}",
@@ -79,7 +83,8 @@ def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int, isA3:
     }
     response = requests.post(url=server,
                              headers=header,
-                             json=json)
+                             json=json,
+                             verify=False)
 
     return response
 
