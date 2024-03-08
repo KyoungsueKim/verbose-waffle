@@ -3,3 +3,5 @@ PyPDF2
 httpx
 python-multipart
 requests
+urllib3
+uvicorn

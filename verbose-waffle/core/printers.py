@@ -5,6 +5,8 @@ from typing import Optional
 import PyPDF2
 import requests
 import random
+from fastapi.exceptions import HTTPException
+from requests import Response
 
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
