@@ -35,7 +35,7 @@ async def receive_file(phone_number: str = Form(...), file: UploadFile = File(..
     delete_print_data(uuid)
 
     print(
-        f"[Print Job]: {file.filename}, page_count: {page_count}, phone_number: {phone_number}, data_result: {data_result}, register_result: {register_result}")
+        f"[Print Job]: {file.filename}, page_count: {page_count}, phone_number: {phone_number}, data_result: {data_result.json()}, register_result: {register_result.json()}")
     return {"phone_number": phone_number, "file_name": file.filename}
 
 
