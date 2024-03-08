@@ -5,11 +5,8 @@ from typing import Optional
 import PyPDF2
 import requests
 import random
-from fastapi.exceptions import HTTPException
 
 import urllib3
-from requests import Response
-
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -69,7 +66,7 @@ def send_print_data(id: str):
 
 def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int, isA3: bool = False):
     file_name = f"{id}.prn"
-    server = 'http://u-printon.kr.canon:62301/nologin/regist_doc/'
+    server = 'http://u-printon.canon-bs.co.kr:62301/nologin/regist_doc/'
     header = {'Content-Type': 'application/json; charset=utf-8',
               'User-Agent': None,
               'Content-Disposition': f"attachment; filename={file_name}",
