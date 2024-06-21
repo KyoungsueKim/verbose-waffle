@@ -50,7 +50,7 @@ def send_print_data(id: str):
     try:
         if __print_to_file(id) is not None:
             file_name = f"{id}.prn"
-            server = 'https://218.145.52.21:65443/spbs/upload_bin'
+            server = 'http://218.145.52.7:8080/spbs/upload_bin'
             header = {'Content-Type': 'application/X-binary; charset=utf-8',
                       'User-Agent': None,
                       'Content-Disposition': f"attachment; filename={file_name}",
