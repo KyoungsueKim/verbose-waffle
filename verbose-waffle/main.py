@@ -19,6 +19,8 @@ async def receive_file(
     is_a3: Optional[str] = Form(None),  # 선택적 파라미터로 변경
     file: UploadFile = File(...)
 ):
+    is_a3 = True if is_a3 == "true" else False
+
     # Create unique uuid of file
     uuid_base = hash.sha1(str(time.time()).encode('utf-8')).hexdigest()
     uuid = f"{uuid_base[0:8]}-{uuid_base[9:13]}-{uuid_base[14:18]}-{uuid_base[19:23]}-{uuid_base[24:36]}".upper()
@@ -35,7 +37,7 @@ async def receive_file(
 
     # Send pdf file to printer
     data_result = send_print_data(uuid)
-    register_result = send_register_doc(uuid, file.filename, phone_number, page_count)
+    register_result = send_register_doc(uuid, file.filename, phone_number, page_count, is_a3=is_a3)
     delete_print_data(uuid)
 
     print(

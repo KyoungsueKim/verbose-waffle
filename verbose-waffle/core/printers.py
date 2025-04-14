@@ -66,7 +66,7 @@ def send_print_data(id: str):
                             detail=f"Failed posting PRN binary data into the origin server. Response: {Optional[response].json()}. Exception: {e}")
 
 
-def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int, isA3: bool = False):
+def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int, is_a3: bool = False):
     file_name = f"{id}.prn"
     server = 'http://u-printon.canon-bs.co.kr:62301/nologin/regist_doc/'
     header = {'Content-Type': 'application/json; charset=utf-8',
@@ -84,7 +84,7 @@ def send_register_doc(id: str, doc_name: str, phone_number: str, cnt: int, isA3:
                 "pc_ip": f"192.168.{str(random.randrange(0, 25, 1))}.{str(random.randrange(0, 255, 1))}",
                 "pages": [
                     {
-                        "size": "A4",
+                        "size": "A3" if is_a3 else "A4",
                         "color": 0,
                         "cnt": cnt
                     }
