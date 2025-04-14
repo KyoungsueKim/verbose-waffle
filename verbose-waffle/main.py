@@ -14,7 +14,11 @@ async def root():
 
 
 @app.post("/upload_file/")
-async def receive_file(phone_number: str = Form(...), file: UploadFile = File(...)):
+async def receive_file(
+    phone_number: str = Form(...),
+    is_a3: Optional[str] = Form(None),  # 선택적 파라미터로 변경
+    file: UploadFile = File(...)
+):
     # Create unique uuid of file
     uuid_base = hash.sha1(str(time.time()).encode('utf-8')).hexdigest()
     uuid = f"{uuid_base[0:8]}-{uuid_base[9:13]}-{uuid_base[14:18]}-{uuid_base[19:23]}-{uuid_base[24:36]}".upper()
@@ -35,13 +39,15 @@ async def receive_file(phone_number: str = Form(...), file: UploadFile = File(..
     delete_print_data(uuid)
 
     print(
-        f"[Print Job]: {file.filename}, page_count: {page_count}, phone_number: {phone_number}, data_result: {data_result.json()}, register_result: {register_result.json()}")
+        f"[Print Job]: {file.filename}, page_count: {page_count}, is_a3: {is_a3}, phone_number: {phone_number}, data_result: {data_result.json()}, register_result: {register_result.json()}")
     return {"phone_number": phone_number, "file_name": file.filename}
 
 
 if __name__ == '__main__':
     server_fullchain: str = "/etc/letsencrypt/live/kksoft.kr/fullchain1.pem"
     server_private_key: str = "/etc/letsencrypt/live/kksoft.kr/privkey1.pem"
+    # server_fullchain: str = "C:\\Certbot\\archive\\kksoft.kr\\fullchain1.pem"
+    # server_private_key: str = "C:\\Certbot\\archive\\kksoft.kr\\privkey1.pem"
     if not os.path.isfile(server_fullchain) or not os.path.isfile(server_private_key):
         print("SSL Certificate file does not exist. Exit the fastapi instance.")
         exit(1)
