@@ -1,48 +1,29 @@
+import os
+
 import uvicorn
-import hashlib as hash
-from core.printers import *
-from core import html_content
-from fastapi import FastAPI, File, UploadFile, Form
-from fastapi.responses import HTMLResponse
+from fastapi import FastAPI
 
-app = FastAPI()
-
-
-@app.get("/")
-async def root():
-    return HTMLResponse(content=html_content.html_content, status_code=200)
+from core.config import AdmobSsvConfig, PrintConfig
+from core.printers import PrintJobService
+from core.routes import admob, privacy, print_jobs
+from core.ssv import AdmobSsvVerifier
 
 
-@app.post("/upload_file/")
-async def receive_file(
-    phone_number: str = Form(...),
-    is_a3: Optional[str] = Form(None),  # 선택적 파라미터로 변경
-    file: UploadFile = File(...)
-):
-    is_a3 = True if is_a3 == "true" else False
+def create_app() -> FastAPI:
+    """FastAPI 애플리케이션과 의존성을 구성한다."""
 
-    # Create unique uuid of file
-    uuid_base = hash.sha1(str(time.time()).encode('utf-8')).hexdigest()
-    uuid = f"{uuid_base[0:8]}-{uuid_base[9:13]}-{uuid_base[14:18]}-{uuid_base[19:23]}-{uuid_base[24:36]}".upper()
+    app = FastAPI()
+    app.state.print_service = PrintJobService(PrintConfig())
+    app.state.ssv_verifier = AdmobSsvVerifier(AdmobSsvConfig())
 
-    # Create directory if doesn't exists.
-    if not os.path.exists('temp/'):
-        os.makedirs('temp/')
+    app.include_router(privacy.router)
+    app.include_router(print_jobs.router)
+    app.include_router(admob.router)
 
-    # Save file with name as uuid
-    with open(f"temp/{uuid}.pdf", "wb+") as file_obj:
-        file_obj.write(file.file.read())
+    return app
 
-    page_count = get_page_cnt(uuid)
 
-    # Send pdf file to printer
-    data_result = send_print_data(uuid)
-    register_result = send_register_doc(uuid, file.filename, phone_number, page_count, is_a3=is_a3)
-    delete_print_data(uuid)
-
-    print(
-        f"[Print Job]: {file.filename}, page_count: {page_count}, is_a3: {is_a3}, phone_number: {phone_number}, data_result: {data_result.json()}, register_result: {register_result.json()}")
-    return {"phone_number": phone_number, "file_name": file.filename}
+app = create_app()
 
 
 if __name__ == '__main__':
@@ -55,5 +36,11 @@ if __name__ == '__main__':
         exit(1)
 
     os.system('service cups start')
-    uvicorn.run("main:app", host="0.0.0.0", port=64550, reload=False, ssl_certfile=server_fullchain,
-                ssl_keyfile=server_private_key)
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=64550,
+        reload=False,
+        ssl_certfile=server_fullchain,
+        ssl_keyfile=server_private_key,
+    )
