@@ -22,3 +22,10 @@ class AdmobSsvConfig:
 
     key_server_url: str = "https://www.gstatic.com/admob/reward/verifier-keys.json"
     cache_ttl_seconds: int = 24 * 60 * 60
+
+
+@dataclass(frozen=True)
+class AppAdsConfig:
+    """app-ads.txt 제공을 위한 설정."""
+
+    lines: tuple[str, ...] = ("google.com, pub-8286712861565957, DIRECT, f08c47fec0942fa0",)

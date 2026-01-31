@@ -3,9 +3,10 @@ import os
 import uvicorn
 from fastapi import FastAPI
 
-from core.config import AdmobSsvConfig, PrintConfig
+from core.app_ads import AppAdsContentService
+from core.config import AdmobSsvConfig, AppAdsConfig, PrintConfig
 from core.printers import PrintJobService
-from core.routes import admob, privacy, print_jobs
+from core.routes import admob, app_ads, privacy, print_jobs
 from core.ssv import AdmobSsvVerifier
 
 
@@ -15,10 +16,12 @@ def create_app() -> FastAPI:
     app = FastAPI()
     app.state.print_service = PrintJobService(PrintConfig())
     app.state.ssv_verifier = AdmobSsvVerifier(AdmobSsvConfig())
+    app.state.app_ads_service = AppAdsContentService(AppAdsConfig())
 
     app.include_router(privacy.router)
     app.include_router(print_jobs.router)
     app.include_router(admob.router)
+    app.include_router(app_ads.router)
 
     return app
 
