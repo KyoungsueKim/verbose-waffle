@@ -28,4 +28,7 @@ class AdmobSsvConfig:
 class AppAdsConfig:
     """app-ads.txt 제공을 위한 설정."""
 
-    lines: tuple[str, ...] = ("google.com, pub-8286712861565957, DIRECT, f08c47fec0942fa0",)
+    lines: tuple[str, ...] = (
+        "google.com, pub-8286712861565957, DIRECT, f08c47fec0942fa0",
+        "facebook.com, 1207724671011144, DIRECT, c3e20eee3f780d68",
+    )
