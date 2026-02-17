@@ -37,6 +37,10 @@ MANIFEST
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Ignore local CUPS artifacts and custom driver PPD copied in repo
+cups/
+verbose-waffle/CNRCUPSIRADV45453ZK.ppd
+
 # Unit test / coverage reports
 htmlcov/
 .tox/
