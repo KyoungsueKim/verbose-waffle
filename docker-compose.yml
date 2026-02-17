@@ -1,7 +1,8 @@
 version: '3'
 services:
   verbose-waffle:
-    image: mindersturmoil/verbose-waffle:5
+    image: verbose-waffle:local
+    build: .
     volumes:
       - C:\Certbot\archive\kksoft.kr:/etc/letsencrypt/live/kksoft.kr
       - ./verbose-waffle:/opt/project/verbose-waffle
