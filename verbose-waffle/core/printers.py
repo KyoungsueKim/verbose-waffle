@@ -5,6 +5,7 @@ import random
 import subprocess
 import time
 from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
 from typing import Optional
 
@@ -21,6 +22,57 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
+class DuplexMode(str, Enum):
+    """API 요청에서 선택할 수 있는 단면/양면 인쇄 모드다."""
+
+    SIMPLEX = "simplex"
+    LONG_EDGE = "long_edge"
+    SHORT_EDGE = "short_edge"
+
+    @classmethod
+    def from_api_value(cls, value: str | None) -> "DuplexMode":
+        """요청 문자열을 내부 인쇄 모드로 변환하고, 누락된 값은 단면으로 처리한다."""
+
+        normalized_value = (value or "").strip().lower().replace("-", "_").replace(" ", "_")
+        if not normalized_value:
+            return cls.SIMPLEX
+
+        aliases = {
+            "simplex": cls.SIMPLEX,
+            "one_sided": cls.SIMPLEX,
+            "none": cls.SIMPLEX,
+            "off": cls.SIMPLEX,
+            "false": cls.SIMPLEX,
+            "long_edge": cls.LONG_EDGE,
+            "two_sided_long_edge": cls.LONG_EDGE,
+            "duplex": cls.LONG_EDGE,
+            "duplexnotumble": cls.LONG_EDGE,
+            "duplex_no_tumble": cls.LONG_EDGE,
+            "true": cls.LONG_EDGE,
+            "short_edge": cls.SHORT_EDGE,
+            "two_sided_short_edge": cls.SHORT_EDGE,
+            "duplextumble": cls.SHORT_EDGE,
+            "duplex_tumble": cls.SHORT_EDGE,
+        }
+        try:
+            return aliases[normalized_value]
+        except KeyError:
+            supported_values = "simplex, long_edge, short_edge"
+            raise HTTPException(
+                status_code=400,
+                detail=f"Unsupported duplex_mode '{value}'. Supported values: {supported_values}.",
+            )
+
+    def to_cups_options(self) -> list[str]:
+        """Canon UFR II PPD가 이해하는 CUPS 작업 옵션으로 변환한다."""
+
+        if self is DuplexMode.LONG_EDGE:
+            return ["-o", "Duplex=DuplexNoTumble", "-o", "BindEdge=Left"]
+        if self is DuplexMode.SHORT_EDGE:
+            return ["-o", "Duplex=DuplexTumble", "-o", "BindEdge=Top"]
+        return ["-o", "Duplex=None"]
+
+
 @dataclass(frozen=True)
 class PrintJobResult:
     """프린트 처리 결과를 담는 값 객체다."""
@@ -29,6 +81,7 @@ class PrintJobResult:
     file_name: str
     page_count: int
     is_a3: bool
+    duplex_mode: DuplexMode
 
 
 class PrintJobService:
@@ -37,16 +90,23 @@ class PrintJobService:
     def __init__(self, config: PrintConfig | None = None) -> None:
         self._config = config or PrintConfig()
 
-    def process_upload(self, upload_file: UploadFile, phone_number: str, is_a3: bool) -> PrintJobResult:
+    def process_upload(
+        self,
+        upload_file: UploadFile,
+        phone_number: str,
+        is_a3: bool,
+        duplex_mode: DuplexMode | None = None,
+    ) -> PrintJobResult:
         """업로드된 PDF 파일을 처리하고 프린트 등록까지 완료한다."""
 
+        effective_duplex_mode = duplex_mode or DuplexMode.SIMPLEX
         job_id = self._create_job_id()
         self._ensure_temp_dir()
 
         pdf_path = self._save_upload(job_id, upload_file)
         page_count = self._get_page_count(pdf_path)
 
-        data_result = self._send_print_data(job_id)
+        data_result = self._send_print_data(job_id, effective_duplex_mode)
         register_result = self._send_register_doc(job_id, upload_file.filename, phone_number, page_count, is_a3)
         self._cleanup_job_files(job_id)
 
@@ -56,6 +116,7 @@ class PrintJobService:
                 "file_name": upload_file.filename,
                 "page_count": page_count,
                 "is_a3": is_a3,
+                "duplex_mode": effective_duplex_mode.value,
                 "phone_number": phone_number,
                 "data_result": self._safe_response_json(data_result),
                 "register_result": self._safe_response_json(register_result),
@@ -67,6 +128,7 @@ class PrintJobService:
             file_name=upload_file.filename,
             page_count=page_count,
             is_a3=is_a3,
+            duplex_mode=effective_duplex_mode,
         )
 
     def _create_job_id(self) -> str:
@@ -96,7 +158,7 @@ class PrintJobService:
             pdf_reader = PyPDF2.PdfReader(pdf_file)
             return len(pdf_reader.pages)
 
-    def _print_to_file(self, job_id: str) -> Optional[Path]:
+    def _print_to_file(self, job_id: str, duplex_mode: DuplexMode) -> Optional[Path]:
         """CUPS 가상 프린터를 이용해 PRN 파일을 생성한다."""
 
         processing_time = 0
@@ -114,7 +176,7 @@ class PrintJobService:
                     str(self._config.ppd_path),
                 ]
             )
-            subprocess.check_call(["lpr", "-P", job_id, "-o", "ColorModel=KGray", str(self._config.temp_dir / f"{job_id}.pdf")])
+            subprocess.check_call(self._build_lpr_command(job_id, duplex_mode))
 
             while True:
                 if b"idle" in subprocess.check_output(["lpstat", "-p", job_id], timeout=180):
@@ -131,11 +193,24 @@ class PrintJobService:
                 detail=f"Failed converting pdf files to PRN binary files. Detail: {exc}",
             )
 
-    def _send_print_data(self, job_id: str) -> Response:
+    def _build_lpr_command(self, job_id: str, duplex_mode: DuplexMode) -> list[str]:
+        """PDF를 PRN으로 변환할 때 CUPS에 전달할 lpr 명령을 구성한다."""
+
+        return [
+            "lpr",
+            "-P",
+            job_id,
+            "-o",
+            "ColorModel=KGray",
+            *duplex_mode.to_cups_options(),
+            str(self._config.temp_dir / f"{job_id}.pdf"),
+        ]
+
+    def _send_print_data(self, job_id: str, duplex_mode: DuplexMode) -> Response:
         """PRN 파일을 업로드 서버로 전송한다."""
 
         try:
-            prn_path = self._print_to_file(job_id)
+            prn_path = self._print_to_file(job_id, duplex_mode)
             if prn_path is None:
                 raise HTTPException(status_code=500, detail="Failed converting pdf files to PRN binary files.")
 
