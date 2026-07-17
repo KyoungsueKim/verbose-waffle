@@ -41,6 +41,10 @@ pip-delete-this-directory.txt
 cups/
 verbose-waffle/CNRCUPSIRADV45453ZK.ppd
 
+# 실제 사용자 업로드와 로컬 검증 산출물은 저장소에 포함하지 않음
+/temp/
+/tmp/
+
 # Unit test / coverage reports
 htmlcov/
 .tox/
@@ -113,6 +117,12 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+
+# 로컬 IDE/프로젝트 생성 메타데이터
+# 이 저장소는 requirements.txt를 의존성 기준으로 사용하므로, IDE가 생성한
+# 최소 pyproject.toml은 배포·테스트 설정으로 추적하지 않는다.
+/.idea/
+/pyproject.toml
 
 # Spyder project settings
 .spyderproject

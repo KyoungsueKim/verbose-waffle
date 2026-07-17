@@ -1,0 +1,12 @@
+.git
+.idea
+.venv
+.env
+.coverage
+__pycache__
+*.py[cod]
+.pytest_cache
+temp
+tmp
+docs
+tests

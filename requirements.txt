@@ -1,5 +1,5 @@
 fastapi[all]
-PyPDF2
+pypdf
 httpx
 python-multipart
 requests

@@ -1,11 +1,26 @@
-version: '3'
 services:
   verbose-waffle:
     image: verbose-waffle:local
     build: .
     volumes:
-      - C:\Certbot\archive\kksoft.kr:/etc/letsencrypt/live/kksoft.kr
-      - ./verbose-waffle:/opt/project/verbose-waffle
+#      - C:\Certbot\archive\kksoft.kr:/etc/letsencrypt/live/kksoft.kr
+      - ./temp:/temp
+    environment:
+      PRINT_TEMP_DIR: ${PRINT_TEMP_DIR:-/temp}
+      PRINT_OUTPUT_DIR: ${PRINT_OUTPUT_DIR:-/root}
+      PRINT_CUPS_MODEL: ${PRINT_CUPS_MODEL:-CNRCUPSIRADV45453ZK.ppd}
+      PRINT_CUPS_MEDIA_A4: ${PRINT_CUPS_MEDIA_A4:-A4}
+      PRINT_CUPS_MEDIA_A3: ${PRINT_CUPS_MEDIA_A3:-A3}
+      PRINT_CUPS_SCALING: ${PRINT_CUPS_SCALING:-auto-fit}
+      PRINT_CUPS_JOB_TIMEOUT_SECONDS: ${PRINT_CUPS_JOB_TIMEOUT_SECONDS:-180}
+      PRINT_CUPS_POLL_INTERVAL_SECONDS: ${PRINT_CUPS_POLL_INTERVAL_SECONDS:-1}
+      PRINT_CUPS_CLEANUP_TIMEOUT_SECONDS: ${PRINT_CUPS_CLEANUP_TIMEOUT_SECONDS:-10}
+      PRINT_RETAIN_JOB_FILES: ${PRINT_RETAIN_JOB_FILES:-false}
+      PRINT_HTTP_CONNECT_TIMEOUT_SECONDS: ${PRINT_HTTP_CONNECT_TIMEOUT_SECONDS:-10}
+      PRINT_HTTP_READ_TIMEOUT_SECONDS: ${PRINT_HTTP_READ_TIMEOUT_SECONDS:-60}
+      PRINT_UPLOAD_BIN_URL: ${PRINT_UPLOAD_BIN_URL:-http://218.145.52.6:8080/spbs/upload_bin}
+      PRINT_REGISTER_DOC_URL: ${PRINT_REGISTER_DOC_URL:-http://u-printon.canon-bs.co.kr:62301/nologin/regist_doc/}
+      PRINT_FRANCHISE_ID: ${PRINT_FRANCHISE_ID:-28}
     working_dir: /
 #    command: /bin/sh -c "python3 /opt/project/verbose-waffle/main.py"  -> This execution order is already in the base-image.
     networks:
@@ -13,3 +28,9 @@ services:
     ports:
       - "64550:64550"
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "lpstat -r >/dev/null 2>&1 && python3 -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:64550/openapi.json', timeout=3).read(1)\""]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3

@@ -1,293 +1,120 @@
 from __future__ import annotations
 
-import hashlib
-import random
-import subprocess
-import time
-from dataclasses import dataclass
-from enum import Enum
-from pathlib import Path
-from typing import Optional
-
-import PyPDF2
-import requests
-from fastapi import UploadFile
-from fastapi.exceptions import HTTPException
-from requests import Response
+import logging
+from uuid import uuid4
 
 from core.config import PrintConfig
+from core.printing.errors import (
+    InvalidPrintDocumentError,
+    PrintConversionFailedError,
+    PrintFileStorageError,
+)
+from core.printing.models import DuplexMode, PaperSize, PrintJobResult
+from core.printing.ports import (
+    JobFileStore,
+    PdfDocumentInspector,
+    PrintFileConverter,
+    PrintServerGateway,
+    UploadedDocument,
+)
 
-import urllib3
-
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-
-class DuplexMode(str, Enum):
-    """API 요청에서 선택할 수 있는 단면/양면 인쇄 모드다."""
-
-    SIMPLEX = "simplex"
-    LONG_EDGE = "long_edge"
-    SHORT_EDGE = "short_edge"
-
-    @classmethod
-    def from_api_value(cls, value: str | None) -> "DuplexMode":
-        """요청 문자열을 내부 인쇄 모드로 변환하고, 누락된 값은 단면으로 처리한다."""
-
-        normalized_value = (value or "").strip().lower().replace("-", "_").replace(" ", "_")
-        if not normalized_value:
-            return cls.SIMPLEX
-
-        aliases = {
-            "simplex": cls.SIMPLEX,
-            "one_sided": cls.SIMPLEX,
-            "none": cls.SIMPLEX,
-            "off": cls.SIMPLEX,
-            "false": cls.SIMPLEX,
-            "long_edge": cls.LONG_EDGE,
-            "two_sided_long_edge": cls.LONG_EDGE,
-            "duplex": cls.LONG_EDGE,
-            "duplexnotumble": cls.LONG_EDGE,
-            "duplex_no_tumble": cls.LONG_EDGE,
-            "true": cls.LONG_EDGE,
-            "short_edge": cls.SHORT_EDGE,
-            "two_sided_short_edge": cls.SHORT_EDGE,
-            "duplextumble": cls.SHORT_EDGE,
-            "duplex_tumble": cls.SHORT_EDGE,
-        }
-        try:
-            return aliases[normalized_value]
-        except KeyError:
-            supported_values = "simplex, long_edge, short_edge"
-            raise HTTPException(
-                status_code=400,
-                detail=f"Unsupported duplex_mode '{value}'. Supported values: {supported_values}.",
-            )
-
-    def to_cups_options(self) -> list[str]:
-        """Canon UFR II PPD가 이해하는 CUPS 작업 옵션으로 변환한다."""
-
-        if self is DuplexMode.LONG_EDGE:
-            return ["-o", "Duplex=DuplexNoTumble", "-o", "BindEdge=Left"]
-        if self is DuplexMode.SHORT_EDGE:
-            return ["-o", "Duplex=DuplexTumble", "-o", "BindEdge=Top"]
-        return ["-o", "Duplex=None"]
-
-
-@dataclass(frozen=True)
-class PrintJobResult:
-    """프린트 처리 결과를 담는 값 객체다."""
-
-    phone_number: str
-    file_name: str
-    page_count: int
-    is_a3: bool
-    duplex_mode: DuplexMode
+logger = logging.getLogger(__name__)
 
 
 class PrintJobService:
-    """업로드된 PDF를 프린트 서버로 전송하는 기능을 담당한다."""
+    """PDF 저장, 검사, 변환, 전송, 등록의 유즈케이스 순서만 조정한다."""
 
-    def __init__(self, config: PrintConfig | None = None) -> None:
-        self._config = config or PrintConfig()
+    def __init__(
+        self,
+        config: PrintConfig,
+        pdf_inspector: PdfDocumentInspector,
+        print_converter: PrintFileConverter,
+        file_store: JobFileStore,
+        server_gateway: PrintServerGateway,
+    ) -> None:
+        self._config = config
+        self._pdf_inspector = pdf_inspector
+        self._print_converter = print_converter
+        self._file_store = file_store
+        self._server_gateway = server_gateway
 
     def process_upload(
         self,
-        upload_file: UploadFile,
+        upload_file: UploadedDocument,
         phone_number: str,
         is_a3: bool,
         duplex_mode: DuplexMode | None = None,
     ) -> PrintJobResult:
-        """업로드된 PDF 파일을 처리하고 프린트 등록까지 완료한다."""
+        """업로드 PDF를 선택 용지에 맞춘 PRN으로 변환하고 등록한다."""
 
         effective_duplex_mode = duplex_mode or DuplexMode.SIMPLEX
-        job_id = self._create_job_id()
-        self._ensure_temp_dir()
+        paper_size = PaperSize.from_is_a3(is_a3)
+        job_id = str(uuid4()).upper()
+        document_name = upload_file.filename or f"{job_id}.pdf"
+        data_result: dict | None = None
+        register_result: dict | None = None
 
-        pdf_path = self._save_upload(job_id, upload_file)
-        page_count = self._get_page_count(pdf_path)
+        try:
+            try:
+                pdf_path = self._file_store.save_upload(job_id, upload_file.file)
+            except Exception as exc:  # noqa: BLE001 - 저장 구현의 오류를 유즈케이스 오류로 변환한다.
+                raise PrintFileStorageError(
+                    f"Failed to save uploaded PDF for job '{job_id}': {exc}"
+                ) from exc
 
-        data_result = self._send_print_data(job_id, effective_duplex_mode)
-        register_result = self._send_register_doc(job_id, upload_file.filename, phone_number, page_count, is_a3)
-        self._cleanup_job_files(job_id)
+            try:
+                document_info = self._pdf_inspector.inspect(pdf_path)
+            except Exception as exc:  # noqa: BLE001 - PDF 라이브러리 오류를 API 오류로 변환한다.
+                raise InvalidPrintDocumentError(
+                    f"Uploaded file is not a readable PDF for job '{job_id}': {exc}"
+                ) from exc
 
-        print(
-            "[Print Job]",
+            try:
+                prn_path = self._print_converter.convert(
+                    job_id,
+                    pdf_path,
+                    paper_size,
+                    effective_duplex_mode,
+                )
+            except Exception as exc:  # noqa: BLE001 - 변환 어댑터 오류를 유즈케이스 오류로 통일한다.
+                raise PrintConversionFailedError(
+                    f"Print conversion failed for job '{job_id}': {exc}"
+                ) from exc
+
+            data_result = self._server_gateway.upload_print_file(prn_path)
+            register_result = self._server_gateway.register_document(
+                job_id,
+                document_name,
+                phone_number,
+                document_info.page_count,
+                paper_size,
+            )
+        finally:
+            if not self._config.retain_job_files:
+                try:
+                    self._file_store.cleanup(job_id)
+                except Exception:  # noqa: BLE001 - 원래 작업 결과를 보존하고 로그로 경고한다.
+                    logger.exception("Failed to clean local files for print job %s", job_id)
+
+        logger.info(
+            "Print job completed: %s",
             {
-                "file_name": upload_file.filename,
-                "page_count": page_count,
-                "is_a3": is_a3,
+                "job_id": job_id,
+                "page_count": document_info.page_count,
+                "paper_size": paper_size.value,
+                "print_scaling": self._config.cups_scaling.value,
                 "duplex_mode": effective_duplex_mode.value,
-                "phone_number": phone_number,
-                "data_result": self._safe_response_json(data_result),
-                "register_result": self._safe_response_json(register_result),
+                "data_result": data_result,
+                "register_result": register_result,
             },
         )
 
         return PrintJobResult(
             phone_number=phone_number,
-            file_name=upload_file.filename,
-            page_count=page_count,
+            file_name=document_name,
+            page_count=document_info.page_count,
             is_a3=is_a3,
             duplex_mode=effective_duplex_mode,
+            paper_size=paper_size,
+            print_scaling=self._config.cups_scaling,
         )
-
-    def _create_job_id(self) -> str:
-        """프린트 작업 식별자를 생성한다."""
-
-        uuid_base = f"{time.time():.6f}".encode("utf-8")
-        digest = hashlib.sha1(uuid_base).hexdigest()
-        return f"{digest[0:8]}-{digest[9:13]}-{digest[14:18]}-{digest[19:23]}-{digest[24:36]}".upper()
-
-    def _ensure_temp_dir(self) -> None:
-        """임시 파일 저장용 디렉터리를 준비한다."""
-
-        self._config.temp_dir.mkdir(parents=True, exist_ok=True)
-
-    def _save_upload(self, job_id: str, upload_file: UploadFile) -> Path:
-        """업로드된 파일을 임시 디렉터리에 저장한다."""
-
-        pdf_path = self._config.temp_dir / f"{job_id}.pdf"
-        with pdf_path.open("wb") as file_obj:
-            file_obj.write(upload_file.file.read())
-        return pdf_path
-
-    def _get_page_count(self, pdf_path: Path) -> int:
-        """PDF 페이지 수를 계산한다."""
-
-        with pdf_path.open("rb") as pdf_file:
-            pdf_reader = PyPDF2.PdfReader(pdf_file)
-            return len(pdf_reader.pages)
-
-    def _print_to_file(self, job_id: str, duplex_mode: DuplexMode) -> Optional[Path]:
-        """CUPS 가상 프린터를 이용해 PRN 파일을 생성한다."""
-
-        processing_time = 0
-        output_path = self._config.output_dir / f"{job_id}.prn"
-        try:
-            subprocess.check_call(
-                [
-                    "lpadmin",
-                    "-p",
-                    job_id,
-                    "-v",
-                    f"file://{output_path}",
-                    "-E",
-                    "-m",
-                    str(self._config.ppd_path),
-                ]
-            )
-            subprocess.check_call(self._build_lpr_command(job_id, duplex_mode))
-
-            while True:
-                if b"idle" in subprocess.check_output(["lpstat", "-p", job_id], timeout=180):
-                    break
-                time.sleep(1)
-                processing_time += 1
-
-            subprocess.check_call(["lpadmin", "-x", job_id])
-            print(f"[DEBUG] PDF file {job_id}.pdf is processed with {processing_time} seconds.")
-            return output_path if output_path.is_file() else None
-        except Exception as exc:  # noqa: BLE001
-            raise HTTPException(
-                status_code=500,
-                detail=f"Failed converting pdf files to PRN binary files. Detail: {exc}",
-            )
-
-    def _build_lpr_command(self, job_id: str, duplex_mode: DuplexMode) -> list[str]:
-        """PDF를 PRN으로 변환할 때 CUPS에 전달할 lpr 명령을 구성한다."""
-
-        return [
-            "lpr",
-            "-P",
-            job_id,
-            "-o",
-            "ColorModel=KGray",
-            *duplex_mode.to_cups_options(),
-            str(self._config.temp_dir / f"{job_id}.pdf"),
-        ]
-
-    def _send_print_data(self, job_id: str, duplex_mode: DuplexMode) -> Response:
-        """PRN 파일을 업로드 서버로 전송한다."""
-
-        try:
-            prn_path = self._print_to_file(job_id, duplex_mode)
-            if prn_path is None:
-                raise HTTPException(status_code=500, detail="Failed converting pdf files to PRN binary files.")
-
-            file_name = prn_path.name
-            headers = {
-                "Content-Type": "application/X-binary; charset=utf-8",
-                "User-Agent": None,
-                "Content-Disposition": f"attachment; filename={file_name}",
-                "Expect": "100-continue",
-            }
-            with prn_path.open("rb") as data:
-                response = requests.post(
-                    url=self._config.upload_bin_url,
-                    headers=headers,
-                    data=data,
-                    verify=False,
-                )
-            return response
-        except Exception as exc:  # noqa: BLE001
-            raise HTTPException(
-                status_code=500,
-                detail=f"Failed posting PRN binary data into the origin server. Exception: {exc}",
-            )
-
-    def _send_register_doc(self, job_id: str, doc_name: str, phone_number: str, cnt: int, is_a3: bool) -> Response:
-        """등록 서버에 프린트 문서 정보를 등록한다."""
-
-        file_name = f"{job_id}.prn"
-        headers = {
-            "Content-Type": "application/json; charset=utf-8",
-            "User-Agent": None,
-            "Content-Disposition": f"attachment; filename={file_name}",
-            "Expect": "100-continue",
-        }
-        payload = {
-            "nonmember_id": phone_number,
-            "franchise": self._config.franchise_id,
-            "pc_mac": job_id[-12:],
-            "docs": [
-                {
-                    "doc_name": doc_name,
-                    "queue_id": job_id,
-                    "pc_ip": f"192.168.{random.randrange(0, 25)}.{random.randrange(0, 255)}",
-                    "pages": [
-                        {
-                            "size": "A3" if is_a3 else "A4",
-                            "color": 0,
-                            "cnt": cnt,
-                        }
-                    ],
-                }
-            ],
-        }
-        return requests.post(
-            url=self._config.register_doc_url,
-            headers=headers,
-            json=payload,
-            verify=False,
-        )
-
-    def _cleanup_job_files(self, job_id: str) -> None:
-        """임시 PDF/PRN 파일을 정리한다."""
-
-        prn_path = self._config.output_dir / f"{job_id}.prn"
-        pdf_path = self._config.temp_dir / f"{job_id}.pdf"
-        if prn_path.exists():
-            prn_path.unlink()
-        if pdf_path.exists():
-            pdf_path.unlink()
-
-    @staticmethod
-    def _safe_response_json(response: Response | None) -> dict | None:
-        """응답이 JSON일 때만 안전하게 파싱한다."""
-
-        if response is None:
-            return None
-        try:
-            return response.json()
-        except ValueError:
-            return {"status_code": response.status_code}
