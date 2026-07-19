@@ -16,6 +16,8 @@ services:
       PRINT_CUPS_POLL_INTERVAL_SECONDS: ${PRINT_CUPS_POLL_INTERVAL_SECONDS:-1}
       PRINT_CUPS_CLEANUP_TIMEOUT_SECONDS: ${PRINT_CUPS_CLEANUP_TIMEOUT_SECONDS:-10}
       PRINT_RETAIN_JOB_FILES: ${PRINT_RETAIN_JOB_FILES:-false}
+      PRINT_LOG_PHONE_NUMBER: ${PRINT_LOG_PHONE_NUMBER:-true}
+      PRINT_LOG_FILE_NAME: ${PRINT_LOG_FILE_NAME:-true}
       PRINT_HTTP_CONNECT_TIMEOUT_SECONDS: ${PRINT_HTTP_CONNECT_TIMEOUT_SECONDS:-10}
       PRINT_HTTP_READ_TIMEOUT_SECONDS: ${PRINT_HTTP_READ_TIMEOUT_SECONDS:-60}
       PRINT_UPLOAD_BIN_URL: ${PRINT_UPLOAD_BIN_URL:-http://218.145.52.6:8080/spbs/upload_bin}
@@ -29,8 +31,4 @@ services:
       - "64550:64550"
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "lpstat -r >/dev/null 2>&1 && python3 -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:64550/openapi.json', timeout=3).read(1)\""]
-      interval: 30s
-      timeout: 5s
-      start_period: 10s
-      retries: 3
+      disable: ${PRINT_HEALTHCHECK_DISABLED:-true}

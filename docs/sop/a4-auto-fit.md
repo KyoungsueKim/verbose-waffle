@@ -62,7 +62,10 @@ Compose 배포의 기준값은 `.env.example`과 `docker-compose.yml`이다. `ma
 | `PRINT_CUPS_JOB_TIMEOUT_SECONDS` | `180` | 유한하고 0보다 큰 초 단위 실수 | 큐 생성, 제출, 완료 확인을 합친 CUPS 작업 전체 deadline | 직전 검증값 또는 `180` |
 | `PRINT_CUPS_POLL_INTERVAL_SECONDS` | `1` | 유한하고 0보다 큰 초 단위 실수 | `lpstat -W not-completed` 상태 확인 간격 | 직전 검증값 또는 `1` |
 | `PRINT_CUPS_CLEANUP_TIMEOUT_SECONDS` | `10` | 유한하고 0보다 큰 초 단위 실수 | 성공·실패 뒤 `lpadmin -x` 큐 정리에 허용하는 별도 제한 시간 | 직전 검증값 또는 `10` |
-| `PRINT_RETAIN_JOB_FILES` | `true` | 참: `1,true,yes,on`; 거짓: `0,false,no,off` | PDF/PRN의 작업 후 보존 여부 | 장애 분석은 승인된 기간만 `true`; 일반 운영 권장값은 `false` |
+| `PRINT_RETAIN_JOB_FILES` | `false` | 참: `1,true,yes,on`; 거짓: `0,false,no,off` | PDF/PRN의 작업 후 보존 여부 | 장애 분석은 승인된 기간만 `true`; 일반 운영 권장값은 `false` |
+| `PRINT_LOG_PHONE_NUMBER` | `true` | 참: `1,true,yes,on`; 거짓: `0,false,no,off` | 성공 완료 로그에 전화번호 포함 | 개인정보 로그가 불필요하면 `false` |
+| `PRINT_LOG_FILE_NAME` | `true` | 참: `1,true,yes,on`; 거짓: `0,false,no,off` | 성공 완료 로그에 원본 PDF 파일명 포함 | 개인정보·문서명 로그가 불필요하면 `false` |
+| `PRINT_HEALTHCHECK_DISABLED` | `true` | Compose 전용이며 `true` 또는 `false`만 허용. `true`이면 주기 검사 없음, `false`이면 CUPS와 `/healthz` 검사 | 반복 `/healthz` access log와 Docker health 상태를 제어 | 주기 상태 감시가 필요하면 `false` |
 | `PRINT_HTTP_CONNECT_TIMEOUT_SECONDS` | `10` | 유한하고 0보다 큰 초 단위 실수 | 캠퍼스 서버 연결 대기 제한 | 직전 검증값 또는 `10` |
 | `PRINT_HTTP_READ_TIMEOUT_SECONDS` | `60` | 유한하고 0보다 큰 초 단위 실수 | 캠퍼스 서버 응답 읽기 제한 | 직전 검증값 또는 `60` |
 | `PRINT_UPLOAD_BIN_URL` | `.env.example`의 현행값 | 코드는 비어 있지 않은지만 검사한다. 운영자는 승인된 HTTP(S) 주소인지 별도 확인 | PRN 바이너리 전송 대상 | 보안 백업에 기록된 직전 주소 |
@@ -223,7 +226,7 @@ docker compose run --rm --no-deps `
    docker compose ps
    ```
 
-2. `docker-entrypoint.sh`의 CUPS 시작/readiness 실패와 애플리케이션 시작 실패를 확인한다. 애플리케이션은 전화번호를 직접 로그에 남기지 않지만 파일명, 작업 ID, 외부 응답에 개인정보가 포함될 수 있으므로 화면 공유나 티켓 첨부 전에 가린다.
+2. `docker-entrypoint.sh`의 CUPS 시작/readiness 실패와 애플리케이션 시작 실패를 확인한다. 기본 완료 로그에는 전화번호와 원본 PDF 파일명이 포함된다. 파일명, 작업 ID, 외부 응답에도 개인정보가 포함될 수 있으므로 로그 접근을 통제하고 화면 공유나 티켓 첨부 전에 가린다.
 
    ```powershell
    docker compose logs --tail 200 verbose-waffle
@@ -248,9 +251,18 @@ docker compose run --rm --no-deps `
    docker compose exec verbose-waffle printenv PRINT_CUPS_MEDIA_A3
    docker compose exec verbose-waffle printenv PRINT_CUPS_SCALING
    docker compose exec verbose-waffle printenv PRINT_RETAIN_JOB_FILES
+   docker compose exec verbose-waffle printenv PRINT_LOG_PHONE_NUMBER
+   docker compose exec verbose-waffle printenv PRINT_LOG_FILE_NAME
    ```
 
-판정 기준은 서비스가 `running (healthy)`, scheduler가 `running`, 현재 구조에서 UID가 `0`, 모델 한 건 이상 조회, 두 필터의 종료 코드 0, 배율 값 `auto-fit`이다. healthcheck는 CUPS scheduler와 `http://127.0.0.1:64550/openapi.json`을 함께 확인한다.
+5. 주기 healthcheck의 활성 여부와 관계없이 배포 직후에는 CUPS와 API를 한 번 수동 확인한다.
+
+   ```powershell
+   docker compose exec verbose-waffle lpstat -r
+   docker compose exec verbose-waffle python3 -c "import urllib.request; response = urllib.request.urlopen('http://127.0.0.1:64550/healthz', timeout=3); print(response.status)"
+   ```
+
+판정 기준은 scheduler가 `running`, `/healthz`가 HTTP 204, 현재 구조에서 UID가 `0`, 모델 한 건 이상 조회, 두 필터의 종료 코드 0, 배율 값이 `auto-fit`인 것이다. `PRINT_HEALTHCHECK_DISABLED=true`이면 `docker compose ps`에는 Docker health 상태가 표시되지 않는 것이 정상이다. `false`이면 서비스가 `running (healthy)`여야 하고 Docker가 CUPS scheduler와 `/healthz`를 주기적으로 확인한다. 운영 애플리케이션의 `/openapi.json`, `/docs`, `/redoc`은 모두 HTTP 404여야 한다.
 
 Docker entrypoint를 우회해 `python main.py`나 `uvicorn`을 직접 실행하는 비표준 절차에서는 운영자가 CUPS를 먼저 시작하고 `lpstat -r` 성공을 확인해야 한다. 일반 배포에서는 entrypoint를 우회하지 않는다.
 
@@ -366,6 +378,8 @@ docker compose exec verbose-waffle cupsctl --no-debug-logging
 * 배포 시각, commit, 신규/이전 이미지 ID, 설정 백업 위치, 인수 담당자 기록 완료
 * 디버그 로그 비활성화 확인
 * 운영 `PRINT_RETAIN_JOB_FILES` 결정과 파일 보존 종료 시각 기록
+* 전화번호·원본 파일명 로그 활성 여부, 접근자와 보존 기간 기록
+* 주기 healthcheck 활성 여부와 비활성 시 수동 점검 결과 기록
 
 안정화 관찰 기간이 끝나면 개인정보 최소 보관을 위해 `PRINT_RETAIN_JOB_FILES=false`를 권장한다. `true`가 꼭 필요하면 접근자, 목적, 종료 시각을 명시하고 종료 직후 확인된 파일만 정리한다.
 
@@ -373,7 +387,7 @@ docker compose exec verbose-waffle cupsctl --no-debug-logging
 
 | 조사 대상 | 위치/명령 | 포함될 수 있는 민감정보 | 담당 코드 |
 | --- | --- | --- | --- |
-| 애플리케이션 시작·작업 로그 | `docker compose logs verbose-waffle` | 원본 파일명, 작업 ID, 외부 응답 요약; 응답에 개인정보가 포함될 가능성 | `verbose-waffle/core/printers.py`, `core/printing/gateway.py` |
+| 애플리케이션 시작·작업 로그 | `docker compose logs verbose-waffle` | 기본 설정에서 전화번호, 원본 파일명, 작업 ID, 외부 응답 요약 | `verbose-waffle/core/printers.py`, `core/printing/gateway.py` |
 | CUPS 변환 오류 | 컨테이너 `/var/log/cups/error_log` | 큐/작업 ID, 파일 경로, 옵션 | `verbose-waffle/core/printing/cups.py` |
 | CUPS 접근·페이지 로그 | `/var/log/cups/access_log`, `/var/log/cups/page_log` | 작업·사용자 관련 메타데이터 | `cups-files.conf` |
 | CUPS 시작·readiness 오류 | `/tmp/cups-start.log`, `/tmp/cups-readiness.log` | 시스템 경로·서비스 오류 | `docker-entrypoint.sh` |
@@ -398,6 +412,7 @@ docker compose exec verbose-waffle cupsctl --no-debug-logging
 | --- | --- | --- | --- |
 | 시작 즉시 `ValueError` | 오류에 표시된 `PRINT_*` 이름 | `.env` → `docker-compose.yml` → `core/config.py` | 표의 허용값으로 고치고 설정 검증부터 재실행 |
 | 컨테이너가 기동하지 않거나 unhealthy | `/tmp/cups-start.log`, `/tmp/cups-readiness.log`, `docker compose logs` | `docker-entrypoint.sh`, Docker/Compose healthcheck | CUPS readiness 또는 API health 원인을 해결하고 entrypoint를 우회하지 않음 |
+| `/healthz` access 로그가 계속 반복됨 | 유효 `PRINT_HEALTHCHECK_DISABLED`, 현재 컨테이너의 healthcheck와 외부 모니터 | `.env`, `docker-compose.yml`, reverse proxy·uptime monitor | `true` 반영 후 컨테이너를 재생성한다. Docker 검사가 꺼졌는데도 반복되면 외부 호출 주체를 조사 |
 | 여전히 A3/대형 페이지가 잘림 | 유효 `PRINT_CUPS_SCALING`, CUPS debug 로그의 `media`/`print-scaling` | `core/printing/cups.py`, PPD media 값 | `auto-fit`과 A4 media가 실제 작업에 함께 있는지 확인 |
 | 옵션은 맞지만 `pdftopdf`가 실행되지 않음 | 작업 명령의 `-l`, `-o raw`, raw/pass-through 큐 여부 | `core/printing/cups.py`, CUPS filter log | raw 우회를 제거하고 실제 PPD 필터 큐로 통합 테스트 재실행 |
 | A5가 A4 전체로 확대됨 | `PRINT_CUPS_SCALING=fit` 여부 | `core/printing/models.py`, `core/config.py` | 요구가 큰 페이지만 축소라면 `auto-fit`으로 복원 |

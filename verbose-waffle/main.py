@@ -10,7 +10,7 @@ from core.printing.cups import CupsPrintFileConverter
 from core.printing.files import LocalJobFileStore
 from core.printing.gateway import RequestsPrintServerGateway
 from core.printing.pdf import PyPdfDocumentInspector
-from core.routes import admob, app_ads, privacy, print_jobs
+from core.routes import admob, app_ads, health, privacy, print_jobs
 from core.ssv import AdmobSsvVerifier
 
 
@@ -35,7 +35,12 @@ def create_app() -> FastAPI:
 
     configure_application_logging()
     print_config = PrintConfig.from_env()
-    app = FastAPI()
+    app = FastAPI(
+        openapi_url=None,
+        docs_url=None,
+        redoc_url=None,
+        swagger_ui_oauth2_redirect_url=None,
+    )
     app.state.print_service = PrintJobService(
         config=print_config,
         pdf_inspector=PyPdfDocumentInspector(),
@@ -46,6 +51,7 @@ def create_app() -> FastAPI:
     app.state.ssv_verifier = AdmobSsvVerifier(AdmobSsvConfig())
     app.state.app_ads_service = AppAdsContentService(AppAdsConfig())
 
+    app.include_router(health.router)
     app.include_router(privacy.router)
     app.include_router(print_jobs.router)
     app.include_router(admob.router)

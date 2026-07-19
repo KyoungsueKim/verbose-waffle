@@ -53,6 +53,7 @@ flowchart LR
 | 계층 | 파일 | 맡는 책임 | 맡지 않는 책임 |
 | --- | --- | --- | --- |
 | HTTP 어댑터 | `verbose-waffle/core/routes/print_jobs.py` | multipart 필드 수신, `is_a3`/양면 값 검증, 읽을 수 없는 PDF는 HTTP 400, 나머지 애플리케이션 오류는 상세를 숨긴 HTTP 500으로 변환 | CUPS 명령 생성, 파일 변환, 캠퍼스 서버 payload 조립 |
+| 상태 확인 어댑터 | `verbose-waffle/core/routes/health.py` | 응답 본문 없는 `GET /healthz` HTTP 204 제공 | CUPS 상태 판정, 상세 진단 정보 공개 |
 | 애플리케이션 서비스 | `verbose-waffle/core/printers.py` | 저장 → 검사 → 변환 → 업로드 → 등록 유즈케이스 순서와 정리 시점만 조정 | 파일 I/O 구현, requests 호출, CUPS 옵션 문자열, FastAPI 예외 생성 |
 | 도메인 값 | `verbose-waffle/core/printing/models.py` | `PaperSize`, `PrintScaling`, `DuplexMode`, 결과 값과 허용값 검증 | 환경변수 읽기, subprocess 실행 |
 | 애플리케이션 오류 | `verbose-waffle/core/printing/errors.py` | 저장·문서·변환·업로드·등록 실패를 구분하는 프레임워크 비의존 오류 | HTTP 상태와 응답 형식 결정 |
@@ -63,7 +64,7 @@ flowchart LR
 | 원격 서버 어댑터 | `verbose-waffle/core/printing/gateway.py` | PRN 업로드, 등록 payload 구성, connect/read timeout, HTTP 오류 검증, 단계별 오류 변환 | 로컬 파일과 CUPS 큐 수명주기 |
 | 구성 | `verbose-waffle/core/config.py` | 환경변수 기본값·형식·허용값 검증 | 출력 실행 |
 | 조립 | `verbose-waffle/main.py`, `verbose-waffle/core/dependencies.py` | 설정과 구현체를 한 번 조립해 FastAPI 의존성으로 제공 | 개별 출력 정책 구현 |
-| 런타임 이미지 | `Dockerfile`, `docker-entrypoint.sh`, `cups-files.conf`, `docker-compose.yml` | CUPS/cups-filters/Canon 드라이버 설치, file device 허용, CUPS 시작·readiness fail-fast, API/CUPS healthcheck, 환경변수 주입 | 요청별 업무 규칙 |
+| 런타임 이미지 | `Dockerfile`, `docker-entrypoint.sh`, `cups-files.conf`, `docker-compose.yml` | CUPS/cups-filters/Canon 드라이버 설치, file device 허용, CUPS 시작·readiness fail-fast, 선택적 API/CUPS healthcheck, 환경변수 주입 | 요청별 업무 규칙 |
 
 이 분리는 다음 변경 위치를 예측 가능하게 만든다.
 
@@ -73,6 +74,7 @@ flowchart LR
 * 출력 처리 순서를 바꾸려면 `printers.py`, 파일 저장 정책은 `files.py`, 외부 서버 계약은 `gateway.py`를 확인한다.
 * 저장·변환·업로드·등록의 오류 분류를 바꾸려면 `errors.py`와 라우트 매핑을 함께 확인한다.
 * API 필드나 오류 코드를 바꾸려면 `routes/print_jobs.py`를 확인한다.
+* 공개 메타데이터 정책과 라우터 조립은 `main.py`, 컨테이너 상태 확인 응답은 `routes/health.py`를 확인한다. `/openapi.json`, `/docs`, `/redoc`은 운영 애플리케이션에서 라우팅하지 않는다.
 
 ## 4. 요청부터 등록까지의 상세 순서
 
@@ -158,6 +160,8 @@ application/pdf
 * 불리언: `1/true/yes/on`, `0/false/no/off`
 * 배율: `auto-fit`, `fit`, `none`
 
+`PRINT_HEALTHCHECK_DISABLED`는 `PrintConfig`가 아니라 호스트의 Docker Compose가 읽는 배포 옵션이다. 이 값은 `true` 또는 `false`만 사용한다. 검사 명령·간격·제한 시간은 `Dockerfile`이 단독 소유하고 Compose는 활성 여부만 덮어쓴다.
+
 직접 `PrintConfig()`를 만드는 단위 테스트의 `temp_dir` 기본값은 상대 경로 `temp`이지만, 실제 Compose 배포는 `PRINT_TEMP_DIR=/temp`를 명시한다. 운영 판단은 항상 Compose와 유효 환경변수를 기준으로 한다.
 
 기본 `docker-compose.yml`은 `./temp:/temp`만 바인드하고 애플리케이션 소스는 바인드하지 않는다. 실행 코드는 이미지 빌드 시 `/opt/project/verbose-waffle`에 복사된 버전으로 고정된다. 이 불변 조건을 깨고 호스트 소스를 덮어쓰면 자동 검증한 이미지와 운영 코드가 달라지고 이미지 태그 롤백도 무효가 되므로, 운영 Compose에 소스 bind mount를 추가하지 않는다.
@@ -168,10 +172,10 @@ application/pdf
 
 * PDF: 기본 Compose 경로 `/temp/<JOB_ID>.pdf`; 호스트의 `./temp`에 바인드된다.
 * PRN: 기본 경로 `/root/<JOB_ID>.prn`; 컨테이너 내부에 저장된다.
-* 애플리케이션 표준 출력: 성공한 작업 ID, 페이지 수, 출력 정책, HTTP 상태 요약을 기록한다. 전화번호와 원본 파일명, 외부 응답 본문은 기록하지 않는다. 오류 로그와 CUPS 로그에는 작업 ID나 생성 파일 경로가 포함될 수 있다.
+* 애플리케이션 표준 출력: 성공한 작업 ID, 페이지 수, 출력 정책, HTTP 상태 요약을 기록한다. 호환성과 장애 추적을 위해 기본값에서는 전화번호와 원본 파일명도 기록한다. `PRINT_LOG_PHONE_NUMBER=false`, `PRINT_LOG_FILE_NAME=false`로 각 필드를 독립적으로 제외할 수 있으며 외부 응답 본문은 기록하지 않는다. 오류 로그와 CUPS 로그에는 작업 ID나 생성 파일 경로가 포함될 수 있다.
 * CUPS 로그: `/var/log/cups/error_log`, `access_log`, `page_log`에 작업 이름과 상태가 남을 수 있다.
 
-호환성과 장애 분석을 위해 현재 기본값은 `PRINT_RETAIN_JOB_FILES=true`이지만, 개인정보 최소 보관 원칙상 운영 검증을 마친 뒤 `false` 사용을 권장한다. 로그나 파일을 이슈·메신저에 첨부할 때는 전화번호, 파일명, 작업 ID, 문서 내용을 제거한다. 삭제는 반드시 확인된 작업 ID의 정확한 파일만 대상으로 하며 와일드카드나 광범위한 재귀 삭제를 사용하지 않는다.
+호환성과 장애 분석을 위해 `PrintConfig`의 파일 보존 기본값은 `PRINT_RETAIN_JOB_FILES=true`이지만 Compose는 `false`를 명시한다. 개인정보 최소 보관 원칙상 일반 운영에서는 파일 보존을 끄고, 전화번호·파일명 로그가 필요한 기간과 접근자를 정한다. 로그나 파일을 이슈·메신저에 첨부할 때는 전화번호, 파일명, 작업 ID, 문서 내용을 제거한다. 삭제는 반드시 확인된 작업 ID의 정확한 파일만 대상으로 하며 와일드카드나 광범위한 재귀 삭제를 사용하지 않는다.
 
 ## 9. 테스트 경계
 
@@ -183,7 +187,7 @@ application/pdf
 | `tests/test_print_jobs_route.py` | `is_a3`의 명시적 불리언 파싱과 잘못된 값 거부 | 없음 |
 | `tests/test_printing_adapters.py` | 부분 저장 정리, HTTP timeout/상태 검사, 단계별 gateway 오류, 등록 용지 | HTTP 테스트 대역 사용 |
 | `tests/test_cups_printing.py` | 정확한 `lpr` 인수, 단일 deadline, 기존/빈 PRN 거부, 실패 단계, 모든 경로의 큐 제거 | CUPS 테스트 대역 사용 |
-| `tests/test_print_job_service.py` | CUPS/등록에 동일한 용지 사용, 잘못된 PDF 및 외부 실패 시 파일 정리 | 모든 외부 포트의 테스트 대역 사용 |
+| `tests/test_print_job_service.py` | CUPS/등록에 동일한 용지 사용, 완료 로그의 전화번호·파일명 토글, 잘못된 PDF 및 외부 실패 시 파일 정리 | 모든 외부 포트의 테스트 대역 사용 |
 | `tests/test_cups_integration.py` | 실제 `pdftopdf`로 5종 합성 PDF의 A4 MediaBox·네 모서리 렌더 보존을 검사하고 실제 Canon CUPS로 PRN 생성 | 로컬 컨테이너 CUPS/Poppler만 사용 |
 | `scripts/generate_print_fit_fixtures.py` | 실물 검수용 A3 세로·가로, A4, A5, 혼합 크기 및 2쪽 양면 합성 PDF 생성 | 없음 |
 

@@ -17,6 +17,8 @@ class PrintConfigTest(unittest.TestCase):
         self.assertEqual(config.cups_media_a4, "A4")
         self.assertEqual(config.cups_media_a3, "A3")
         self.assertTrue(config.retain_job_files)
+        self.assertTrue(config.log_phone_number)
+        self.assertTrue(config.log_file_name)
 
     def test_all_operational_values_can_be_overridden(self) -> None:
         config = PrintConfig.from_env(
@@ -31,6 +33,8 @@ class PrintConfigTest(unittest.TestCase):
                 "PRINT_CUPS_POLL_INTERVAL_SECONDS": "0.25",
                 "PRINT_CUPS_CLEANUP_TIMEOUT_SECONDS": "7",
                 "PRINT_RETAIN_JOB_FILES": "false",
+                "PRINT_LOG_PHONE_NUMBER": "false",
+                "PRINT_LOG_FILE_NAME": "false",
                 "PRINT_HTTP_CONNECT_TIMEOUT_SECONDS": "3",
                 "PRINT_HTTP_READ_TIMEOUT_SECONDS": "12",
                 "PRINT_UPLOAD_BIN_URL": "http://upload.test/binary",
@@ -49,6 +53,8 @@ class PrintConfigTest(unittest.TestCase):
         self.assertEqual(config.cups_poll_interval_seconds, 0.25)
         self.assertEqual(config.cups_cleanup_timeout_seconds, 7)
         self.assertFalse(config.retain_job_files)
+        self.assertFalse(config.log_phone_number)
+        self.assertFalse(config.log_file_name)
         self.assertEqual(config.http_timeout, (3, 12))
         self.assertEqual(config.franchise_id, 99)
 
@@ -79,6 +85,14 @@ class PrintConfigTest(unittest.TestCase):
     def test_invalid_retention_flag_fails_at_startup(self) -> None:
         with self.assertRaisesRegex(ValueError, "PRINT_RETAIN_JOB_FILES"):
             PrintConfig.from_env({"PRINT_RETAIN_JOB_FILES": "sometimes"})
+
+    def test_invalid_log_flags_fail_at_startup(self) -> None:
+        """민감정보 로그 옵션의 오타를 조용히 기본값으로 처리하지 않는다."""
+
+        for variable_name in ("PRINT_LOG_PHONE_NUMBER", "PRINT_LOG_FILE_NAME"):
+            with self.subTest(variable_name=variable_name):
+                with self.assertRaisesRegex(ValueError, variable_name):
+                    PrintConfig.from_env({variable_name: "sometimes"})
 
     def test_non_positive_franchise_id_fails_at_startup(self) -> None:
         with self.assertRaisesRegex(ValueError, "PRINT_FRANCHISE_ID"):

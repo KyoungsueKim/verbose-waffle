@@ -105,19 +105,55 @@ class PrintJobServiceTest(unittest.TestCase):
                 filename="synthetic-a3.pdf", file=BytesIO(b"%PDF-synthetic")
             )
 
-            result = service.process_upload(
-                upload,
-                "01000000000",
-                is_a3=True,
-                duplex_mode=DuplexMode.LONG_EDGE,
-            )
+            with self.assertLogs("core.printers", level="INFO") as captured_logs:
+                result = service.process_upload(
+                    upload,
+                    "01000000000",
+                    is_a3=True,
+                    duplex_mode=DuplexMode.LONG_EDGE,
+                )
 
             self.assertIs(converter.calls[0][2], PaperSize.A3)
             self.assertIs(result.paper_size, PaperSize.A3)
             self.assertIs(gateway.registrations[0][4], PaperSize.A3)
             self.assertEqual(gateway.registrations[0][3], 3)
+            self.assertIn("'file_name': 'synthetic-a3.pdf'", captured_logs.output[0])
+            self.assertIn("'phone_number': '01000000000'", captured_logs.output[0])
             self.assertFalse(any(config.temp_dir.glob("*.pdf")))
             self.assertFalse(any(config.output_dir.glob("*.prn")))
+
+    def test_completion_log_can_hide_phone_number_and_file_name(self) -> None:
+        """운영자가 두 민감정보 필드를 각각 설정으로 제외할 수 있어야 한다."""
+
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            config = PrintConfig(
+                temp_dir=root / "input",
+                output_dir=root / "output",
+                retain_job_files=False,
+                log_phone_number=False,
+                log_file_name=False,
+            )
+            gateway = FakePrintServerGateway()
+            service = PrintJobService(
+                config=config,
+                pdf_inspector=FakePdfInspector(),
+                print_converter=FakePrintConverter(config.output_dir),
+                file_store=LocalJobFileStore(config),
+                server_gateway=gateway,
+            )
+            upload = SimpleNamespace(
+                filename="private-name.pdf",
+                file=BytesIO(b"%PDF-synthetic"),
+            )
+
+            with self.assertLogs("core.printers", level="INFO") as captured_logs:
+                service.process_upload(upload, "01011112222", is_a3=False)
+
+            self.assertNotIn("private-name.pdf", captured_logs.output[0])
+            self.assertNotIn("01011112222", captured_logs.output[0])
+            self.assertEqual(gateway.registrations[0][1], "private-name.pdf")
+            self.assertEqual(gateway.registrations[0][2], "01011112222")
 
     def test_gateway_failure_still_removes_job_files_when_configured(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

@@ -40,6 +40,6 @@ COPY ./verbose-waffle /opt/project/verbose-waffle
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD lpstat -r >/dev/null 2>&1 \
-        && python3 -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:64550/openapi.json', timeout=3).read(1)"
+        && python3 -c "import urllib.request; urllib.request.urlopen('http://127.0.0.1:64550/healthz', timeout=3).read()"
 ENTRYPOINT ["/usr/local/bin/verbose-waffle-entrypoint"]
 CMD ["python3", "/opt/project/verbose-waffle/main.py"]

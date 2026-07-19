@@ -96,18 +96,22 @@ class PrintJobService:
                 except Exception:  # noqa: BLE001 - 원래 작업 결과를 보존하고 로그로 경고한다.
                     logger.exception("Failed to clean local files for print job %s", job_id)
 
-        logger.info(
-            "Print job completed: %s",
+        completion_log: dict[str, object] = {"job_id": job_id}
+        if self._config.log_file_name:
+            completion_log["file_name"] = document_name
+        if self._config.log_phone_number:
+            completion_log["phone_number"] = phone_number
+        completion_log.update(
             {
-                "job_id": job_id,
                 "page_count": document_info.page_count,
                 "paper_size": paper_size.value,
                 "print_scaling": self._config.cups_scaling.value,
                 "duplex_mode": effective_duplex_mode.value,
                 "data_result": data_result,
                 "register_result": register_result,
-            },
+            }
         )
+        logger.info("Print job completed: %s", completion_log)
 
         return PrintJobResult(
             phone_number=phone_number,

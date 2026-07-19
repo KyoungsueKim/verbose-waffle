@@ -23,6 +23,8 @@ class PrintConfig:
     cups_poll_interval_seconds: float = 1.0
     cups_cleanup_timeout_seconds: float = 10.0
     retain_job_files: bool = True
+    log_phone_number: bool = True
+    log_file_name: bool = True
     http_connect_timeout_seconds: float = 10.0
     http_read_timeout_seconds: float = 60.0
     upload_bin_url: str = "http://218.145.52.6:8080/spbs/upload_bin"
@@ -83,6 +85,14 @@ class PrintConfig:
             retain_job_files=_boolean(
                 source.get("PRINT_RETAIN_JOB_FILES", "true"),
                 "PRINT_RETAIN_JOB_FILES",
+            ),
+            log_phone_number=_boolean(
+                source.get("PRINT_LOG_PHONE_NUMBER", "true"),
+                "PRINT_LOG_PHONE_NUMBER",
+            ),
+            log_file_name=_boolean(
+                source.get("PRINT_LOG_FILE_NAME", "true"),
+                "PRINT_LOG_FILE_NAME",
             ),
             http_connect_timeout_seconds=_positive_float(
                 source.get("PRINT_HTTP_CONNECT_TIMEOUT_SECONDS", "10"),

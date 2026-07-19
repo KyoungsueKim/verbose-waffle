@@ -46,6 +46,9 @@ Copy-Item .env.example .env
 PRINT_CUPS_MEDIA_A4=A4
 PRINT_CUPS_MEDIA_A3=A3
 PRINT_CUPS_SCALING=auto-fit
+PRINT_LOG_PHONE_NUMBER=true
+PRINT_LOG_FILE_NAME=true
+PRINT_HEALTHCHECK_DISABLED=true
 ```
 
 이미지를 빌드하고 서버를 시작합니다. 파일 수신 포트는 `64550`입니다.
@@ -58,6 +61,10 @@ docker compose logs --tail 200 verbose-waffle
 ```
 
 기본 Compose는 검증된 이미지 안의 애플리케이션 코드를 실행하며 호스트 소스를 컨테이너에 덮어쓰지 않습니다. 소스를 수정했으면 반드시 이미지를 다시 빌드해야 하며, 이 경계 덕분에 이전 이미지 태그로 되돌리는 롤백이 실제 코드 롤백이 됩니다.
+
+운영 서버는 API 구조 노출을 줄이기 위해 `/openapi.json`, `/docs`, `/redoc`을 라우팅하지 않습니다. `GET /healthz`는 응답 본문 없이 HTTP 204를 반환하지만, 반복 access log를 피하기 위해 기본 Compose의 주기적 healthcheck는 `PRINT_HEALTHCHECK_DISABLED=true`로 꺼져 있습니다. 필요할 때 이 값을 `false`로 바꾸면 Docker가 `/healthz`와 CUPS scheduler를 함께 검사합니다.
+
+완료 로그는 장애 추적을 위해 기본적으로 전화번호와 원본 PDF 파일명을 포함합니다. 각각 `PRINT_LOG_PHONE_NUMBER=false`, `PRINT_LOG_FILE_NAME=false`로 즉시 제외할 수 있습니다. 이 로그는 개인정보이므로 접근을 통제하고 외부 공유 전에 전화번호·파일명·작업 ID를 제거합니다.
 
 전체 환경변수와 허용값은 [.env.example](.env.example), 배포·실물 인쇄·장애 대응 절차는 [A4 자동 맞춤 운영 SOP](docs/sop/a4-auto-fit.md)를 따릅니다.
 
