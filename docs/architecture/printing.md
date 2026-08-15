@@ -160,18 +160,18 @@ application/pdf
 * 불리언: `1/true/yes/on`, `0/false/no/off`
 * 배율: `auto-fit`, `fit`, `none`
 
-`PRINT_HEALTHCHECK_DISABLED`는 `PrintConfig`가 아니라 호스트의 Docker Compose가 읽는 배포 옵션이다. 이 값은 `true` 또는 `false`만 사용한다. 검사 명령·간격·제한 시간은 `Dockerfile`이 단독 소유하고 Compose는 활성 여부만 덮어쓴다.
+`PRINT_HEALTHCHECK_DISABLED`, `PRINT_TEMP_HOST_DIR`, `PRINT_TEMP_BIND_CREATE_HOST_PATH`는 `PrintConfig`가 아니라 호스트의 Docker Compose가 읽는 배포 옵션이다. 불리언 Compose 옵션은 `true` 또는 `false`만 사용한다. 검사 명령·간격·제한 시간은 `Dockerfile`이 단독 소유하고 Compose는 활성 여부만 덮어쓴다.
 
 직접 `PrintConfig()`를 만드는 단위 테스트의 `temp_dir` 기본값은 상대 경로 `temp`이지만, 실제 Compose 배포는 `PRINT_TEMP_DIR=/temp`를 명시한다. 운영 판단은 항상 Compose와 유효 환경변수를 기준으로 한다.
 
-기본 `docker-compose.yml`은 `./temp:/temp`만 바인드하고 애플리케이션 소스는 바인드하지 않는다. 실행 코드는 이미지 빌드 시 `/opt/project/verbose-waffle`에 복사된 버전으로 고정된다. 이 불변 조건을 깨고 호스트 소스를 덮어쓰면 자동 검증한 이미지와 운영 코드가 달라지고 이미지 태그 롤백도 무효가 되므로, 운영 Compose에 소스 bind mount를 추가하지 않는다.
+기본 `docker-compose.yml`은 `PRINT_TEMP_HOST_DIR`가 가리키는 작업 파일 디렉터리만 `/temp`에 바인드하고 애플리케이션 소스는 바인드하지 않는다. 이 변수의 기본값은 프로젝트 로컬 `./temp`이므로 특정 파일시스템이나 외부 mount에 의존하지 않는다. 실행 코드는 이미지 빌드 시 `/opt/project/verbose-waffle`에 복사된 버전으로 고정된다. 이 불변 조건을 깨고 호스트 소스를 덮어쓰면 자동 검증한 이미지와 운영 코드가 달라지고 이미지 태그 롤백도 무효가 되므로, 운영 Compose에 소스 bind mount를 추가하지 않는다.
 
 ## 8. 파일·로그와 개인정보
 
 업로드 PDF, PRN, 원본 파일명, 전화번호는 개인정보 또는 민감한 문서 내용을 포함할 수 있다.
 
-* PDF: 기본 Compose 경로 `/temp/<JOB_ID>.pdf`; 호스트의 `./temp`에 바인드된다.
-* PRN: 기본 경로 `/root/<JOB_ID>.prn`; 컨테이너 내부에 저장된다.
+* PDF: 기본 Compose 경로 `/temp/<JOB_ID>.pdf`; 호스트의 `PRINT_TEMP_HOST_DIR`에 바인드된다. 변수 미지정 시 호스트 경로는 `./temp`이다.
+* PRN: 기본 경로 `/root/<JOB_ID>.prn`; 컨테이너 내부에 저장된다. 운영 환경에서 `PRINT_OUTPUT_DIR=/temp`를 선택하면 PDF와 함께 `PRINT_TEMP_HOST_DIR`에 저장된다.
 * 애플리케이션 표준 출력: 성공한 작업 ID, 페이지 수, 출력 정책, HTTP 상태 요약을 기록한다. 호환성과 장애 추적을 위해 기본값에서는 전화번호와 원본 파일명도 기록한다. `PRINT_LOG_PHONE_NUMBER=false`, `PRINT_LOG_FILE_NAME=false`로 각 필드를 독립적으로 제외할 수 있으며 외부 응답 본문은 기록하지 않는다. 오류 로그와 CUPS 로그에는 작업 ID나 생성 파일 경로가 포함될 수 있다.
 * CUPS 로그: `/var/log/cups/error_log`, `access_log`, `page_log`에 작업 이름과 상태가 남을 수 있다.
 

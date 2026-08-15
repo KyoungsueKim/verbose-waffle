@@ -4,7 +4,11 @@ services:
     build: .
     volumes:
 #      - C:\Certbot\archive\kksoft.kr:/etc/letsencrypt/live/kksoft.kr
-      - ./temp:/temp
+      - type: bind
+        source: ${PRINT_TEMP_HOST_DIR:-./temp}
+        target: /temp
+        bind:
+          create_host_path: ${PRINT_TEMP_BIND_CREATE_HOST_PATH:-true}
     environment:
       PRINT_TEMP_DIR: ${PRINT_TEMP_DIR:-/temp}
       PRINT_OUTPUT_DIR: ${PRINT_OUTPUT_DIR:-/root}

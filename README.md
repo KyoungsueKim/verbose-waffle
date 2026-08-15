@@ -51,6 +51,8 @@ PRINT_LOG_FILE_NAME=true
 PRINT_HEALTHCHECK_DISABLED=true
 ```
 
+기본 `PRINT_TEMP_HOST_DIR=./temp`는 프로젝트 로컬 디렉터리를 `/temp`에 바인드하므로 CIFS나 특정 호스트 경로를 요구하지 않습니다. 이미 마운트되어 있어야 하는 외부 저장소를 사용할 때만 로컬 `.env`에서 절대 경로를 지정하고 `PRINT_TEMP_BIND_CREATE_HOST_PATH=false`로 두어, mount가 빠졌을 때 빈 로컬 디렉터리를 대신 생성하지 않도록 합니다. `PRINT_OUTPUT_DIR=/temp`로 설정하면 보존된 PDF와 PRN이 같은 호스트 작업 디렉터리에 남습니다. 이 호스트 측 변수들은 애플리케이션 설정이 아니라 Compose bind 설정입니다.
+
 이미지를 빌드하고 서버를 시작합니다. 파일 수신 포트는 `64550`입니다.
 
 ```powershell
@@ -60,7 +62,7 @@ docker compose ps
 docker compose logs --tail 200 verbose-waffle
 ```
 
-기본 Compose는 검증된 이미지 안의 애플리케이션 코드를 실행하며 호스트 소스를 컨테이너에 덮어쓰지 않습니다. 소스를 수정했으면 반드시 이미지를 다시 빌드해야 하며, 이 경계 덕분에 이전 이미지 태그로 되돌리는 롤백이 실제 코드 롤백이 됩니다.
+기본 Compose는 검증된 이미지 안의 애플리케이션 코드를 실행하며 호스트 소스를 컨테이너에 덮어쓰지 않습니다. 호스트에서는 `PRINT_TEMP_HOST_DIR`로 선택한 작업 파일 디렉터리만 `/temp`에 바인드합니다. 소스를 수정했으면 반드시 이미지를 다시 빌드해야 하며, 이 경계 덕분에 이전 이미지 태그로 되돌리는 롤백이 실제 코드 롤백이 됩니다.
 
 운영 서버는 API 구조 노출을 줄이기 위해 `/openapi.json`, `/docs`, `/redoc`을 라우팅하지 않습니다. `GET /healthz`는 응답 본문 없이 HTTP 204를 반환하지만, 반복 access log를 피하기 위해 기본 Compose의 주기적 healthcheck는 `PRINT_HEALTHCHECK_DISABLED=true`로 꺼져 있습니다. 필요할 때 이 값을 `false`로 바꾸면 Docker가 `/healthz`와 CUPS scheduler를 함께 검사합니다.
 

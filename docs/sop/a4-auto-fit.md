@@ -53,8 +53,10 @@ Compose 배포의 기준값은 `.env.example`과 `docker-compose.yml`이다. `ma
 
 | 변수 | Compose 기본값 | 허용값·운영 규칙 | 효과 | 롤백 기준 |
 | --- | --- | --- | --- | --- |
+| `PRINT_TEMP_HOST_DIR` | `./temp` | Compose를 실행하는 호스트에서 유효한 디렉터리. 상대 경로는 Compose 파일 기준이며 특정 파일시스템을 요구하지 않음 | 호스트 디렉터리를 컨테이너 `/temp`에 bind | `./temp` |
+| `PRINT_TEMP_BIND_CREATE_HOST_PATH` | `true` | Compose 전용 `true` 또는 `false`. 이미 mount되어 있어야 하는 외부 경로는 `false` 권장 | source가 없을 때 디렉터리 자동 생성 허용 여부 | 로컬 기본은 `true`; 외부 mount는 사전 검증 후 `false` |
 | `PRINT_TEMP_DIR` | `/temp` | 비어 있지 않고 컨테이너가 쓰기 가능한 경로. 운영은 절대 경로 권장 | 업로드 PDF 저장 위치 | 이전 `.env` 값. Compose 표준은 `/temp` |
-| `PRINT_OUTPUT_DIR` | `/root` | 비어 있지 않고 컨테이너가 쓰기 가능한 경로 | PRN 출력 위치와 `file:` URI 기준 | 이전 `.env` 값 또는 `/root` |
+| `PRINT_OUTPUT_DIR` | `/root` | 비어 있지 않고 컨테이너가 쓰기 가능한 경로. `/temp`를 선택하면 PRN도 호스트 작업 디렉터리에 보존됨 | PRN 출력 위치와 `file:` URI 기준 | 이전 `.env` 값 또는 `/root` |
 | `PRINT_CUPS_MODEL` | `CNRCUPSIRADV45453ZK.ppd` | 설치된 PPD 모델 이름. 빈 문자열 금지 | 작업별 CUPS 큐의 Canon 모델 | 직전 검증된 PPD 이름 |
 | `PRINT_CUPS_MEDIA_A4` | `A4` | PPD가 지원하는 A4 media 키워드. 빈 문자열 금지 | `is_a3=false` 작업의 `media` | 직전 검증값 또는 `A4` |
 | `PRINT_CUPS_MEDIA_A3` | `A3` | PPD가 지원하는 A3 media 키워드. 빈 문자열 금지 | `is_a3=true` 작업의 `media` | 직전 검증값 또는 `A3` |
@@ -169,7 +171,7 @@ docker image inspect verbose-waffle:local --format '{{.Id}}'
 
 빌드 중 `pdftopdf`, `rastertoufr2`, Canon PPD, Canon 라이브러리를 검사한다. 하나라도 없으면 Dockerfile 단계가 실패해야 정상이다. 설치 실패를 무시하거나 Dockerfile의 검사를 제거하지 않는다.
 
-기본 Compose는 이미지의 `/opt/project/verbose-waffle` 코드를 그대로 실행해야 한다. `docker-compose.yml`의 `volumes`에는 운영 데이터용 `./temp:/temp`만 있고 `./verbose-waffle:/opt/project/verbose-waffle` 같은 소스 bind mount가 없어야 한다. 소스 mount가 있으면 검증한 이미지와 실제 코드가 달라지고 이미지 태그 롤백도 성립하지 않으므로 배포를 중단한다.
+기본 Compose는 이미지의 `/opt/project/verbose-waffle` 코드를 그대로 실행해야 한다. `docker-compose.yml`의 `volumes`에는 `PRINT_TEMP_HOST_DIR`에서 `/temp`로 향하는 운영 데이터용 bind만 있고 `./verbose-waffle:/opt/project/verbose-waffle` 같은 소스 bind mount가 없어야 한다. 기본 호스트 경로는 로컬 `./temp`이며 외부 경로는 해당 환경의 `.env`에서만 선택한다. 소스 mount가 있으면 검증한 이미지와 실제 코드가 달라지고 이미지 태그 롤백도 성립하지 않으므로 배포를 중단한다.
 
 최신 이미지와 현재 `.env`를 함께 사용해 애플리케이션의 시작 시 설정 검증을 실행한다. entrypoint는 이 명령 전에도 CUPS 시작/readiness를 검사한다.
 
@@ -392,7 +394,7 @@ docker compose exec verbose-waffle cupsctl --no-debug-logging
 | CUPS 접근·페이지 로그 | `/var/log/cups/access_log`, `/var/log/cups/page_log` | 작업·사용자 관련 메타데이터 | `cups-files.conf` |
 | CUPS 시작·readiness 오류 | `/tmp/cups-start.log`, `/tmp/cups-readiness.log` | 시스템 경로·서비스 오류 | `docker-entrypoint.sh` |
 | 컨테이너 health | `docker compose ps`, Docker healthcheck | 서비스 상태 | `Dockerfile`, `docker-compose.yml` |
-| 업로드 PDF | 기본 `/temp/<JOB_ID>.pdf`, 호스트 `./temp` | 문서 원문 전체 | `PrintConfig.temp_dir`, `LocalJobFileStore.save_upload()` |
+| 업로드 PDF | 기본 `/temp/<JOB_ID>.pdf`, 호스트 `PRINT_TEMP_HOST_DIR`(기본 `./temp`) | 문서 원문 전체 | `PrintConfig.temp_dir`, `LocalJobFileStore.save_upload()` |
 | 생성 PRN | 기본 `/root/<JOB_ID>.prn` | 인쇄 가능한 문서 내용 | `CupsPrintFileConverter` |
 | API 파싱 | `verbose-waffle/core/routes/print_jobs.py` | 요청 필드 | `receive_file()` |
 | 용지·배율·양면 정책 | `verbose-waffle/core/printing/models.py` | 없음 | `PaperSize`, `PrintScaling`, `DuplexMode` |
