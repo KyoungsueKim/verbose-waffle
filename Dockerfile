@@ -3,7 +3,6 @@ LABEL maintainer="zp5njqlfex@gmail.com"
 
 EXPOSE 64550
 VOLUME /etc/letsencrypt/live/kksoft.kr/
-ENV DEBIAN_FRONTEND=noninteractive
 RUN mkdir -p /opt/project
 
 RUN apt-get update \
@@ -11,28 +10,41 @@ RUN apt-get update \
         ca-certificates \
         cups \
         cups-bsd \
-        cups-filters \
         libcups2-dev \
+        libcupsimage2 \
+        libgcrypt20 \
+        libgtk-3-0 \
+        libjbig0 \
+        libjpeg62-turbo \
+        lsb-release \
         tar \
-    && usermod --append --groups lpadmin root \
     && rm -rf /var/lib/apt/lists/*
 
 COPY linux-UFRII-drv-v620-m17n-20.tar.gz /tmp/canon-ufr2/ufr2.tar.gz
 RUN set -eux; \
+    test "$(dpkg --print-architecture)" = "amd64"; \
     mkdir -p /tmp/canon-ufr2; \
     tar -xzf /tmp/canon-ufr2/ufr2.tar.gz -C /tmp/canon-ufr2; \
-    cd /tmp/canon-ufr2/linux-UFRII-drv-v620-m17n; \
-    yes y | bash install.sh; \
+    dpkg-deb -x /tmp/canon-ufr2/linux-UFRII-drv-v620-m17n/x64/Debian/cnrdrvcups-ufr2-uk_6.20-1.20_amd64.deb /; \
+    mkdir -p /usr/share/ppd; \
+    for fn in /usr/share/cups/model/CNR*ZK.ppd; do \
+        [ -e "$fn" ] || continue; \
+        ln -sf "$fn" "/usr/share/ppd/$(basename "$fn")"; \
+    done; \
+    ldconfig; \
     test -x /usr/lib/cups/filter/pdftopdf; \
     test -x /usr/lib/cups/filter/rastertoufr2; \
     test -f /usr/share/cups/model/CNRCUPSIRADV45453ZK.ppd; \
     test -f /usr/lib/libcanonufr2r.so.1; \
     rm -rf /tmp/canon-ufr2
 COPY cups-files.conf /etc/cups/cups-files.conf
+RUN usermod --append --groups lpadmin root
 COPY docker-entrypoint.sh /usr/local/bin/verbose-waffle-entrypoint
 RUN grep -qx '#!/bin/sh' /usr/local/bin/verbose-waffle-entrypoint \
     && /bin/sh -n /usr/local/bin/verbose-waffle-entrypoint \
     && chmod 0755 /usr/local/bin/verbose-waffle-entrypoint
+
+ENV DEBIAN_FRONTEND=noninteractive
 
 COPY requirements.txt /opt/project/requirements.txt
 RUN pip install --no-cache-dir --upgrade -r /opt/project/requirements.txt

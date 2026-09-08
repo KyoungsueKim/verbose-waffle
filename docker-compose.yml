@@ -1,6 +1,7 @@
 services:
   verbose-waffle:
     image: verbose-waffle:local
+    platform: linux/amd64
     build: .
     volumes:
 #      - C:\Certbot\archive\kksoft.kr:/etc/letsencrypt/live/kksoft.kr
