@@ -84,6 +84,60 @@ class FakePrintServerGateway:
 class PrintJobServiceTest(unittest.TestCase):
     """매체 정책, 외부 포트 인수, 성공/실패 파일 수명주기를 검증한다."""
 
+    def test_retained_pdf_never_retains_prn_after_success_or_failure(self) -> None:
+        """성공, 업로드/등록 실패, 부분 변환 실패에도 PDF만 보관한다."""
+
+        for phase in ("success", "upload", "register", "conversion"):
+            with self.subTest(phase=phase), tempfile.TemporaryDirectory() as temp_dir:
+                root = Path(temp_dir)
+                config = PrintConfig(
+                    temp_dir=root, output_dir=root, retain_job_files=True
+                )
+                unrelated_prn = root / "OTHER-JOB.prn"
+                unrelated_prn.write_bytes(b"other job")
+                converter = FakePrintConverter(root)
+                gateway = FakePrintServerGateway()
+                original_convert = converter.convert
+                original_register = gateway.register_document
+
+                def convert(*args):
+                    path = original_convert(*args)
+                    if phase == "conversion":
+                        raise RuntimeError("partial conversion failed")
+                    return path
+
+                def register(*args):
+                    self.assertTrue(gateway.uploads[0].is_file())
+                    if phase == "register":
+                        raise RuntimeError("registration failed")
+                    return original_register(*args)
+
+                converter.convert = convert
+                gateway.register_document = register
+                if phase == "upload":
+                    gateway.upload_failure = PrintDataUploadError("upload failed")
+                service = PrintJobService(
+                    config=config,
+                    pdf_inspector=FakePdfInspector(),
+                    print_converter=converter,
+                    file_store=LocalJobFileStore(config),
+                    server_gateway=gateway,
+                )
+                upload = SimpleNamespace(
+                    filename="retained.pdf", file=BytesIO(b"%PDF-synthetic")
+                )
+                if phase == "success":
+                    service.process_upload(upload, "01000000000", is_a3=False)
+                else:
+                    with self.assertRaises((PrintDataUploadError, RuntimeError,
+                                            PrintConversionFailedError)):
+                        service.process_upload(upload, "01000000000", is_a3=False)
+
+                job_id = converter.calls[0][0]
+                self.assertTrue((root / f"{job_id}.pdf").is_file())
+                self.assertFalse((root / f"{job_id}.prn").exists())
+                self.assertEqual(unrelated_prn.read_bytes(), b"other job")
+
     def test_a3_request_uses_a3_for_cups_and_registration(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             root = Path(temp_dir)

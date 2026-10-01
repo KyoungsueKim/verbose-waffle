@@ -39,8 +39,8 @@ class JobFileStore(Protocol):
     def save_upload(self, job_id: str, source: BinaryIO) -> Path:
         """업로드 스트림을 작업별 PDF로 저장한다."""
 
-    def cleanup(self, job_id: str) -> None:
-        """해당 작업이 만든 로컬 파일만 정리한다."""
+    def cleanup(self, job_id: str, *, retain_pdf: bool = False) -> None:
+        """해당 작업의 PRN을 삭제하고 지정된 경우 PDF만 보관한다."""
 
 
 class PrintServerGateway(Protocol):

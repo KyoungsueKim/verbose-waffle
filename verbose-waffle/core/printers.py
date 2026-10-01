@@ -90,11 +90,12 @@ class PrintJobService:
                 paper_size,
             )
         finally:
-            if not self._config.retain_job_files:
-                try:
-                    self._file_store.cleanup(job_id)
-                except Exception:  # noqa: BLE001 - 원래 작업 결과를 보존하고 로그로 경고한다.
-                    logger.exception("Failed to clean local files for print job %s", job_id)
+            try:
+                self._file_store.cleanup(
+                    job_id, retain_pdf=self._config.retain_job_files
+                )
+            except Exception:  # noqa: BLE001 - 원래 작업 결과를 보존하고 로그로 경고한다.
+                logger.exception("Failed to clean local files for print job %s", job_id)
 
         completion_log: dict[str, object] = {"job_id": job_id}
         if self._config.log_file_name:

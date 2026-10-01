@@ -26,8 +26,9 @@ class LocalJobFileStore:
             raise
         return pdf_path
 
-    def cleanup(self, job_id: str) -> None:
-        """설정된 입출력 디렉터리에서 해당 작업 파일만 삭제한다."""
+    def cleanup(self, job_id: str, *, retain_pdf: bool = False) -> None:
+        """PRN은 항상 삭제하고 업로드 PDF는 보관 정책에 따라 정리한다."""
 
         (self._config.output_dir / f"{job_id}.prn").unlink(missing_ok=True)
-        (self._config.temp_dir / f"{job_id}.pdf").unlink(missing_ok=True)
+        if not retain_pdf:
+            (self._config.temp_dir / f"{job_id}.pdf").unlink(missing_ok=True)
